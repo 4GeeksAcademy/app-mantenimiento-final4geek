@@ -89,7 +89,7 @@ const ScheduleVehicle = () => {
                                     className="btn fw-bold"
                                     style={{ backgroundColor: '#7ED957', width: '206px', height: '33px', color: 'white', textAlign: 'center' }}
                                 >
-                                    Confirmar Agenda
+                                    Ingresar Servicio
                                 </button>
                             </div>
 
