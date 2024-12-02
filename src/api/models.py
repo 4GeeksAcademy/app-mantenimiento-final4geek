@@ -74,5 +74,4 @@ class Vehicles(db.Model):
             "license_plate": self.license_plate
 
 
-
         }    
