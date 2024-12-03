@@ -5,11 +5,16 @@ import os
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
+from flask_jwt_extended import create_access_token
 from api.utils import APIException, generate_sitemap
-from api.models import db
+from api.models import db, User, Vehicles
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
+from flask_jwt_extended import JWTManager
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import get_jwt_identity
+ 
 
 # from models import Person
 
@@ -30,6 +35,10 @@ else:
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 MIGRATE = Migrate(app, db, compare_type=True)
 db.init_app(app)
+
+
+app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SSKEY")
+jwt = JWTManager(app)
 
 # add the admin
 setup_admin(app)
@@ -66,6 +75,57 @@ def serve_any_other_file(path):
     return response
 
 
+@app.route('/login', methods=['POST'])
+def login():
+    body = request.get_json(silent=True)
+    if body is None:
+        return jsonify({"msg":"Debes enviar información en el body"}), 400
+    email = request.json.get('email')
+    password = request.json.get('password')
+    user = User.query.filter_by(email=email).first()
+
+    if not user or user.password != password:
+        return jsonify({"msg": "Email o contraseña incorrecto"}), 401
+
+    access_token = create_access_token(identity=user.id)
+    return jsonify(access_token=access_token), 200,
+
+@app.route('/register', methods=['POST'])
+def register():
+    body = request.get_json(silent=True)
+    if body is None:
+        return jsonify({"msg":"Debes enviar información en el body"}), 400
+    email = request.json.get('email')
+    password = request.json.get('password')
+    if not email:
+        return jsonify({"msg": "Campo email vacío"}), 400
+    if not password:
+        return jsonify({"msg": "Campo contraseña vacío"}), 400
+    
+    if User.query.filter_by(email=email).first():
+        return jsonify({"msg": "Email ya está en uso"}), 400
+
+    new_user = User(email=email, password=password, is_active=True)
+    db.session.add(new_user)
+    db.session.commit()
+    return jsonify(new_user.serialize()), 201 
+
+@app.route('/protected', methods=['GET'])
+@jwt_required()
+def protected():
+    body = request.get_json(silent=True)
+    if body is None:
+        return jsonify({"msg": "Debes enviar información en el body"}), 400
+
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    return jsonify(user.serialize()), 200
+
+@app.route('/vehicles', methods=['GET'])
+def get_vehicles():
+    vehicles = Vehicles.query.all()
+    vehicles_list = [vehicle.serialize() for vehicle in vehicles]
+    return jsonify(vehicles_list), 200
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
