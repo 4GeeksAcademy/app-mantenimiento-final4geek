@@ -58,7 +58,8 @@ class Vehicles(db.Model):
 
 
     user = db.relationship('User',back_populates='vehicles')
-
+    schedule = db.relationship('Schedule',back_populates='vehicle')
+    service = db.relationship('Services',back_populates='vehicle')
 
 
     def __repr__(self):
@@ -85,6 +86,9 @@ class Service_Type(db.Model):
     description = db.Column(db.String(150))
 
 
+    services = db.relationship('Services', back_populates = 'service_type')
+
+
     def __repr__(self):
      return f'Service_Type {self.id}{self.name}{self.description}'
 
@@ -103,6 +107,10 @@ class Service_status(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), unique=True, nullable=False)
     description = db.Column(db.String(150))
+
+
+    status = db.relationship('Services', back_populates = 'service_status')
+
 
 
     def __repr__(self):
@@ -131,6 +139,14 @@ class Services(db.Model):
     created_at = db.Column(DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(DateTime(timezone=True), server_default=func.now())
 
+    schedule = db.relationship('Schedule', back_populates = 'service')
+    notes = db.relationship('Notes', back_populates = 'service')
+    vehicle = db.relationship('Vehicles', back_populates = 'service')
+    service_type = db.relationship('Service_Type', back_populates = 'services')
+    service_status = db.relationship('Service_status', back_populates = 'status')
+    parts = db.relationship('Parts_Service',back_populates='service_id')
+
+
 
 
     def __repr__(self):
@@ -156,6 +172,11 @@ class Parts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), unique=True, nullable=False)
 
+
+    parts_service = db.relationship('Parts_Service',back_populates='parts_id')
+
+
+
     def __repr__(self):
      return f'Parts {self.id}{self.name}'
 
@@ -175,6 +196,11 @@ class Parts_Service(db.Model):
     Parts_ID = db.Column(db.Integer, db.ForeignKey('parts.id') )
     Quantity = db.Column(db.Integer)
     Cost = db.Column(DECIMAL(10, 2), nullable=False)
+
+
+    service_id = db.relationship('Services',back_populates='parts')
+    parts_id = db.relationship('Parts',back_populates='parts_service')
+
 
 
     def __repr__(self):
@@ -198,6 +224,10 @@ class Notes(db.Model):
    Service_ID = db.Column(db.Integer, db.ForeignKey('services.id'))
    Text = db.Column(db.String(300))
 
+
+   service = db.relationship('Services', back_populates = 'notes')
+
+
    def __repr__(self):
      return f'Notes {self.id}{self.Service_ID}{self.Text}'
 
@@ -220,6 +250,9 @@ class Schedule(db.Model):
    Status = db.Column(db.String(30))
 
    user = db.relationship('User',back_populates='schedule')
+   vehicle = db.relationship('Vehicles',back_populates='schedule')
+   service = db.relationship('Services', back_populates = 'schedule')
+
 
    def __repr__(self):
         return f'Schedule {self.id}{self.User_ID}{self.Vehicle_ID}{self.Date}{self.Service_ID}{self.Status}'
