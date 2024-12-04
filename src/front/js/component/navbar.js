@@ -1,19 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import MenuHome from "./MenuHome";
 
 export const Navbar = () => {
+	const [showMenu, setShowMenu] = useState(false)
+	const closeMenu = () => {
+		setShowMenu(false)
+	}
 	return (
-		<nav className="navbar navbar-light bg-light">
-			<div className="container">
-				<Link to="/">
-					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
-				</Link>
-				<div className="ml-auto">
-					<Link to="/demo">
-						<button className="btn btn-primary">Check the Context in action</button>
-					</Link>
-				</div>
+		<header className="row text-light  navHome">
+			<div className="col-2 d-flex align-items-center justify-content-center menuHome">
+				<button className="btn botonMenu"
+					onClick={() => setShowMenu(true)}>
+					<i className="fas fa-bars"></i>
+				</button>
+				{showMenu && <MenuHome closeMenu={closeMenu} />}
 			</div>
-		</nav>
+			<div className="col-10 d-flex align-items-center justify-content-center">
+				<h1 className="h5 m-0">Bienvenido &lt;NomUsuario&gt;</h1>
+			</div>
+		</header>
+
 	);
 };
