@@ -5,3 +5,27 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+.backgroundHome {
+    background-color: #312D2E;
+}
+
+.navHome {
+    background-color: #619546;
+}
+
+.menuHome {
+    background-color: #143E79;
+    padding: 0;
+    margin: 0;
+    width: 100px;
+    
+}
+
+.botonMenu {
+    color: white;  
+}
+
+.botonMenu:hover {
+    background-color: white;
+    color: #143E79;
+}
