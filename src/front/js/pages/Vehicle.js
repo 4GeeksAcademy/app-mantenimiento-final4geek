@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 
 
 
-const Vehicule = () => {
+const Vehicle = () => {
     return(
     <div className="container d-flex justify-content-center align-items-center vh-100">
         <div className="card p-4" style={{ width: '1130px', height: '777px', backgroundColor: '#312E2D' }}>
@@ -51,6 +51,6 @@ const Vehicule = () => {
 )}
 
 
-export default Vehicule;
+export default Vehicle;
 
 
