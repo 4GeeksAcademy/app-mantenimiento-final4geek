@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 
-const Vehicule = () => {
+const Vehicle = () => {
     return (
         <div className="container d-flex justify-content-center align-items-center vh-100">
             <div
@@ -93,7 +93,7 @@ const Vehicule = () => {
     );
 };
 
-export default Vehicule;
+export default Vehicle;
 
 
 

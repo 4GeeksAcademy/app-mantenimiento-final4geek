@@ -13,7 +13,8 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import ScheduleVehicle from "./pages/ScheduleVehicle";
 import HomeClient from "./component/HomeClient";
-import Vehicule from "./pages/Vehicule";
+
+import Vehicle from "./pages/Vehicle";
 
 
 //create your first component
@@ -38,7 +39,7 @@ const Layout = () => {
 
 
                         <Route element={<ModalTesting />} path="/modaltesting" />
-                        <Route element={<Vehicule/>} path="/vehicule"/>
+                        <Route element={<Vehicle/>} path="/vehicle"/>
 
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
