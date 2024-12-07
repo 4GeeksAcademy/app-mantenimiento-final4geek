@@ -13,7 +13,7 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import ScheduleVehicle from "./pages/ScheduleVehicle";
 import HomeClient from "./component/HomeClient";
-
+import BackgroundAnimated from "./component/Backgroundanimated";
 import Vehicle from "./pages/Vehicle";
 
 
@@ -30,6 +30,7 @@ const Layout = () => {
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     <Navbar />
+                    <BackgroundAnimated />
                     <Routes>
                         <Route element={<Login />} path="/" />
                         <Route element={<Registro />} path="/registro" />
