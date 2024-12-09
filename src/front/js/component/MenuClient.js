@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import Prueba from './AgendarServicio.js'
+
 
 const MenuHome = ({ closeMenu }) => {
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleOpenModal = () => setIsModalOpen(true);
+    const handleCloseModal = () => setIsModalOpen(false);
     
     return (
         <div
@@ -16,7 +24,10 @@ const MenuHome = ({ closeMenu }) => {
             </div>
             <ul className="list-unstyled text-center m-0">
                 <li >
-                    <button className="btn  w-100 botonMenu" >Agendar Servicio</button>
+                    <button className="btn  w-100 botonMenu" 
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalPrueba"
+                    >Agendar Servicio</button>
                 </li>
                 <li >
                     <button className="btn w-100 botonMenu" >Seguimientos</button>
@@ -31,6 +42,9 @@ const MenuHome = ({ closeMenu }) => {
             <div className="mt-auto text-center pb-3">
                 <button className="btn btn-danger w-75">Cerrar sesión</button>
             </div>
+
+                <Prueba isOpen = {isModalOpen} onClose= {handleCloseModal}/>        
+
         </div>
     );
 };
