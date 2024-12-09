@@ -9,11 +9,14 @@ import { Single } from "./pages/single";
 import ModalTesting from "./pages/modalTesting";
 import injectContext from "./store/appContext";
 
+
 import { Footer } from "./component/footer";
 import ScheduleVehicle from "./pages/ScheduleVehicle";
 import HomeClient from "./component/HomeClient";
 import BackgroundAnimated from "./component/Backgroundanimated";
 import Vehicle from "./pages/Vehicle";
+
+import HomeAdm from "./component/HomeAdm"
 
 
 //create your first component
@@ -27,8 +30,7 @@ const Layout = () => {
     return (
         <div>
             <BrowserRouter basename={basename}>
-                <ScrollToTop>
-                   
+                <ScrollToTop>                   
                     <BackgroundAnimated />
 
                     <Routes>
@@ -38,6 +40,7 @@ const Layout = () => {
                         <Route element={<Navbar />} path="navbar"/>
                         <Route element={<HomeClient />} path="/homeClient"></Route>
                         <Route element={<ScheduleVehicle />} path="/ScheduleVehicle" />
+                        <Route element={<HomeAdm />} path="/HomeAdmin" />
 
 
                         <Route element={<ModalTesting />} path="/modaltesting" />
