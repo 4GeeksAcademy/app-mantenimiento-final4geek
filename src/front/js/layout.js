@@ -12,7 +12,8 @@ import injectContext from "./store/appContext";
 import { Footer } from "./component/footer";
 import ScheduleVehicle from "./pages/ScheduleVehicle";
 import HomeClient from "./component/HomeClient";
-import Vehicule from "./pages/Vehicule";
+import BackgroundAnimated from "./component/Backgroundanimated";
+import Vehicle from "./pages/Vehicle";
 
 
 //create your first component
@@ -27,17 +28,20 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
+                   
+                    <BackgroundAnimated />
 
                     <Routes>
                         <Route element={<Login />} path="/" />
                         <Route element={<Registro />} path="/registro" />
                         <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<Navbar />} path="navbar"/>
                         <Route element={<HomeClient />} path="/homeClient"></Route>
                         <Route element={<ScheduleVehicle />} path="/ScheduleVehicle" />
 
 
                         <Route element={<ModalTesting />} path="/modaltesting" />
-                        <Route element={<Vehicule/>} path="/vehicule"/>
+                        <Route element={<Vehicle/>} path="/vehicle"/>
 
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
