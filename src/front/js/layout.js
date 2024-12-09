@@ -13,7 +13,7 @@ import injectContext from "./store/appContext";
 import { Footer } from "./component/footer";
 import ScheduleVehicle from "./pages/ScheduleVehicle";
 import HomeClient from "./component/HomeClient";
-
+import BackgroundAnimated from "./component/Backgroundanimated";
 import Vehicle from "./pages/Vehicle";
 
 import HomeAdm from "./component/HomeAdm"
@@ -30,12 +30,13 @@ const Layout = () => {
     return (
         <div>
             <BrowserRouter basename={basename}>
-                <ScrollToTop>
-                    
+                <ScrollToTop>                   
+                    <BackgroundAnimated />
                     <Routes>
                         <Route element={<Login />} path="/" />
                         <Route element={<Registro />} path="/registro" />
                         <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<Navbar />} path="navbar"/>
                         <Route element={<HomeClient />} path="/homeClient"></Route>
                         <Route element={<ScheduleVehicle />} path="/ScheduleVehicle" />
                         <Route element={<HomeAdm />} path="/HomeAdmin" />
