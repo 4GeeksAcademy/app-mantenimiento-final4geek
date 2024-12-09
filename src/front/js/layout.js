@@ -32,6 +32,7 @@ const Layout = () => {
             <BrowserRouter basename={basename}>
                 <ScrollToTop>                   
                     <BackgroundAnimated />
+
                     <Routes>
                         <Route element={<Login />} path="/" />
                         <Route element={<Registro />} path="/registro" />
