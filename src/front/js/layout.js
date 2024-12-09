@@ -9,7 +9,6 @@ import { Single } from "./pages/single";
 import ModalTesting from "./pages/modalTesting";
 import injectContext from "./store/appContext";
 
-import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import ScheduleVehicle from "./pages/ScheduleVehicle";
 import HomeClient from "./component/HomeClient";
@@ -28,7 +27,7 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    <Navbar />
+
                     <Routes>
                         <Route element={<Login />} path="/" />
                         <Route element={<Registro />} path="/registro" />
