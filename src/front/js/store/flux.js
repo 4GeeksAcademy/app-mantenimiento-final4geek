@@ -15,13 +15,15 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
                     const data = await response.json();
                     console.log('Token de acceso:', data.access_token);
+                    localStorage.setItem("token", data.access_token);
                 } catch (error) {
                     console.error('Error:', error);
                 }
             },
             registerUser: async (userData) => {
                 try {
-                    const response = await fetch(process.env.BACKEND_URL + "/register", {
+                    console.log('Registering user with data:', userData);
+                    const response = await fetch(`${process.env.BACKEND_URL}/registro`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -29,6 +31,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                         body: JSON.stringify(userData)
                     });
                     if (!response.ok) {
+                        const errorData = await response.json();
+                        console.error('Error data:', errorData);
                         throw new Error('Error en el registro');
                     }
                     const data = await response.json();

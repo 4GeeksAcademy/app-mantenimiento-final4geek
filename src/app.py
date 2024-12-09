@@ -82,7 +82,7 @@ def login():
     access_token = create_access_token(identity=user.id)
     return jsonify(access_token=access_token), 200,
 
-@app.route('/register', methods=['POST'])
+@app.route('/registro', methods=['POST'])
 def register():
     body = request.get_json(silent=True)
     if body is None:

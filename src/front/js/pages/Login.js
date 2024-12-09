@@ -7,7 +7,7 @@ import BackgroundAnimated from "../component/Backgroundanimated";
 import { Context } from "../store/appContext";
 
 const Login = () => {
-    const { actions } = useContext(Context);
+    const {actions} = useContext(Context);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showRegistro, setShowRegistro] = useState(false);
