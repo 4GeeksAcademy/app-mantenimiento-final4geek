@@ -8,6 +8,7 @@ import  Registro from "./pages/Registro";
 import { Single } from "./pages/single";
 import ModalTesting from "./pages/modalTesting";
 import injectContext from "./store/appContext";
+import ModalSeguimientos from "./pages/SeguiAdmin";
 
 
 import { Footer } from "./component/footer";
@@ -42,7 +43,7 @@ const Layout = () => {
                         <Route element={<ScheduleVehicle />} path="/ScheduleVehicle" />
                         <Route element={<HomeAdm />} path="/HomeAdmin" />
 
-
+                        <Route element={<ModalSeguimientos />} path="/seguiadmin" />
                         <Route element={<ModalTesting />} path="/modaltesting" />
                         <Route element={<Vehicle/>} path="/vehicle"/>
 
