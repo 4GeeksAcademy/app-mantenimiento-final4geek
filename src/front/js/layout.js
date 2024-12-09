@@ -13,11 +13,17 @@ import ModalSeguimientos from "./pages/SeguiAdmin";
 
 import { Footer } from "./component/footer";
 import ScheduleVehicle from "./pages/ScheduleVehicle";
+
+import AdminAgendarServicio from "./pages/admin_ingreso_servicios";
+
+import Vehicle from "./pages/Vehicle";
+
 import HomeClient from "./component/HomeClient";
 import BackgroundAnimated from "./component/Backgroundanimated";
 import Vehicle from "./pages/Vehicle";
 
 import HomeAdm from "./component/HomeAdm"
+
 
 
 //create your first component
@@ -41,8 +47,8 @@ const Layout = () => {
                         <Route element={<Navbar />} path="navbar"/>
                         <Route element={<HomeClient />} path="/homeClient"></Route>
                         <Route element={<ScheduleVehicle />} path="/ScheduleVehicle" />
+                        <Route element={<AdminAgendarServicio />} path="/AdminAgendarServicio" />
                         <Route element={<HomeAdm />} path="/HomeAdmin" />
-
                         <Route element={<ModalSeguimientos />} path="/seguiadmin" />
                         <Route element={<ModalTesting />} path="/modaltesting" />
                         <Route element={<Vehicle/>} path="/vehicle"/>
