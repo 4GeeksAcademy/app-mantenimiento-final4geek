@@ -9,7 +9,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_type = db.Column((Enum('client', 'admin', name='user_type')))
     email = db.Column(db.String(30), unique=True, nullable=False)
-    password = db.Column(db.String(20), unique=False, nullable=False)
+    password = db.Column(db.String(255), unique=False, nullable=False) # aumento a 255 porque al hashear se encripta y son más de 20 caractéres.
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     first_name = db.Column(db.String(30))
     last_name = db.Column(db.String(30))

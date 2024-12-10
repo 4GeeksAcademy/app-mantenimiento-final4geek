@@ -16,7 +16,6 @@ import ScheduleVehicle from "./pages/ScheduleVehicle";
 
 import AdminAgendarServicio from "./pages/admin_ingreso_servicios";
 
-import Vehicle from "./pages/Vehicle";
 
 import HomeClient from "./component/HomeClient";
 import BackgroundAnimated from "./component/Backgroundanimated";
@@ -44,7 +43,6 @@ const Layout = () => {
                         <Route element={<Login />} path="/" />
                         <Route element={<Registro />} path="/registro" />
                         <Route element={<Single />} path="/single/:theid" />
-                        <Route element={<Navbar />} path="navbar"/>
                         <Route element={<HomeClient />} path="/homeClient"></Route>
                         <Route element={<ScheduleVehicle />} path="/ScheduleVehicle" />
                         <Route element={<AdminAgendarServicio />} path="/AdminAgendarServicio" />

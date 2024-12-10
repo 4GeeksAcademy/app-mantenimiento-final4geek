@@ -12,6 +12,8 @@ from flask_jwt_extended import JWTManager
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import get_jwt_identity
 from flask_cors import CORS  # Importa Flask-CORS
+from werkzeug.security import generate_password_hash  # Solución para hashear contraseña, y asegurar que no se guarden en texto plano. 
+from werkzeug.security import check_password_hash
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
@@ -76,10 +78,11 @@ def login():
     password = request.json.get('password')
     user = User.query.filter_by(email=email).first()
 
-    if not user or user.password != password:
+    if not user or not check_password_hash(user.password, password):
         return jsonify({"msg": "Email o contraseña incorrecto"}), 401
 
-    access_token = create_access_token(identity=user.id)
+    access_token = create_access_token(identity=str(user.id))# Modifique porque create_acces_token necesita un valor que se serialize como un string por ej. 
+    print(f"Token JWT:{access_token} ") #Borrar luego, es para probar token en el resto de los endpoints
     return jsonify(access_token=access_token), 200,
 
 @app.route('/registro', methods=['POST'])
@@ -89,18 +92,20 @@ def register():
         return jsonify({"msg":"Debes enviar información en el body"}), 400
     email = request.json.get('email')
     password = request.json.get('password')
-    if not email:
-        return jsonify({"msg": "Campo email vacío"}), 400
-    if not password:
-        return jsonify({"msg": "Campo contraseña vacío"}), 400
-    
+    if not email or not password:
+        return jsonify({"msg": "Email y contraseña son obligatorios"}), 400
+      
     if User.query.filter_by(email=email).first():
         return jsonify({"msg": "Email ya está en uso"}), 400
+    
+    # Codigo para hashear contraseña y evitar que se guarde en texto plano
+    hashed_password = generate_password_hash(password)
 
-    new_user = User(email=email, password=password, is_active=True)
+    new_user = User(email=email, password=hashed_password, is_active=True)
     db.session.add(new_user)
     db.session.commit()
     return jsonify(new_user.serialize()), 201 
+
 
 @app.route('/protected', methods=['GET'])
 @jwt_required()
@@ -179,10 +184,10 @@ def actualizar_servicio(id):
     
 #Endopoint 09-12-2024 para crear vehículos LIF
 
-@app.route('/api/vehiculos', methods=['POST'])
+@app.route('/vehicle', methods=['POST']) # Listo probado y funcionando nachito supercampeón.  
 @jwt_required()
 def crear_vehiculo():
-    user_id = get_jwt_identity()  #  ID del usuario autenticado
+    user_id = get_jwt_identity()  #  token del usuario autenticado
     body = request.get_json(silent=True)
     
     
@@ -212,7 +217,7 @@ def crear_vehiculo():
         return jsonify({"msg": f"Error al crear el vehículo: {str(e)}"}), 500
     
 
-@app.route('/api/vehiculos', methods=['GET'])
+@app.route('/vehicle', methods=['GET'])
 def obtener_vehiculos():
     try:
         vehiculos = Vehicles.query.all()
