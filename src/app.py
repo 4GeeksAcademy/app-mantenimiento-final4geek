@@ -127,12 +127,13 @@ def get_vehicles():
 
 #Start Endpoints Ignacio
 
-@app.route('/api/servicios', methods=['POST'])
+#Agendar Servicios del lado de admin
+@app.route('/servicios', methods=['POST'])
 def crear_servicio():
     body = request.get_json(silent=True)
     if not body:
         return jsonify({"msg": "Debes enviar información en el body"}), 400
-    required_fields = ['vehicle_ID', 'Service_Type_ID', 'Start_Date', 'End_Date', 'Total_Cost', 'Payment_status']
+    required_fields = ['vehicle_ID', 'Service_Type_ID', 'Start_Date', 'End_Date', 'Payment_status']
     for field in required_fields:
         if field not in body or not body[field]:
             return jsonify({"msg": f"El campo '{field}' es obligatorio"}), 400
@@ -217,7 +218,7 @@ def crear_vehiculo():
         return jsonify({"msg": f"Error al crear el vehículo: {str(e)}"}), 500
     
 
-@app.route('/vehicle', methods=['GET'])
+@app.route('/vehicle', methods=['GET'])#Probado y funcionando
 def obtener_vehiculos():
     try:
         vehiculos = Vehicles.query.all()
@@ -227,7 +228,7 @@ def obtener_vehiculos():
     except Exception as e:
         return jsonify({"msg": f"Error al obtener los vehículos: {str(e)}"}), 500
 
-@app.route('/api/clientes', methods=['GET'])
+@app.route('/clientes', methods=['GET'])#Funciona trae todos los user con tipo "Client"
 def obtener_clientes():
     try:
         clientes = User.query.filter_by(user_type='client').all()
@@ -258,7 +259,7 @@ def mis_servicios():
         return jsonify({"msg": "No hay servicios regisrados a su nombre"}), 404
     return jsonify([servicio.serialize()for servicio in servicios]), 200 
 
-#Acá verificamos que el cliente solo puede agendar vehículos propios
+#Acá verificamos que el cliente solo puede agendar vehículos propios del cliente
 @app.route('/api/agendar', methods=['POST'])
 @jwt_required()
 def agendar():
