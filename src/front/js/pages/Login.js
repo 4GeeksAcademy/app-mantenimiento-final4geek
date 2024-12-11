@@ -7,6 +7,7 @@ import "../../styles/Login.css";
 import BackgroundAnimated from "../component/Backgroundanimated";
 import { Context } from "../store/appContext";
 
+
 const Login = () => {
     const { actions } = useContext(Context);
     const [email, setEmail] = useState('');
@@ -19,10 +20,10 @@ const Login = () => {
         event.preventDefault();
         const response = await actions.loginUser(email, password);
         if (response.success) {
-            const { type_user } = response.data;
-            if (type_user === "client") {
+            const { user_type } = response.data;
+            if (user_type === "client") {
                 navigate("/homeClient");
-            } else if (type_user === "admin") {
+            } else {
                 navigate("/HomeAdmin");
             }
         } else {
@@ -32,7 +33,6 @@ const Login = () => {
 
     return (
         <div className="container d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
-            {/* <BackgroundAnimated/> */}
             {showRegistro ? (
                 <Registro />
             ) : (

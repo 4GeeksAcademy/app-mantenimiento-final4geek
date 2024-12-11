@@ -21,7 +21,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error('Error:', error);
                 }
             },
-            loginUser: async (email, password, navigate) => {
+            loginUser: async (email, password) => {
                 try {
                     const response = await fetch(process.env.BACKEND_URL + "/login", {
                         method: 'POST',
@@ -37,7 +37,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log('Token de acceso:', data.access_token);
                     localStorage.setItem("token", data.access_token);
                     setStore({ token: data.access_token });
-                    navigate('/homeClient');  // Redirect to HomeClient after successful login
+                
                     return { success: true, data: data };
                 } catch (error) {
                     console.error('Error:', error);

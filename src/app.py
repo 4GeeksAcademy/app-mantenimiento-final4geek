@@ -80,10 +80,14 @@ def login():
 
     if not user or not check_password_hash(user.password, password):
         return jsonify({"msg": "Email o contraseña incorrecto"}), 401
+    
+    additional_claims = {"user_type":user.serialize()["user_type"]}
 
-    access_token = create_access_token(identity=str(user.id))# Modifique porque create_acces_token necesita un valor que se serialize como un string por ej. 
+    #access_token = create_access_token(identity=str(user.id),additional_claims=additional_claims)# Modifique porque create_acces_token necesita un valor que se serialize como un string por ej. 
+    access_token = create_access_token(identity=str(user.id))
+    print(user.serialize())
     print(f"Token JWT:{access_token} ") #Borrar luego, es para probar token en el resto de los endpoints
-    return jsonify(access_token=access_token), 200,
+    return jsonify({"access_token":access_token, "user_type":user.serialize()["user_type"]}), 200, 
 
 @app.route('/registro', methods=['POST'])
 def register():
