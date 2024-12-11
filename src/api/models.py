@@ -106,7 +106,7 @@ class Service_Type(db.Model):
 class Service_status(db.Model):
     __tablename__ = 'service_status'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column((Enum('Agendado','Ingresado', 'En Proceso', 'Finalizado', name='user_type', default='Agendado')))
+    name = db.Column((Enum('Agendado','Ingresado', 'En Proceso', 'Finalizado', name='name', default='Agendado')))
 
     description = db.Column(db.String(150))
 
