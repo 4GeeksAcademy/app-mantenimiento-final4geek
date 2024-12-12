@@ -96,9 +96,15 @@ def register():
         return jsonify({"msg":"Debes enviar información en el body"}), 400
     email = request.json.get('email')
     password = request.json.get('password')
-    if not email or not password:
-        return jsonify({"msg": "Email y contraseña son obligatorios"}), 400
-      
+    first_name = request.json.get('first_name')
+    last_name = request.json.get ('last_name')
+    phone = request.json.get ('phone')
+    ci_rut = request.json.get ('ci_rut')
+
+    fields= ["email","password","first_name","last_name","phone","ci_rut"]
+    for field in fields:
+        if not field:
+            return jsonify(f'El campo {field} es obligatorio'), 400   
     if User.query.filter_by(email=email).first():
         return jsonify({"msg": "Email ya está en uso"}), 400
     

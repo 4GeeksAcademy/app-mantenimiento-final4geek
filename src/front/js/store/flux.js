@@ -17,8 +17,10 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
                     const data = await response.json();
                     console.log('Registro exitoso:', data);
+                    return { success: true};
                 } catch (error) {
                     console.error('Error:', error);
+                    return { success: false };
                 }
             },
             loginUser: async (email, password) => {

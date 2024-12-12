@@ -1,9 +1,11 @@
 import React, { useContext, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
 
 const Registro = () => {
     const { actions } = useContext(Context);
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         nombre: '',
         apellido: '',
@@ -22,8 +24,11 @@ const Registro = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await actions.registerUser(formData);
+        const {success}=await actions.registerUser(formData);
+        if (success) {
+          navigate ("/")
     };
+}
 
     return (
         <div className="container d-flex justify-content-center align-items-center vh-100">
