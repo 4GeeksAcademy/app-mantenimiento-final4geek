@@ -16,6 +16,7 @@ const Registro = () => {
         ci: '',
         razonSocial: ''
     });
+    const [showRedirectButton, setShowRedirectButton] = useState(false);
 
     const handleChange = (e) => {
         const { id, value } = e.target;
@@ -24,11 +25,18 @@ const Registro = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const {success}=await actions.registerUser(formData);
-        if (success) {
-          navigate ("/")
+        const result = await actions.registerUser(formData);
+        console.log("Resultado del registro:", result);
+        if (result.success) {
+            setShowRedirectButton(true);
+        } else {
+            console.error("Registro fallido:", result.error);
+        }
     };
-}
+
+    const handleRedirect = () => {
+        navigate("/loginpostregister");
+    };
 
     return (
         <div className="container d-flex justify-content-center align-items-center vh-100">
@@ -88,6 +96,13 @@ const Registro = () => {
                             </div>
                         </div>
                     </form>
+                    {showRedirectButton && (
+                        <div className="row mt-4">
+                            <div className="col-md-12 d-flex justify-content-center">
+                                <button onClick={handleRedirect} className="btn fw-bold" style={{ backgroundColor: '#7ED957' }}>Ir a la página de inicio</button>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

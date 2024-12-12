@@ -4,9 +4,7 @@ import { useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Registro from "./Registro";
 import "../../styles/Login.css";
-import BackgroundAnimated from "../component/Backgroundanimated";
 import { Context } from "../store/appContext";
-
 
 const Login = () => {
     const { actions } = useContext(Context);

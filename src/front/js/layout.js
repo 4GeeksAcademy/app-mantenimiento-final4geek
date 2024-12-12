@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
-import Login from "./pages/Login";
+import Login from "./pages/LoginPrincipal";
 import  Registro from "./pages/Registro";
 import { Single } from "./pages/single";
 import ModalTesting from "./pages/modalTesting";
@@ -22,7 +22,7 @@ import BackgroundAnimated from "./component/Backgroundanimated";
 import Vehicle from "./pages/Vehicle";
 
 import HomeAdm from "./component/HomeAdm"
-
+import LoginPostRegister from "./pages/LoginPostRegister";
 
 
 //create your first component
@@ -42,7 +42,7 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Login />} path="/" />
                         <Route element={<Registro />} path="/registro" />
-                        <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<LoginPostRegister />} path="/loginpostregister" />
                         <Route element={<HomeClient />} path="/homeClient"></Route>
                         <Route element={<ScheduleVehicle />} path="/ScheduleVehicle" />
                         <Route element={<AdminAgendarServicio />} path="/AdminAgendarServicio" />
