@@ -4,7 +4,7 @@ from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_jwt_extended import create_access_token
 from api.utils import APIException, generate_sitemap
-from api.models import db, Services, Vehicles, User, Service_status
+from api.models import db, Services, Vehicles, User, Service_status, Service_Type
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
@@ -275,26 +275,45 @@ def mis_servicios():
 def agendar():
     user_id = get_jwt_identity()
     body = request.get_json()
+    
     if not body:
         return jsonify({"msg": "Debes enviar información en el body"}), 400
 
+    # Verificar que el vehículo pertenece al usuario autenticado
     vehicle = Vehicles.query.filter_by(id=body['vehicle_ID'], user_id=user_id).first()
     if not vehicle:
         return jsonify({"msg": "El vehículo no está asociado a tu cuenta"}), 403
 
-    nuevo_servicio = Services(
-        vehicle_ID=body['vehicle_ID'],
-        Service_Type_ID=body['Service_Type_ID'],
-        Status_ID=1,  # Estado inicial
-        Start_Date=body['Start_Date'],
-        End_Date=body['End_Date'],
-        Total_Cost=body['Total_Cost'],
-        Payment_status='Pendiente',
-        User_ID=user_id
-    )
-    db.session.add(nuevo_servicio)
-    db.session.commit()
-    return jsonify(nuevo_servicio.serialize()), 201
+    # Obtener el servicio desde Service_Type para extraer el precio
+    service_type = Service_Type.query.get(body['Service_Type_ID'])
+    if not service_type:
+        return jsonify({"msg": "El tipo de servicio seleccionado no existe"}), 404
+
+    # Calcular el total del servicio
+    total_cost = service_type.price
+
+    try:
+        nuevo_servicio = Services(
+            vehicle_ID=body['vehicle_ID'],
+            Service_Type_ID=body['Service_Type_ID'],
+            Status_ID=1,  # Estado inicial: "Agendado"
+            Start_Date=body['Start_Date'],
+            End_Date=body['End_Date'],
+            Total_Cost=str(total_cost),  # Guardar el precio como Total_Cost
+            Payment_status='Pendiente',
+            User_ID=user_id
+        )
+        db.session.add(nuevo_servicio)
+        db.session.commit()
+
+        return jsonify({
+            "msg": "Servicio agendado exitosamente",
+            "service": nuevo_servicio.serialize()
+        }), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"msg": f"Error al agendar el servicio: {str(e)}"}), 500
+
 
 #Acá verificamos que la vista de todos los servicios sea accesible, solamente a los usuarios internos.
 @app.route('/api/todos-los-servicios', methods=['GET'])
@@ -320,6 +339,43 @@ def actualizar_estado(id):
     servicio.Status_ID = body['Status_ID']
     db.session.commit()
     return jsonify(servicio.serialize()), 200
+
+#POST crear servicios por parte de Usuario Admin
+
+@app.route('/api/crear-tipo-servicio', methods=['POST'])
+@jwt_required()
+def crear_tipo_servicio():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+    
+    if not user or user.user_type != 'admin':
+        return jsonify({"msg": "No tiene permisos para crear tipos de servicios"}), 403
+
+    body = request.get_json(silent=True)
+    if not body:
+        return jsonify({"msg": "Debe enviar información en el body"}), 400
+
+    required_fields = ['name', 'description', 'price']
+    for field in required_fields:
+        if field not in body or not body[field]:
+            return jsonify({"msg": f"El campo '{field}' es obligatorio"}), 400
+
+    try:
+        nuevo_tipo_servicio = Service_Type(
+            name=body['name'],
+            description=body['description'],
+            price=body['price']  
+        )
+        db.session.add(nuevo_tipo_servicio)
+        db.session.commit()
+
+        return jsonify({
+            "msg": "Tipo de servicio creado exitosamente",
+            "service_type": nuevo_tipo_servicio.serialize()
+        }), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"msg": f"Error al crear el tipo de servicio: {str(e)}"}), 500
 
     
 
