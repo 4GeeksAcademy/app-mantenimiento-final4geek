@@ -104,7 +104,7 @@ def register():
     fields= ["email","password","first_name","last_name","phone","ci_rut"]
     for field in fields:
         if not field:
-            return jsonify(f'El campo {field} es obligatorio'git), 400   
+            return jsonify(f'El campo {field} es obligatorio'), 400   
     if User.query.filter_by(email=email).first():
         return jsonify({"msg": "Email ya está en uso"}), 400
     
