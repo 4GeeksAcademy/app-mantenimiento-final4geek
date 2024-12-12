@@ -111,7 +111,7 @@ def register():
     # Codigo para hashear contraseña y evitar que se guarde en texto plano
     hashed_password = generate_password_hash(password)
 
-    new_user = User(email=email, password=hashed_password, is_active=True)
+    new_user = User(email=email, password=hashed_password, is_active=True , user_type ="client") #Asegurarse que esta linea este, sino lo crea como admin. 
     db.session.add(new_user)
     db.session.commit()
     return jsonify(new_user.serialize()), 201 
