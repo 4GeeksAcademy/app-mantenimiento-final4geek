@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import Prueba from './AgendarServicio.js'
 import { useNavigate } from "react-router-dom";
-
+import LogoutButton from "./LogoutButton.js";
 
 
 
@@ -18,9 +18,9 @@ const MenuHome = ({ closeMenu }) => {
         window.location.href = "/";
         window.location.reload(); // Fuerza la recarga completa
     };
-    
-    
-    
+
+
+
     return (
         <div
             className="d-flex flex-column text-light"
@@ -51,9 +51,8 @@ const MenuHome = ({ closeMenu }) => {
                 </li>
             </ul>
             <div className="mt-auto text-center pb-3">
-                <button style={{ backgroundColor: "red", color: "white", padding: "10px" }} onClick={handleLogout}>
-                    Cerrar sesión
-                </button>
+            <LogoutButton onBeforeLogout={closeMenu} />
+
             </div>
 
             <Prueba isOpen={isModalOpen} onClose={handleCloseModal} />
