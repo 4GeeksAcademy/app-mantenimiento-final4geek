@@ -119,7 +119,6 @@ def get_vehicles():
     vehicles_list = [vehicle.serialize() for vehicle in vehicles]
     return jsonify(vehicles_list), 200
 
-
 #Start Endpoints Ignacio
 
 @app.route('/api/servicios', methods=['POST'])

@@ -2,7 +2,7 @@ import React from "react";
 import { Modal } from "react-bootstrap";
 import "../../styles/modal.css";
 
-const ModalSeguimientos = ({ isOpen, onClose, data }) => {
+const ModalSeguimientosComp = ({ isOpen, onClose, data }) => {
   return (
     <Modal show={isOpen} onHide={onClose} centered backdrop="static" dialogClassName="custom-modal">
       <Modal.Header className="custom-modal-header">
@@ -18,4 +18,4 @@ const ModalSeguimientos = ({ isOpen, onClose, data }) => {
   );
 };
 
-export default ModalSeguimientos;
+export default ModalSeguimientosComp;
