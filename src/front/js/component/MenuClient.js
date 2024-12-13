@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 import Prueba from './AgendarServicio.js'
 import { useNavigate } from "react-router-dom";
 import LogoutButton from "./LogoutButton.js";
+import ModalVehiculos from "./modalVehiculos.js";
+import ModalRegVehiculo from "../pages/modalVehiculeRegister.js";
 
 
 
@@ -37,26 +39,34 @@ const MenuHome = ({ closeMenu }) => {
                 <li >
                     <button className="btn  w-100 botonMenu"
                         data-bs-toggle="modal"
-                        data-bs-target="#modalPrueba"
+                        data-bs-target="#modalAgendarServicio"
                     >Agendar Servicio</button>
                 </li>
                 <li >
-                    <button className="btn w-100 botonMenu" >Seguimientos</button>
+                    <button className="btn w-100 botonMenu"
+                    >Seguimientos</button>
                 </li>
                 <li >
-                    <button className="btn w-100 botonMenu" >Vehículos Registrados</button>
+                    <button className="btn w-100 botonMenu"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalVehiculos"
+                    >Vehículos Registrados</button>
                 </li>
                 <li >
-                    <button className="btn w-100 botonMenu" >Registrar Vehículo</button>
+                    <button className="btn w-100 botonMenu"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalRegVehiculos"
+                    >Registrar Vehículo</button>
                 </li>
             </ul>
             <div className="mt-auto text-center pb-3">
-            <LogoutButton onBeforeLogout={closeMenu} />
+                <LogoutButton onBeforeLogout={closeMenu} />
 
             </div>
 
             <Prueba isOpen={isModalOpen} onClose={handleCloseModal} />
-
+            <ModalVehiculos isModalOpen={isModalOpen} onClose={handleCloseModal} />
+            <ModalRegVehiculo isModalOpen={isModalOpen} onClose={handleCloseModal} />
         </div>
     );
 };
