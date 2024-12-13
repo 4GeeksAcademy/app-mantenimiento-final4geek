@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column,DateTime,func,DECIMAL,Numeric
+from sqlalchemy import Column,DateTime,func,DECIMAL,Numeric,Enum 
 
 
 db = SQLAlchemy()
@@ -7,6 +7,7 @@ db = SQLAlchemy()
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
+    user_type = db.Column((Enum('client', 'admin', name='user_type')))
     email = db.Column(db.String(30), unique=True, nullable=False)
     password = db.Column(db.String(20), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
@@ -48,7 +49,7 @@ class User(db.Model):
 class Vehicles(db.Model):
     __tablename__ = 'vehicles'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer,db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer,db.ForeignKey('user.id'), nullable=False) #Agregue código pra relacionar con el auto con el usuario
     brand = db.Column(db.String(30))
     model = db.Column(db.String(30))
     year = db.Column(db.Integer)
@@ -136,6 +137,8 @@ class Services(db.Model):
     End_Date = db.Column(db.String(30))
     Total_Cost = db.Column(db.String(50))
     Payment_status = db.Column(db.String(30))
+    User_ID = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True) #Es para relacionar solo los servicios de un usuario específico LIF
+    user = db.relationship('User', backref='services')#idem arriba
     created_at = db.Column(DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(DateTime(timezone=True), server_default=func.now())
 
