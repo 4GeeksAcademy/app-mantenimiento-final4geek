@@ -10,7 +10,7 @@ const LogoutButton = ({ onBeforeLogout }) => {
         const token = localStorage.getItem("token");
         console.log("Token a eliminar:", token);
         localStorage.removeItem("token");
-        navigate("/loginprincipal");
+        navigate("/");
         console.log("Navegación a loginprincipal");
     };
     return (
