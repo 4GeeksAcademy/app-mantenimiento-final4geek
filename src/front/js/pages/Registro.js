@@ -7,16 +7,15 @@ const Registro = () => {
     const { actions } = useContext(Context);
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        nombre: '',
-        apellido: '',
+        first_name: '',
+        last_name: '',
         email: '',
-        direccion: '',
         password: '',
-        telefono: '',
-        ci: '',
-        razonSocial: ''
+        phone: '',
+        ci_rut: ''
     });
     const [showRedirectButton, setShowRedirectButton] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleChange = (e) => {
         const { id, value } = e.target;
@@ -25,12 +24,14 @@ const Registro = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log('Datos del formulario:', formData); 
         const result = await actions.registerUser(formData);
         console.log("Resultado del registro:", result);
         if (result.success) {
             setShowRedirectButton(true);
+            setErrorMessage(''); // limpia mensaje letras rojas
         } else {
-            console.error("Registro fallido:", result.error);
+            setErrorMessage(result.error || 'Error en el registro');
         }
     };
 
@@ -47,14 +48,14 @@ const Registro = () => {
                         <div className="row">
                             <div className="col-md-6">
                                 <div className="mb-3 text-start">
-                                    <label htmlFor="nombre" className="form-label text-white">Nombre</label>
-                                    <input type="text" className="form-control" id="nombre" style={{ backgroundColor: '#FFFFFF', height: '40px' }}
-                                        value={formData.nombre} onChange={handleChange} />
+                                    <label htmlFor="first_name" className="form-label text-white">Nombre</label>
+                                    <input type="text" className="form-control" id="first_name" style={{ backgroundColor: '#FFFFFF', height: '40px' }}
+                                        value={formData.first_name} onChange={handleChange} />
                                 </div>
                                 <div className="mb-3 text-start">
-                                    <label htmlFor="apellido" className="form-label text-white">Apellido</label>
-                                    <input type="text" className="form-control" id="apellido" style={{ backgroundColor: '#FFFFFF', height: '40px' }}
-                                        value={formData.apellido} onChange={handleChange} />
+                                    <label htmlFor="last_name" className="form-label text-white">Apellido</label>
+                                    <input type="text" className="form-control" id="last_name" style={{ backgroundColor: '#FFFFFF', height: '40px' }}
+                                        value={formData.last_name} onChange={handleChange} />
                                 </div>
                                 <div className="mb-3 text-start">
                                     <label htmlFor="email" className="form-label text-white">Email</label>
@@ -62,9 +63,8 @@ const Registro = () => {
                                         value={formData.email} onChange={handleChange} />
                                 </div>
                                 <div className="mb-3 text-start">
-                                    <label htmlFor="direccion" className="form-label text-white">Dirección</label>
-                                    <input type="text" className="form-control" id="direccion" style={{ backgroundColor: '#FFFFFF', height: '40px' }}
-                                        value={formData.direccion} onChange={handleChange} />
+                                    <label htmlFor="ci_rut" className="form-label text-white">Dirección</label>
+                                    <input type="text" className="form-control" id="ci_rut" style={{ backgroundColor: '#FFFFFF', height: '40px' }}></input>
                                 </div>
                             </div>
                             <div className="col-md-6">
@@ -74,19 +74,18 @@ const Registro = () => {
                                         value={formData.password} onChange={handleChange} />
                                 </div>
                                 <div className="mb-3 text-start">
-                                    <label htmlFor="telefono" className="form-label text-white">Teléfono</label>
-                                    <input type="text" className="form-control" id="telefono" style={{ backgroundColor: '#FFFFFF', height: '40px' }}
-                                        value={formData.telefono} onChange={handleChange} />
+                                    <label htmlFor="phone" className="form-label text-white">Teléfono</label>
+                                    <input type="text" className="form-control" id="phone" style={{ backgroundColor: '#FFFFFF', height: '40px' }}
+                                        value={formData.phone} onChange={handleChange} />
                                 </div>
                                 <div className="mb-3 text-start">
-                                    <label htmlFor="ci" className="form-label text-white">CI/Rut</label>
-                                    <input type="text" className="form-control" id="ci" style={{ backgroundColor: '#FFFFFF', height: '40px' }}
-                                        value={formData.ci} onChange={handleChange} />
+                                    <label htmlFor="ci_rut" className="form-label text-white">CI/Rut</label>
+                                    <input type="text" className="form-control" id="ci_rut" style={{ backgroundColor: '#FFFFFF', height: '40px' }}
+                                        value={formData.ci_rut} onChange={handleChange} />
                                 </div>
                                 <div className="mb-3 text-start">
-                                    <label htmlFor="razonSocial" className="form-label text-white">Razón Social</label>
-                                    <input type="text" className="form-control" id="razonSocial" style={{ backgroundColor: '#FFFFFF', height: '40px' }}
-                                        value={formData.razonSocial} onChange={handleChange} />
+                                    <label htmlFor="ci_rut" className="form-label text-white">Razón Social</label>
+                                    <input type="text" className="form-control" id="ci_rut" style={{ backgroundColor: '#FFFFFF', height: '40px' }}></input>
                                 </div>
                             </div>
                         </div>
@@ -96,6 +95,15 @@ const Registro = () => {
                             </div>
                         </div>
                     </form>
+                    {errorMessage && (
+                        <div className="row mt-4">
+                            <div className="col-md-12 d-flex justify-content-center">
+                                <div className="alert alert-danger" role="alert">
+                                    {errorMessage}
+                                </div>
+                            </div>
+                        </div>
+                    )}
                     {showRedirectButton && (
                         <div className="row mt-4">
                             <div className="col-md-12 d-flex justify-content-center">
@@ -110,3 +118,4 @@ const Registro = () => {
 };
 
 export default Registro;
+

@@ -1,8 +1,3 @@
-
-
-
-
-
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
@@ -11,6 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         actions: {
             registerUser: async (userData) => {
                 try {
+                    console.log('Datos de usuario enviados:', userData); 
                     const response = await fetch(`${process.env.BACKEND_URL}/registro`, {
                         method: 'POST',
                         headers: {
@@ -21,14 +17,14 @@ const getState = ({ getStore, getActions, setStore }) => {
                     if (!response.ok) {
                         const errorData = await response.json();
                         console.error('Error data:', errorData);
-                        throw new Error('Error en el registro');
+                        throw new Error('Error en el registro: ' + errorData.msg); 
                     }
                     const data = await response.json();
                     console.log('Registro exitoso:', data);
                     return { success: true };
                 } catch (error) {
                     console.error('Error:', error);
-                    return { success: false };
+                    return { success: false, error: error.message };
                 }
             },
             loginUser: async (email, password) => {

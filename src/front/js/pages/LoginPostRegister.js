@@ -10,7 +10,7 @@ const LoginPostRegister = () => {
         email: '',
         password: ''
     });
-    const [errorMessage, setErrorMessage] = useState('Credenciales incorrectas, vuelve a intentarlo');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleChange = (e) => {
         const { id, value } = e.target;
@@ -28,7 +28,7 @@ const LoginPostRegister = () => {
                 navigate("/HomeAdmin");
             }
         } else {
-            setErrorMessage('Login failed. Please check your email and password.');
+            setErrorMessage('Credenciales incorrectas, vuelve a intentarlo');
         }
     };
 
