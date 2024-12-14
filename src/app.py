@@ -87,7 +87,45 @@ def login():
     access_token = create_access_token(identity=str(user.id))
     print(user.serialize())
     print(f"Token JWT:{access_token} ") #Borrar luego, es para probar token en el resto de los endpoints
-    return jsonify({"access_token":access_token, "user_type":user.serialize()["user_type"]}), 200, 
+    return jsonify({"access_token":access_token, "user_type":user.serialize()["user_type"]}), 200
+
+#Crear userAdmin
+@app.route('/registro-admin', methods=['POST'])
+@jwt_required()
+def register_admin():
+    body = request.get_json(silent=True)
+    if body is None:
+        return jsonify({"msg":"Debes enviar información en el body"}), 400
+    email = request.json.get('email')
+    password = request.json.get('password')
+    first_name = request.json.get('first_name')
+    last_name = request.json.get ('last_name')
+   
+
+    fields= ["email","password","first_name","last_name"]
+    for field in fields:
+        if not field:
+            return jsonify(f'El campo {field} es obligatorio'), 400   
+    if User.query.filter_by(email=email).first():
+        return jsonify({"msg": "Email ya está en uso"}), 400
+    
+    current_user_id = get_jwt_identity()
+    user=User.query.get(current_user_id)
+    if user.serialize()["user_type"] is not "admin": 
+        return jsonify({"msg":"cuidado infractor, no estas autorizado"}), 403
+
+    # Codigo para hashear contraseña y evitar que se guarde en texto plano
+    hashed_password = generate_password_hash(password)
+
+    new_user = User(user_type ="admin",
+                     email=email, 
+                     password=hashed_password,
+                     is_active=True, 
+                     first_name = first_name, 
+                     last_name = last_name) 
+    db.session.add(new_user)
+    db.session.commit()
+    return jsonify(new_user.serialize()), 201 
 
 
 
