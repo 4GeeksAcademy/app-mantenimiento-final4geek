@@ -4,7 +4,7 @@ from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_jwt_extended import create_access_token
 from api.utils import APIException, generate_sitemap
-from api.models import db, Services, Vehicles, User, Service_status
+from api.models import db, Services, Vehicles, User, Service_status, Service_Type
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
@@ -80,31 +80,90 @@ def login():
 
     if not user or not check_password_hash(user.password, password):
         return jsonify({"msg": "Email o contraseña incorrecto"}), 401
+    
+    additional_claims = {"user_type":user.serialize()["user_type"]}
 
-    access_token = create_access_token(identity=str(user.id))# Modifique porque create_acces_token necesita un valor que se serialize como un string por ej. 
+    #access_token = create_access_token(identity=str(user.id),additional_claims=additional_claims)# Modifique porque create_acces_token necesita un valor que se serialize como un string por ej. 
+    access_token = create_access_token(identity=str(user.id))
+    print(user.serialize())
     print(f"Token JWT:{access_token} ") #Borrar luego, es para probar token en el resto de los endpoints
-    return jsonify(access_token=access_token), 200,
+    return jsonify({"access_token":access_token, "user_type":user.serialize()["user_type"]}), 200
 
-@app.route('/registro', methods=['POST'])
-def register():
+#Crear userAdmin
+@app.route('/registro-admin', methods=['POST'])
+@jwt_required()
+def register_admin():
     body = request.get_json(silent=True)
     if body is None:
         return jsonify({"msg":"Debes enviar información en el body"}), 400
     email = request.json.get('email')
     password = request.json.get('password')
-    if not email or not password:
-        return jsonify({"msg": "Email y contraseña son obligatorios"}), 400
-      
+    first_name = request.json.get('first_name')
+    last_name = request.json.get ('last_name')
+   
+
+    fields= ["email","password","first_name","last_name"]
+    for field in fields:
+        if not field:
+            return jsonify(f'El campo {field} es obligatorio'), 400   
     if User.query.filter_by(email=email).first():
         return jsonify({"msg": "Email ya está en uso"}), 400
     
+    current_user_id = get_jwt_identity()
+    user=User.query.get(current_user_id)
+    if user.serialize()["user_type"] is not "admin": 
+        return jsonify({"msg":"cuidado infractor, no estas autorizado"}), 403
+
     # Codigo para hashear contraseña y evitar que se guarde en texto plano
     hashed_password = generate_password_hash(password)
 
-    new_user = User(email=email, password=hashed_password, is_active=True)
+    new_user = User(user_type ="admin",
+                     email=email, 
+                     password=hashed_password,
+                     is_active=True, 
+                     first_name = first_name, 
+                     last_name = last_name) 
     db.session.add(new_user)
     db.session.commit()
     return jsonify(new_user.serialize()), 201 
+
+
+
+@app.route('/registro', methods=['POST'])
+def register():
+    body = request.get_json(silent=True)
+    if body is None:
+        return jsonify({"msg": "Debes enviar información en el body"}), 400
+    email = request.json.get('email')
+    password = request.json.get('password')
+    first_name = request.json.get('first_name')
+    last_name = request.json.get('last_name')
+    phone = request.json.get('phone')
+    ci_rut = request.json.get('ci_rut')
+
+    fields = ["email", "password", "first_name", "last_name", "phone", "ci_rut"]
+    for field in fields:
+        if not locals()[field]:
+            return jsonify({"msg": f"El campo {field} es obligatorio"}), 400
+    if User.query.filter_by(email=email).first():
+        return jsonify({"msg": "Email ya está en uso"}), 400
+
+    # Codigo para hashear contraseña y evitar que se guarde en texto plano
+    hashed_password = generate_password_hash(password)
+
+    new_user = User(email=email, password=hashed_password, is_active=True, user_type="client")
+    db.session.add(new_user)
+    db.session.commit()
+
+    # Incluir todos los campos necesarios en la respuesta
+    return jsonify({
+        "email": new_user.email,
+        "first_name": first_name,
+        "last_name": last_name,
+        "phone": phone,
+        "ci_rut": ci_rut
+    }), 201
+
 
 
 @app.route('/protected', methods=['GET'])
@@ -127,12 +186,13 @@ def get_vehicles():
 
 #Start Endpoints Ignacio
 
-@app.route('/api/servicios', methods=['POST'])
+#Agendar Servicios del lado de admin
+@app.route('/servicios', methods=['POST'])
 def crear_servicio():
     body = request.get_json(silent=True)
     if not body:
         return jsonify({"msg": "Debes enviar información en el body"}), 400
-    required_fields = ['vehicle_ID', 'Service_Type_ID', 'Start_Date', 'End_Date', 'Total_Cost', 'Payment_status']
+    required_fields = ['vehicle_ID', 'Service_Type_ID', 'Start_Date', 'End_Date', 'Payment_status']
     for field in required_fields:
         if field not in body or not body[field]:
             return jsonify({"msg": f"El campo '{field}' es obligatorio"}), 400
@@ -217,7 +277,7 @@ def crear_vehiculo():
         return jsonify({"msg": f"Error al crear el vehículo: {str(e)}"}), 500
     
 
-@app.route('/vehicle', methods=['GET'])
+@app.route('/vehicle', methods=['GET'])#Probado y funcionando
 def obtener_vehiculos():
     try:
         vehiculos = Vehicles.query.all()
@@ -227,7 +287,7 @@ def obtener_vehiculos():
     except Exception as e:
         return jsonify({"msg": f"Error al obtener los vehículos: {str(e)}"}), 500
 
-@app.route('/api/clientes', methods=['GET'])
+@app.route('/clientes', methods=['GET'])#Funciona trae todos los user con tipo "Client"
 def obtener_clientes():
     try:
         clientes = User.query.filter_by(user_type='client').all()
@@ -258,32 +318,51 @@ def mis_servicios():
         return jsonify({"msg": "No hay servicios regisrados a su nombre"}), 404
     return jsonify([servicio.serialize()for servicio in servicios]), 200 
 
-#Acá verificamos que el cliente solo puede agendar vehículos propios
+#Acá verificamos que el cliente solo puede agendar vehículos propios del cliente
 @app.route('/api/agendar', methods=['POST'])
 @jwt_required()
 def agendar():
     user_id = get_jwt_identity()
     body = request.get_json()
+    
     if not body:
         return jsonify({"msg": "Debes enviar información en el body"}), 400
 
+    # Verificar que el vehículo pertenece al usuario autenticado
     vehicle = Vehicles.query.filter_by(id=body['vehicle_ID'], user_id=user_id).first()
     if not vehicle:
         return jsonify({"msg": "El vehículo no está asociado a tu cuenta"}), 403
 
-    nuevo_servicio = Services(
-        vehicle_ID=body['vehicle_ID'],
-        Service_Type_ID=body['Service_Type_ID'],
-        Status_ID=1,  # Estado inicial
-        Start_Date=body['Start_Date'],
-        End_Date=body['End_Date'],
-        Total_Cost=body['Total_Cost'],
-        Payment_status='Pendiente',
-        User_ID=user_id
-    )
-    db.session.add(nuevo_servicio)
-    db.session.commit()
-    return jsonify(nuevo_servicio.serialize()), 201
+    # Obtener el servicio desde Service_Type para extraer el precio
+    service_type = Service_Type.query.get(body['Service_Type_ID'])
+    if not service_type:
+        return jsonify({"msg": "El tipo de servicio seleccionado no existe"}), 404
+
+    # Calcular el total del servicio
+    total_cost = service_type.price
+
+    try:
+        nuevo_servicio = Services(
+            vehicle_ID=body['vehicle_ID'],
+            Service_Type_ID=body['Service_Type_ID'],
+            Status_ID=1,  # Estado inicial: "Agendado"
+            Start_Date=body['Start_Date'],
+            End_Date=body['End_Date'],
+            Total_Cost=str(total_cost),  # Guardar el precio como Total_Cost
+            Payment_status='Pendiente',
+            User_ID=user_id
+        )
+        db.session.add(nuevo_servicio)
+        db.session.commit()
+
+        return jsonify({
+            "msg": "Servicio agendado exitosamente",
+            "service": nuevo_servicio.serialize()
+        }), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"msg": f"Error al agendar el servicio: {str(e)}"}), 500
+
 
 #Acá verificamos que la vista de todos los servicios sea accesible, solamente a los usuarios internos.
 @app.route('/api/todos-los-servicios', methods=['GET'])
@@ -309,6 +388,43 @@ def actualizar_estado(id):
     servicio.Status_ID = body['Status_ID']
     db.session.commit()
     return jsonify(servicio.serialize()), 200
+
+#POST crear servicios por parte de Usuario Admin
+
+@app.route('/api/crear-tipo-servicio', methods=['POST'])
+@jwt_required()
+def crear_tipo_servicio():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+    
+    if not user or user.user_type != 'admin':
+        return jsonify({"msg": "No tiene permisos para crear tipos de servicios"}), 403
+
+    body = request.get_json(silent=True)
+    if not body:
+        return jsonify({"msg": "Debe enviar información en el body"}), 400
+
+    required_fields = ['name', 'description', 'price']
+    for field in required_fields:
+        if field not in body or not body[field]:
+            return jsonify({"msg": f"El campo '{field}' es obligatorio"}), 400
+
+    try:
+        nuevo_tipo_servicio = Service_Type(
+            name=body['name'],
+            description=body['description'],
+            price=body['price']  
+        )
+        db.session.add(nuevo_tipo_servicio)
+        db.session.commit()
+
+        return jsonify({
+            "msg": "Tipo de servicio creado exitosamente",
+            "service_type": nuevo_tipo_servicio.serialize()
+        }), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"msg": f"Error al crear el tipo de servicio: {str(e)}"}), 500
 
     
 

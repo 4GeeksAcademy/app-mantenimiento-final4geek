@@ -7,7 +7,7 @@ db = SQLAlchemy()
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
-    user_type = db.Column((Enum('client', 'admin', name='user_type')))
+    user_type = db.Column((Enum('client', 'admin', name='user_type', default ='client')))
     email = db.Column(db.String(30), unique=True, nullable=False)
     password = db.Column(db.String(255), unique=False, nullable=False) # aumento a 255 porque al hashear se encripta y son más de 20 caractéres.
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
@@ -38,7 +38,8 @@ class User(db.Model):
             "social_reason": self.social_reason,
             "address": self.address,
             "phone": self.phone,
-            "ci_rut": self.ci_rut
+            "ci_rut": self.ci_rut,
+            "user_type": self.user_type
 
 
 
@@ -85,28 +86,28 @@ class Service_Type(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), unique=True, nullable=False)
     description = db.Column(db.String(150))
+    price = db.Column(db.Numeric(10, 2), nullable=False)  # LIF Nuevo campo de precio para traerlo cuando agendamos cada servicio
 
-
-    services = db.relationship('Services', back_populates = 'service_type')
-
+    services = db.relationship('Services', back_populates='service_type')
 
     def __repr__(self):
-     return f'Service_Type {self.id}{self.name}{self.description}'
+        return f'Service_Type {self.id} {self.name} {self.description} {self.price}'
 
     def serialize(self):
         return {
             "id": self.id,
             "name": self.name,
-            "description": self.description
-            
-
+            "description": self.description,
+            "price": str(self.price)  # LIF Se convierte a string para evitar problemas de serialización
         }
+
     
 
 class Service_status(db.Model):
     __tablename__ = 'service_status'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(30), unique=True, nullable=False)
+    name = db.Column((Enum('Agendado','Ingresado', 'En Proceso', 'Finalizado', name='name', default='Agendado')))
+
     description = db.Column(db.String(150))
 
 

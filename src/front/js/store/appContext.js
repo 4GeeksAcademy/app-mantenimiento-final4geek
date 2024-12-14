@@ -22,6 +22,7 @@ const injectContext = PassedComponent => {
                             actions: { ...prevState.actions }
                         })
                 });
+            
                 return state;
             });
         }, []);

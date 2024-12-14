@@ -3,9 +3,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
-import Login from "./pages/Login";
+import Login from "./pages/LoginPrincipal";
 import  Registro from "./pages/Registro";
-import { Single } from "./pages/single";
+
 import ModalTesting from "./pages/modalTesting";
 import injectContext from "./store/appContext";
 import ModalSeguimientos from "./pages/SeguiAdmin";
@@ -22,7 +22,7 @@ import BackgroundAnimated from "./component/Backgroundanimated";
 import Vehicle from "./pages/Vehicle";
 
 import HomeAdm from "./component/HomeAdm"
-
+import LoginPostRegister from "./pages/LoginPostRegister";
 
 
 //create your first component
@@ -35,28 +35,26 @@ const Layout = () => {
 
     return (
         <div>
-            <BrowserRouter basename={basename}>
-                <ScrollToTop>                   
-                    <BackgroundAnimated />
-
-                    <Routes>
-                        <Route element={<Login />} path="/" />
-                        <Route element={<Registro />} path="/registro" />
-                        <Route element={<Single />} path="/single/:theid" />
-                        <Route element={<HomeClient />} path="/homeClient"></Route>
-                        <Route element={<ScheduleVehicle />} path="/ScheduleVehicle" />
-                        <Route element={<AdminAgendarServicio />} path="/AdminAgendarServicio" />
-                        <Route element={<HomeAdm />} path="/HomeAdmin" />
-                        <Route element={<ModalSeguimientos />} path="/seguiadmin" />
-                        <Route element={<ModalTesting />} path="/modaltesting" />
-                        <Route element={<Vehicle/>} path="/vehicle"/>
-
-                        <Route element={<h1>Not found!</h1>} />
-                    </Routes>
-                    <Footer />
-                </ScrollToTop>
-            </BrowserRouter>
-        </div>
+    <BrowserRouter basename={basename}>
+        <ScrollToTop>
+            <BackgroundAnimated />
+            <Routes>
+                <Route element={<Login />} path="/" />
+                <Route element={<Registro />} path="/registro" />
+                <Route element={<LoginPostRegister />} path="/loginpostregister" />
+                <Route element={<HomeClient />} path="/homeClient" />
+                <Route element={<Vehicle />} path="/vehicle" />
+                <Route element={<ScheduleVehicle />} path="/ScheduleVehicle" />
+                <Route element={<AdminAgendarServicio />} path="/AdminAgendarServicio" />
+                <Route element={<HomeAdm />} path="/HomeAdmin" />
+                <Route element={<ModalSeguimientos />} path="/seguiadmin" />
+                <Route element={<ModalTesting />} path="/modaltesting" />
+                <Route element={<h1>Not found!</h1>} path="*" />
+            </Routes>
+            <Footer />
+        </ScrollToTop>
+    </BrowserRouter>
+</div>
     );
 };
 

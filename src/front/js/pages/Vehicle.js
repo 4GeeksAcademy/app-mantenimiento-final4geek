@@ -1,11 +1,38 @@
-import React from "react";
-import ReactDOM from "react-dom";
-
-import BackgroundAnimated from "../component/Backgroundanimated";
-
-
+import React, { useContext, useState } from "react"; 
+import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";  // Para poder usar la navegación
 
 const Vehicle = () => {
+    const { actions } = useContext(Context);
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        brand: "",
+        model: "",
+        year: "",
+        mileage: "",
+        license_plate: "",
+    });
+git
+    const handleChange = (e) => { 
+        setFormData({ ...formData, [e.target.id]: e.target.value });
+    };
+
+    const handleRegistration = async (data) => { 
+        // Validación simple de campos
+        if (!data.brand || !data.model || !data.year || !data.mileage || !data.license_plate) {
+            alert("Por favor, completa todos los campos.");
+            return;
+        }
+
+        const result = await actions.createVehicle(data);
+        if (result) { 
+            navigate("/ScheduleVehicle");
+        } else {
+            alert("¡Ups! Algo salió mal. Vuelve a intentarlo.");
+        }
+    };
+    
+
     return (
         <div className="container d-flex justify-content-center align-items-center vh-100">
 
@@ -29,6 +56,9 @@ const Vehicle = () => {
                                         type="text"
                                         className="form-control"
                                         id="registerNombre"
+                                        name="brand"
+                                        value={formData?.brand}
+                                        onChange={handleChange}
                                         style={{ backgroundColor: '#FFFFFF', height: '40px' }}
                                     />
                                 </div>
@@ -40,6 +70,9 @@ const Vehicle = () => {
                                         type="text"
                                         className="form-control"
                                         id="registerApellido"
+                                        name="model"
+                                        value={formData?.model}
+                                        onChange={handleChange}
                                         style={{ backgroundColor: '#FFFFFF', height: '40px' }}
                                     />
                                 </div>
@@ -51,6 +84,9 @@ const Vehicle = () => {
                                         type="year"
                                         className="form-control"
                                         id="registeryear"
+                                        name="year"
+                                        value={formData?.year}
+                                        onChange={handleChange}
                                         style={{ backgroundColor: '#FFFFFF', height: '40px' }}
                                     />
                                 </div>
@@ -65,6 +101,9 @@ const Vehicle = () => {
                                         type="mileage"
                                         className="form-control"
                                         id="registermileage"
+                                        name="mileage"
+                                        value={formData?.mileage}
+                                        onChange={handleChange}
                                         style={{ backgroundColor: '#FFFFFF', height: '40px' }}
                                     />
                                 </div>
@@ -76,6 +115,9 @@ const Vehicle = () => {
                                         type="text"
                                         className="form-control"
                                         id="registerlicenseplate"
+                                        name="license_plate"
+                                        value={formData?.license_plate}
+                                        onChange={handleChange}
                                         style={{ backgroundColor: '#FFFFFF', height: '40px' }}
                                     />
                                 </div>
@@ -84,8 +126,9 @@ const Vehicle = () => {
                         <div className="row">
                             <div className="col-md-12 d-flex justify-content-center mt-4">
                                 <button
-                                    type="submit"
+                                    type="button"
                                     className="btn fw-bold"
+                                    onClick={()=>{handleRegistration(formData)}}
                                     style={{ backgroundColor: '#7ED957' }}
                                 >
                                     Confirmar Registro
@@ -100,4 +143,3 @@ const Vehicle = () => {
 };
 
 export default Vehicle;
-
