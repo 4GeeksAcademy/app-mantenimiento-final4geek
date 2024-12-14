@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-
-const AdminAgendarServicio = () => {
+const AdminAgendarServicio = ({ isOpen, onClose }) => {
   const [clientes, setClientes] = useState([]);
   const [vehiculos, setVehiculos] = useState([]);
   const [servicios, setServicios] = useState([]);
@@ -17,10 +16,17 @@ const AdminAgendarServicio = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const vehiculosRes = await fetch('/api/vehiculos');
-        const serviciosRes = await fetch('/api/servicios');
-        const clientesRes = await fetch('/api/clientes');
-        const estadosRes = await fetch('/api/estados');
+        const [vehiculosRes, serviciosRes, clientesRes, estadosRes] = await Promise.all([
+          fetch('/api/vehiculos'),
+          fetch('/api/servicios'),
+          fetch('/api/clientes'),
+          fetch('/api/estados')
+        ]);
+
+        if (!vehiculosRes.ok || !serviciosRes.ok || !clientesRes.ok || !estadosRes.ok) {
+          throw new Error('Error al cargar datos');
+        }
+
         setVehiculos(await vehiculosRes.json());
         setServicios(await serviciosRes.json());
         setClientes(await clientesRes.json());
@@ -42,7 +48,7 @@ const AdminAgendarServicio = () => {
       End_Date: endDate,
       Total_Cost: totalCost,
       Payment_status: 'Pendiente',
-      User_ID: selectedClient  // Asociar cliente con el servicio
+      User_ID: selectedClient
     };
 
     try {
@@ -62,138 +68,89 @@ const AdminAgendarServicio = () => {
     }
   };
 
+  if (!isOpen) return null;
+
   return (
-    <div className="container d-flex justify-content-center align-items-center vh-100"
-    >
-      <div
-                className="card p-4"
-                style={{ width: '1130px', height: '777px', backgroundColor: '#312E2D' }}
-            >
-              <div className="d-flex flex-column align-item-center position-relative"
-
-                    
-style={{ 
-    width: ' 786px', 
-    height: 'auto', 
-    backgroundColor: '#143E79', 
-    borderRadius: '20px', 
-    margin: 'auto', 
-    padding:"20px"}}>
-
-
-                    {/*Icono retorno home*/}
-
-                    <div onClick={""}
-                        className='position-absolute d-flex justify-content-center align-items-center'
-                        style={{
-                            width: '40px', height: '40px', top: '10px', left: '10px', borderRadius: '50%',
-                            cursor: 'pointer', border: '2px solid #FFFFFF', backgroundColor: '#143E79', zIndex: 1,
-                        }}
-                    >
-                        <span style={{ fontSize: '20px', fontWeight: 'bold', color: '#FFFFFF' }}>X</span>
-
-
-                    </div>
-      
-       <div className="card-body">
-        
-       <h2 className="text-white text-center mb-3">Agendar Servicio</h2>
-
-      <form onSubmit={handleSubmit}>
-
-      <div className="row">
-        {/*Izquierda*/}
-        <div className="col-md-6">
-
-        <div className="mb-3">
-          <label className="form-label text-white">Seleccionar Cliente</label>
-          <select className="form-select" onChange={(e) => setSelectedClient(e.target.value)} required>
-            <option value="">Seleccione un cliente</option>
-            {clientes.map((cliente) => (
-              <option key={cliente.id} value={cliente.id}>
-                {cliente.first_name} {cliente.last_name}
-              </option>
-            ))}
-          </select>
+    <div className="modal-backdrop">
+      <div className="modal">
+        <div className="modal-content" style={{ backgroundColor: '#312E2D' }}>
+          <div className="modal-header" style={{ backgroundColor: '#143E79' }}>
+            <h2 className="text-white">Agendar Servicio</h2>
+            <button className="close" onClick={onClose}>&times;</button>
+          </div>
+          <div className="modal-body">
+            <form onSubmit={handleSubmit}>
+              <div className="row">
+                <div className="col-md-6">
+                  <div className="mb-3">
+                    <label className="form-label text-white">Seleccionar Cliente</label>
+                    <select className="form-select" onChange={(e) => setSelectedClient(e.target.value)} required>
+                      <option value="">Seleccione un cliente</option>
+                      {clientes.map((cliente) => (
+                        <option key={cliente.id} value={cliente.id}>
+                          {cliente.first_name} {cliente.last_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label text-white">Seleccionar Servicio</label>
+                    <select className="form-select" onChange={(e) => setSelectedService(e.target.value)} required>
+                      <option value="">Seleccione un servicio</option>
+                      {servicios.map((servicio) => (
+                        <option key={servicio.id} value={servicio.id}>
+                          {servicio.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label text-white">Fecha de Inicio</label>
+                    <input className="form-control" type="date" onChange={(e) => setStartDate(e.target.value)} required />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label text-white">Costo Total</label>
+                    <input className="form-control" type="number" onChange={(e) => setTotalCost(e.target.value)} required />
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="mb-3">
+                    <label className="form-label text-white">Seleccionar Vehículo</label>
+                    <select className="form-select" onChange={(e) => setSelectedVehicle(e.target.value)} required>
+                      <option value="">Seleccione un vehículo</option>
+                      {vehiculos.map((vehiculo) => (
+                        <option key={vehiculo.id} value={vehiculo.id}>
+                          {vehiculo.brand} - {vehiculo.model}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label text-white">Seleccionar Estado</label>
+                    <select className="form-select" onChange={(e) => setSelectedStatus(e.target.value)} required>
+                      <option value="">Seleccione un estado</option>
+                      {estados.map((estado) => (
+                        <option key={estado.id} value={estado.id}>
+                          {estado.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label text-white">Fecha de Entrega</label>
+                    <input className="form-control" type="date" onChange={(e) => setEndDate(e.target.value)} required />
+                  </div>
+                  <div className="d-flex justify-content-end">
+                    <button type="submit" className="btn fw-bold" style={{ backgroundColor: '#7ED957', color: 'white' }}>
+                      Ingresar Servicio
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
-        <div className="mb-3 text-start">
-          <label className="form-label text-white">Seleccionar Servicio</label>
-          <select className="form-select" onChange={(e) => setSelectedService(e.target.value)} required>
-            <option value="">Seleccione un servicio</option>
-            {servicios.map((servicio) => (
-              <option key={servicio.id} value={servicio.id}>
-                {servicio.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="mb-3 text-start">
-          <label className="form-label text-white">Fecha de Inicio</label>
-          <input className="form-control"
-            type="date" onChange={(e) => setStartDate(e.target.value)} required />
-        </div>
-        <div className="mb-3 text-start">
-          <label className="form-label text-white">Costo Total</label>
-          <input
-           className="form-control"
-           type="num"
-            onChange={(e) => setTotalCost(e.target.value)}
-            required
-          />
-        </div>
-        </div>
-            {/* Derecha */}
-            <div className="col-md-6">
-       
-        <div className="mb-3 text-start">
-          <label className="form-label text-white">Seleccionar Vehículo</label>
-          <select className="form-select" onChange={(e) => setSelectedVehicle(e.target.value)} required>
-            <option className="form-select" value="">Seleccione un vehículo</option>
-            {vehiculos.map((vehiculo) => (
-              <option key={vehiculo.id} value={vehiculo.id}>
-                {vehiculo.brand} - {vehiculo.model}
-              </option>
-            ))}
-          </select>
-        </div>
-        
-        
-        <div className="mb-3 text-start">
-          <label className="form-label text-white">Seleccionar Estado</label>
-          <select className="form-select" onChange={(e) => setSelectedStatus(e.target.value)} required>
-            <option value="">Seleccione un estado</option>
-            {estados.map((estado) => (
-              <option key={estado.id} value={estado.id}>
-                {estado.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        
-        
-        <div className="mb-3 text-start">
-          <label className="form-label text-white">Fecha de Entrega</label>
-          <input className="form-control"
-            type="date" onChange={(e) => setEndDate(e.target.value)} required />
-        </div>
-      
-       
-
-        <div className="d-flex justify-content-end">
-                                <button
-                                    type="submit"
-                                    className="btn fw-bold"
-                                    style={{ backgroundColor: '#7ED957', width: '206px', height: '33px', color: 'white', textAlign: 'center', marginTop:'32px' }}
-                                >
-                                    Ingresar Servicio
-                                </button>
-                            </div>
-                            </div>
-                            </div>
-      </form>
       </div>
-      </div>
-    </div>
     </div>
   );
 };

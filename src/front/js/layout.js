@@ -5,7 +5,7 @@ import { BackendURL } from "./component/backendURL";
 
 import Login from "./pages/LoginPrincipal";
 import  Registro from "./pages/Registro";
-import { Single } from "./pages/single";
+
 import ModalTesting from "./pages/modalTesting";
 import injectContext from "./store/appContext";
 import ModalSeguimientos from "./pages/SeguiAdmin";
