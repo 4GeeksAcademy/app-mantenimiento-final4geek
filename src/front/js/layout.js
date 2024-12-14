@@ -35,28 +35,26 @@ const Layout = () => {
 
     return (
         <div>
-            <BrowserRouter basename={basename}>
-                <ScrollToTop>                   
-                    <BackgroundAnimated />
-
-                    <Routes>
-                        <Route element={<Login />} path="/" />
-                        <Route element={<Registro />} path="/registro" />
-                        <Route element={<LoginPostRegister />} path="/loginpostregister" />
-                        <Route element={<HomeClient />} path="/homeClient"></Route>
-                        <Route element={<ScheduleVehicle />} path="/ScheduleVehicle" />
-                        <Route element={<AdminAgendarServicio />} path="/AdminAgendarServicio" />
-                        <Route element={<HomeAdm />} path="/HomeAdmin" />
-                        <Route element={<ModalSeguimientos />} path="/seguiadmin" />
-                        <Route element={<ModalTesting />} path="/modaltesting" />
-                        <Route element={<Vehicle/>} path="/vehicle"/>
-
-                        <Route element={<h1>Not found!</h1>} />
-                    </Routes>
-                    <Footer />
-                </ScrollToTop>
-            </BrowserRouter>
-        </div>
+    <BrowserRouter basename={basename}>
+        <ScrollToTop>
+            <BackgroundAnimated />
+            <Routes>
+                <Route element={<Login />} path="/" />
+                <Route element={<Registro />} path="/registro" />
+                <Route element={<LoginPostRegister />} path="/loginpostregister" />
+                <Route element={<HomeClient />} path="/homeClient" />
+                <Route element={<Vehicle />} path="/vehicle" />
+                <Route element={<ScheduleVehicle />} path="/ScheduleVehicle" />
+                <Route element={<AdminAgendarServicio />} path="/AdminAgendarServicio" />
+                <Route element={<HomeAdm />} path="/HomeAdmin" />
+                <Route element={<ModalSeguimientos />} path="/seguiadmin" />
+                <Route element={<ModalTesting />} path="/modaltesting" />
+                <Route element={<h1>Not found!</h1>} path="*" />
+            </Routes>
+            <Footer />
+        </ScrollToTop>
+    </BrowserRouter>
+</div>
     );
 };
 

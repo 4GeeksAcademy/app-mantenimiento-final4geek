@@ -89,32 +89,43 @@ def login():
     print(f"Token JWT:{access_token} ") #Borrar luego, es para probar token en el resto de los endpoints
     return jsonify({"access_token":access_token, "user_type":user.serialize()["user_type"]}), 200, 
 
+
+
 @app.route('/registro', methods=['POST'])
 def register():
     body = request.get_json(silent=True)
     if body is None:
-        return jsonify({"msg":"Debes enviar información en el body"}), 400
+        return jsonify({"msg": "Debes enviar información en el body"}), 400
     email = request.json.get('email')
     password = request.json.get('password')
     first_name = request.json.get('first_name')
-    last_name = request.json.get ('last_name')
-    phone = request.json.get ('phone')
-    ci_rut = request.json.get ('ci_rut')
+    last_name = request.json.get('last_name')
+    phone = request.json.get('phone')
+    ci_rut = request.json.get('ci_rut')
 
-    fields= ["email","password","first_name","last_name","phone","ci_rut"]
+    fields = ["email", "password", "first_name", "last_name", "phone", "ci_rut"]
     for field in fields:
-        if not field:
-            return jsonify(f'El campo {field} es obligatorio'), 400   
+        if not locals()[field]:
+            return jsonify({"msg": f"El campo {field} es obligatorio"}), 400
     if User.query.filter_by(email=email).first():
         return jsonify({"msg": "Email ya está en uso"}), 400
-    
+
     # Codigo para hashear contraseña y evitar que se guarde en texto plano
     hashed_password = generate_password_hash(password)
 
-    new_user = User(email=email, password=hashed_password, is_active=True , user_type ="client") #Asegurarse que esta linea este, sino lo crea como admin. 
+    new_user = User(email=email, password=hashed_password, is_active=True, user_type="client")
     db.session.add(new_user)
     db.session.commit()
-    return jsonify(new_user.serialize()), 201 
+
+    # Incluir todos los campos necesarios en la respuesta
+    return jsonify({
+        "email": new_user.email,
+        "first_name": first_name,
+        "last_name": last_name,
+        "phone": phone,
+        "ci_rut": ci_rut
+    }), 201
+
 
 
 @app.route('/protected', methods=['GET'])
