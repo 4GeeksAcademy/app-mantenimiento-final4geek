@@ -10,8 +10,8 @@ const LogoutButton = ({ onBeforeLogout }) => {
         const token = localStorage.getItem("token");
         console.log("Token a eliminar:", token);
         localStorage.removeItem("token");
-        navigate("/loginpostregister");
-        console.log("Navegación a loginpostregister");
+        navigate("/loginprincipal");
+        console.log("Navegación a loginprincipal");
     };
     return (
         <button className="btn btn-danger w-75" onClick={handleLogout}>

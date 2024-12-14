@@ -12,7 +12,7 @@ const Vehicle = () => {
         mileage: "",
         license_plate: "",
     });
-
+git
     const handleChange = (e) => { 
         setFormData({ ...formData, [e.target.id]: e.target.value });
     };
