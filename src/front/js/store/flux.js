@@ -55,7 +55,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             createVehicle : async (data) => {
                 try {
-                    const response = await fetch("URL_DE_TU_API/vehicles", {
+                    const response = await fetch(`${process.env.BACKEND_URL}/vehicle`, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -80,7 +80,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             getVehicles: async () => {
                 try {
-                    const response = await fetch(`${process.env.BACKEND_URL}/vehicle`, {
+                    const response = await fetch(`${process.env.BACKEND_URL}/vehicles`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${getStore().token}`
