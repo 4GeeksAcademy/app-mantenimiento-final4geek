@@ -1,5 +1,13 @@
+
+
+
+
+
 const getState = ({ getStore, getActions, setStore }) => {
     return {
+        store: {
+            vehicle: []
+        },
         actions: {
             registerUser: async (userData) => {
                 try {
@@ -17,7 +25,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
                     const data = await response.json();
                     console.log('Registro exitoso:', data);
-                    return { success: true};
+                    return { success: true };
                 } catch (error) {
                     console.error('Error:', error);
                     return { success: false };
@@ -39,35 +47,41 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log('Token de acceso:', data.access_token);
                     localStorage.setItem("token", data.access_token);
                     setStore({ token: data.access_token });
-                
+
                     return { success: true, data: data };
                 } catch (error) {
                     console.error('Error:', error);
                     return { success: false };
                 }
             },
-            createVehicle: async (vehicleData) => {
+
+
+
+            createVehicle : async (data) => {
                 try {
-                    const store = getStore();
-                    const response = await fetch(`${process.env.BACKEND_URL}/vehicle`, {
-                        method: 'POST',
+                    const response = await fetch("URL_DE_TU_API/vehicles", {
+                        method: "POST",
                         headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${store.token}`
+                            "Content-Type": "application/json",
+                            // Si es necesario, agrega más cabeceras, por ejemplo para autorización
+                            // "Authorization": "Bearer tu_token",
                         },
-                        body: JSON.stringify(vehicleData)
+                        body: JSON.stringify(data),
                     });
-                    if (!response.ok) {
-                        const errorData = await response.json();
-                        console.error('Error data:', errorData);
-                        throw new Error('Error al crear el vehículo');
+
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        return result; // Si la respuesta es exitosa, retorna los datos o un estado adecuado
+                    } else {
+                        throw new Error(result.message || "Error al registrar el vehículo");
                     }
-                    const data = await response.json();
-                    console.log('Vehículo creado:', data);
                 } catch (error) {
-                    console.error('Error:', error);
+                    console.error("Error en la creación del vehículo:", error);
+                    return null; // Si hay error, puedes devolver null o algún otro valor
                 }
             },
+
             getVehicles: async () => {
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}/vehicle`, {
@@ -82,28 +96,35 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const data = await response.json();
                     setStore({ vehicles: data });
                 } catch (error) {
+                    c// En tu archivo de actions
+                    const createVehicle = async (data) => {
+                        try {
+                            const response = await fetch("URL_DE_TU_API/vehicles", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    // Si es necesario, agrega más cabeceras, por ejemplo para autorización
+                                    // "Authorization": "Bearer tu_token",
+                                },
+                                body: JSON.stringify(data),
+                            });
+
+                            const result = await response.json();
+
+                            if (response.ok) {
+                                return result; // Si la respuesta es exitosa, retorna los datos o un estado adecuado
+                            } else {
+                                throw new Error(result.message || "Error al registrar el vehículo");
+                            }
+                        } catch (error) {
+                            console.error("Error en la creación del vehículo:", error);
+                            return null; // Si hay error, puedes devolver null o algún otro valor
+                        }
+                    };
                     console.error('Error:', error);
                 }
             },
-            createService: async (serviceData) => {
-                try {
-                    const response = await fetch(`${process.env.BACKEND_URL}/api/servicios`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${getStore().token}`
-                        },
-                        body: JSON.stringify(serviceData)
-                    });
-                    if (!response.ok) {
-                        throw new Error('Error al crear el servicio');
-                    }
-                    const data = await response.json();
-                    console.log('Servicio creado:', data);
-                } catch (error) {
-                    console.error('Error:', error);
-                }
-            },
+
             getServices: async () => {
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}/api/servicios`, {

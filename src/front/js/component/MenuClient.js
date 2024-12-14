@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import Prueba from './AgendarServicio.js'
+import AgendarServicio from './AgendarServicio.js'
 import { useNavigate } from "react-router-dom";
 import LogoutButton from "./LogoutButton.js";
 import ModalVehiculos from "./modalVehiculos.js";
@@ -64,7 +64,7 @@ const MenuHome = ({ closeMenu }) => {
 
             </div>
 
-            <Prueba isOpen={isModalOpen} onClose={handleCloseModal} />
+            <AgendarServicio isOpen={isModalOpen} onClose={handleCloseModal} />
             <ModalVehiculos isModalOpen={isModalOpen} onClose={handleCloseModal} />
             <ModalRegVehiculo isModalOpen={isModalOpen} onClose={handleCloseModal} />
         </div>
