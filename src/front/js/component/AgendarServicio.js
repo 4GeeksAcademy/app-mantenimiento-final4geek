@@ -1,7 +1,21 @@
 // ModalCliente.jsx
 import React from 'react';
+import { useContext,useState } from 'react';
+import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom"; 
+
 
 const AgendarServicio = () => {
+    const { actions } = useContext(Context);
+        const navigate = useNavigate();
+        const [formData, setFormData] = useState({
+            vehicle_id: "",
+            service_type_id: "",
+            total_cost: "",
+      
+        });
+    
+
     return (
         <div
             className="modal fade"
@@ -18,15 +32,13 @@ const AgendarServicio = () => {
                     </div>
                     <div className="modal-body">
                         <form>
-                            <div class="mb-3 text-start">
-                                <label for="selectVehicle" class="form-label text-dark">Seleccione un vehículo</label>
-                                <select class="form-control" id="selectVehicle">
-                                    <option value="" disabled selected>Elija la marca, modelo y matrícula de su vehículo</option>
-                                    <option value="vehiculo1">Toyota Corolla - ABC123</option>
-                                    <option value="vehiculo2">Honda Civic - XYZ456</option>
-                                    <option value="vehiculo3">Ford Fiesta - LMN789</option>
-                                </select>
-                            </div>
+                        <div class="mb-3 text-start">
+    <label for="selectVehicle" class="form-label text-dark">Seleccione un vehículo</label>
+    <select class="form-control" id="selectVehicle">
+        <option value="" disabled selected>Elija la marca, modelo y matrícula de su vehículo</option>
+    
+    </select>
+</div>
 
                             <div class="mb-3 text-start">
                                 <label for="selectService" class="form-label text-dark">Seleccione un servicio</label>
