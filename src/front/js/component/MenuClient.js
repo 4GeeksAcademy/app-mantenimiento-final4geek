@@ -1,10 +1,7 @@
 import React, { useContext, useState } from "react";
-import AgendarServicio from './AgendarServicio.js'
 import { useNavigate } from "react-router-dom";
 import LogoutButton from "./LogoutButton.js";
-import ModalSeguimientos from "./modalSeguimientos.js";
-import Vehicle from "./Vehicle.js";
-import ModalVehiculos from "./modalVehiculos.js";
+import AgendarServicio from "./AgendarServicio.js";
 
 
 
@@ -47,7 +44,7 @@ const MenuHome = ({ closeMenu }) => {
                 <li >
                     <button className="btn w-100 botonMenu"
                         data-bs-toggle="modal"
-                        data-bs-target="#schedulevehicle"
+                        data-bs-target="#modalAgendarServicio"
                     >
                         Agendar Servicio
                     </button>
@@ -72,13 +69,7 @@ const MenuHome = ({ closeMenu }) => {
                 <LogoutButton onBeforeLogout={closeMenu} />
 
             </div>
-            <Vehicle isModalOpen={isModalOpen} onClose={handleCloseModal} />
             <AgendarServicio isOpen={isModalOpen} onClose={handleCloseModal} />
-            <ModalSeguimientos isModalOpen={isModalOpen} onClose={handleCloseModal} />
-            <ModalVehiculos isModalOpen={isModalOpen} onClose={handleCloseModal} />
-
-
-
         </div>
     );
 };

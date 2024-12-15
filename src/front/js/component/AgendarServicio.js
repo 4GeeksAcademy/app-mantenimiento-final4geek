@@ -18,14 +18,24 @@ const ModalCliente = () => {
                     </div>
                     <div className="modal-body">
                         <form>
-                            <div className="mb-3 text-start">
-                                <label htmlFor="selectVehicle" className="form-label text-dark">Seleccione un vehículo</label>
-                                <input type="text" className="form-control" id="selectVehicle" placeholder="Elija la marca, modelo y matrícula de su vehículo" />
+                            <div class="mb-3 text-start">
+                                <label for="selectVehicle" class="form-label text-dark">Seleccione un vehículo</label>
+                                <select class="form-control" id="selectVehicle">
+                                    <option value="" disabled selected>Elija la marca, modelo y matrícula de su vehículo</option>
+                                    <option value="vehiculo1">Toyota Corolla - ABC123</option>
+                                    <option value="vehiculo2">Honda Civic - XYZ456</option>
+                                    <option value="vehiculo3">Ford Fiesta - LMN789</option>
+                                </select>
                             </div>
 
-                            <div className="mb-3 text-start">
-                                <label htmlFor="selectService" className="form-label text-dark">Seleccione un servicio</label>
-                                <input type="text" className="form-control" id="selectService" placeholder="Elija un servicio por favor" />
+                            <div class="mb-3 text-start">
+                                <label for="selectService" class="form-label text-dark">Seleccione un servicio</label>
+                                <select class="form-control" id="selectService">
+                                    <option value="" disabled selected>Elija un servicio por favor</option>
+                                    <option value="servicio1">Cambio de aceite</option>
+                                    <option value="servicio2">Alineación y balanceo</option>
+                                    <option value="servicio3">Inspección general</option>
+                                </select>
                             </div>
 
                             <div className="mb-3 text-start">
