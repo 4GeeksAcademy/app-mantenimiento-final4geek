@@ -4,9 +4,9 @@ import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
 import Login from "./pages/LoginPrincipal";
-import  Registro from "./pages/Registro";
+import Registro from "./pages/Registro";
 
-import ModalTesting from "./pages/modalTesting";
+import SeguimientoClient from "./pages/SeguimientoClient";
 import injectContext from "./store/appContext";
 import ModalSeguimientos from "./pages/SeguiAdmin";
 
@@ -31,30 +31,30 @@ const Layout = () => {
     // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
     const basename = process.env.BASENAME || "";
 
-    if(!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
+    if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
 
     return (
         <div>
-    <BrowserRouter basename={basename}>
-        <ScrollToTop>
-            <BackgroundAnimated />
-            <Routes>
-                <Route element={<Login />} path="/" />
-                <Route element={<Registro />} path="/registro" />
-                <Route element={<LoginPostRegister />} path="/loginpostregister" />
-                <Route element={<HomeClient />} path="/homeClient" />
-                <Route element={<Vehicle />} path="/vehicle" />
-                <Route element={<ScheduleVehicle />} path="/ScheduleVehicle" />
-                <Route element={<AdminAgendarServicio />} path="/AdminAgendarServicio" />
-                <Route element={<HomeAdm />} path="/HomeAdmin" />
-                <Route element={<ModalSeguimientos />} path="/seguiadmin" />
-                <Route element={<ModalTesting />} path="/modaltesting" />
-                <Route element={<h1>Not found!</h1>} path="*" />
-            </Routes>
-            <Footer />
-        </ScrollToTop>
-    </BrowserRouter>
-</div>
+            <BrowserRouter basename={basename}>
+                <ScrollToTop>
+                    <BackgroundAnimated />
+                    <Routes>
+                        <Route element={<Login />} path="/" />
+                        <Route element={<Registro />} path="/registro" />
+                        <Route element={<LoginPostRegister />} path="/loginpostregister" />
+                        <Route element={<HomeClient />} path="/homeClient" />
+                        <Route element={<Vehicle />} path="/vehicle" />
+                        <Route element={<ScheduleVehicle />} path="/ScheduleVehicle" />
+                        <Route element={<AdminAgendarServicio />} path="/AdminAgendarServicio" />
+                        <Route element={<HomeAdm />} path="/HomeAdmin" />
+                        <Route element={<ModalSeguimientos />} path="/seguiadmin" />
+                        <Route element={<SeguimientoClient />} path="/SeguimientoClient" />
+                        <Route element={<h1>Not found!</h1>} path="*" />
+                    </Routes>
+                    <Footer />
+                </ScrollToTop>
+            </BrowserRouter>
+        </div>
     );
 };
 

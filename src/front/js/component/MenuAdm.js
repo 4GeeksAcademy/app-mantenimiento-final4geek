@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import LogoutButton from "./LogoutButton.js";
 import AdminAgendarServicio from "../pages/admin_ingreso_servicios.js";
 import ModalSeguimientoAdmin from "./ModalSeguiAdmin.js";
@@ -11,13 +10,6 @@ const MenuHomeAdm = ({ closeMenu }) => {
     const [isSeguimientoOpen, setIsSeguimientoOpen] = useState(false);
     const [isVehicleAdminOpen, setIsVehicleAdminOpen] = useState(false);
     const [isRegVehiculoOpen, setIsRegVehiculoOpen] = useState(false);
-    const navigate = useNavigate();
-
-    const handleLogout = () => {
-        console.log("Forzando redirección y recarga...");
-        window.location.href = "/";
-        window.location.reload(); // Fuerza la recarga completa
-    };
 
     return (
         <div

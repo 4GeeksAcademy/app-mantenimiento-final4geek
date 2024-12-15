@@ -111,7 +111,7 @@ def register_admin():
     
     current_user_id = get_jwt_identity()
     user=User.query.get(current_user_id)
-    if user.serialize()["user_type"] is not "admin": 
+    if user.serialize()["user_type"] != "admin": 
         return jsonify({"msg":"cuidado infractor, no estas autorizado"}), 403
 
     # Codigo para hashear contraseña y evitar que se guarde en texto plano
