@@ -2,6 +2,9 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LogoutButton from "./LogoutButton.js";
 import AgendarServicio from "./AgendarServicio.js";
+import ModalSeguimientos from "./modalSeguimientos.js";
+import RegistrarVehiculo from "./Vehicle.js"
+import VehiculosRegistrados from "./modalVehiculos.js"
 
 
 
@@ -37,7 +40,7 @@ const MenuHome = ({ closeMenu }) => {
                 <li >
                     <button className="btn  w-100 botonMenu"
                         data-bs-toggle="modal"
-                        data-bs-target="#vehicle"
+                        data-bs-target="#modalVehicle"
                     >Registrar Vehículo
                     </button>
                 </li>
@@ -59,7 +62,7 @@ const MenuHome = ({ closeMenu }) => {
                 <li >
                     <button className="btn w-100 botonMenu"
                         data-bs-toggle="modal"
-                        data-bs-target="#modalseguimientos"
+                        data-bs-target="#modalSeguimientos"
                     >
                         Seguimientos
                     </button>
@@ -70,6 +73,9 @@ const MenuHome = ({ closeMenu }) => {
 
             </div>
             <AgendarServicio isOpen={isModalOpen} onClose={handleCloseModal} />
+            <ModalSeguimientos isOpen={isModalOpen} onClose={handleCloseModal} />
+            <RegistrarVehiculo isOpen={isModalOpen} onClose={handleCloseModal} />
+            <VehiculosRegistrados isOpen={isModalOpen} onClose={handleCloseModal} />
         </div>
     );
 };

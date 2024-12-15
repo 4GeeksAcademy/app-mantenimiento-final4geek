@@ -6,15 +6,15 @@ const ModalSeguimientos = ({ isOpen, onClose, data }) => {
   return (
     <div
       className="modal fade"
-      id="SeguimientoClient"
+      id="modalSeguimientos"
       tabIndex="-1"
-      aria-labelledby="SeguimientoClientLabel"
+      aria-labelledby="modalSeguimientosLabel"
       aria-hidden="true"
     >
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title text-dark" id="SeguimientoClientLabel">Seguimiento de servicios</h5>
+            <h5 className="modal-title text-dark" id="modalSeguimientosLabel">Seguimiento de servicios</h5>
             <button
               type="button"
               className="btn-close"
