@@ -1,7 +1,7 @@
 // ModalCliente.jsx
 import React from 'react';
 
-const ModalCliente = () => {
+const AgendarServicio = () => {
     return (
         <div
             className="modal fade"
@@ -55,4 +55,4 @@ const ModalCliente = () => {
     );
 };
 
-export default ModalCliente;
+export default AgendarServicio;
