@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import LogoutButton from "./LogoutButton.js";
-import AdminAgendarServicio from "../pages/admin_ingreso_servicios.js";
+import AdminAgendarServicio from "./admin_ingreso_servicios.js";
 import ModalSeguimientoAdmin from "./ModalSeguiAdmin.js";
 import ModalVehicleAdmin from "./ModalVehicleadmin.js";
-import ModalRegVehiculo from "../pages/modalVehiculeRegister.js";
+import Vehicle from "./Vehicle.js";
 
 const MenuHomeAdm = ({ closeMenu }) => {
     const [isAgendarServicioOpen, setIsAgendarServicioOpen] = useState(false);
@@ -50,7 +50,7 @@ const MenuHomeAdm = ({ closeMenu }) => {
             <AdminAgendarServicio isOpen={isAgendarServicioOpen} onClose={() => setIsAgendarServicioOpen(false)} />
             <ModalSeguimientoAdmin isOpen={isSeguimientoOpen} onClose={() => setIsSeguimientoOpen(false)} />
             <ModalVehicleAdmin isOpen={isVehicleAdminOpen} onClose={() => setIsVehicleAdminOpen(false)} />
-            <ModalRegVehiculo isOpen={isRegVehiculoOpen} onClose={() => setIsRegVehiculoOpen(false)} />
+            
         </div>
     );
 };

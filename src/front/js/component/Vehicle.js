@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";  // Para poder usar la navegación
+import ModalVehiculos from "./modalVehiculos";
 
 const Vehicle = () => {
     const { actions } = useContext(Context);
@@ -12,9 +13,9 @@ const Vehicle = () => {
         mileage: "",
         license_plate: "",
     });
-    git
+
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.id]: e.target.value });
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     const handleRegistration = async (data) => {

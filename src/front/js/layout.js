@@ -4,24 +4,24 @@ import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
 import Login from "./pages/LoginPrincipal";
-import Registro from "./pages/Registro";
+import Registro from "./component/Registro";
 
-import SeguimientoClient from "./pages/SeguimientoClient";
+import SeguimientoClient from "./component/SeguimientoClient";
 import injectContext from "./store/appContext";
-import ModalSeguimientos from "./pages/SeguiAdmin";
+import ModalSeguimientos from "./component/SeguiAdmin";
 
 
-import { Footer } from "./component/footer";
-import ScheduleVehicle from "./pages/ScheduleVehicle";
 
-import AdminAgendarServicio from "./pages/admin_ingreso_servicios";
+import ScheduleVehicle from "./component/ScheduleVehicle";
+
+import AdminAgendarServicio from "./component/admin_ingreso_servicios";
 
 
-import HomeClient from "./component/HomeClient";
+import HomeClient from "./pages/HomeClient";
 import BackgroundAnimated from "./component/Backgroundanimated";
-import Vehicle from "./pages/Vehicle";
+import Vehicle from "./component/Vehicle";
 
-import HomeAdm from "./component/HomeAdm"
+import HomeAdm from "./pages/HomeAdm"
 import LoginPostRegister from "./pages/LoginPostRegister";
 
 
@@ -51,7 +51,6 @@ const Layout = () => {
                         <Route element={<SeguimientoClient />} path="/SeguimientoClient" />
                         <Route element={<h1>Not found!</h1>} path="*" />
                     </Routes>
-                    <Footer />
                 </ScrollToTop>
             </BrowserRouter>
         </div>

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import ModalSeguimientoAdmin from "../component/ModalSeguiAdmin";
-import ModalVehicle from "../component/ModalVehicleadmin";
+import ModalSeguimientoAdmin from "./ModalSeguiAdmin";
+import ModalVehicle from "./ModalVehicleadmin";
 
-const ModalSeguimientos = () => {
+const ModalVehicleadmin = () => {
     const [isSeguimientosOpen, setIsSeguimientosOpen] = useState(false);
     const [isVehiculosOpen, setIsVehiculosOpen] = useState(false);
 
@@ -53,4 +53,4 @@ const ModalSeguimientos = () => {
     );
 };
 
-export default ModalSeguimientos;
+export default ModalVehicleadmin;

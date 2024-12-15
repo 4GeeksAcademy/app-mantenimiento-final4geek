@@ -2,9 +2,9 @@ import React, { useContext, useState } from "react";
 import AgendarServicio from './AgendarServicio.js'
 import { useNavigate } from "react-router-dom";
 import LogoutButton from "./LogoutButton.js";
-import ModalVehiculos from "./modalVehiculos.js";
-import ModalRegVehiculo from "../pages/modalVehiculeRegister.js";
 import ModalSeguimientos from "./modalSeguimientos.js";
+import Vehicle from "./Vehicle.js";
+import ModalVehiculos from "./modalVehiculos.js";
 
 
 
@@ -40,37 +40,45 @@ const MenuHome = ({ closeMenu }) => {
                 <li >
                     <button className="btn  w-100 botonMenu"
                         data-bs-toggle="modal"
-                        data-bs-target="#modalAgendarServicio"
-                    >Agendar Servicio</button>
+                        data-bs-target="#vehicle"
+                    >Registrar Vehículo
+                    </button>
                 </li>
                 <li >
                     <button className="btn w-100 botonMenu"
-                    data-bs-toggle="modal"
-                    data-bs-target="#SeguimientoClient"
-                    >Seguimientos</button>
+                        data-bs-toggle="modal"
+                        data-bs-target="#schedulevehicle"
+                    >
+                        Agendar Servicio
+                    </button>
                 </li>
                 <li >
                     <button className="btn w-100 botonMenu"
                         data-bs-toggle="modal"
                         data-bs-target="#modalVehiculos"
-                    >Vehículos Registrados</button>
+                    >Vehículos Registrados
+                    </button>
                 </li>
                 <li >
                     <button className="btn w-100 botonMenu"
                         data-bs-toggle="modal"
-                        data-bs-target="#modalRegVehiculos"
-                    >Registrar Vehículo</button>
+                        data-bs-target="#modalseguimientos"
+                    >
+                        Seguimientos
+                    </button>
                 </li>
             </ul>
             <div className="mt-auto text-center pb-3">
                 <LogoutButton onBeforeLogout={closeMenu} />
 
             </div>
-
+            <Vehicle isModalOpen={isModalOpen} onClose={handleCloseModal} />
             <AgendarServicio isOpen={isModalOpen} onClose={handleCloseModal} />
-            <ModalVehiculos isModalOpen={isModalOpen} onClose={handleCloseModal} />
-            <ModalRegVehiculo isModalOpen={isModalOpen} onClose={handleCloseModal} />
             <ModalSeguimientos isModalOpen={isModalOpen} onClose={handleCloseModal} />
+            <ModalVehiculos isModalOpen={isModalOpen} onClose={handleCloseModal} />
+
+
+
         </div>
     );
 };

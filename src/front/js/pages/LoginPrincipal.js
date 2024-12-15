@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import logoapp from "../../img/logoapp.jpg";
 import { useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Registro from "./Registro";
+import Registro from "../component/Registro";
 import "../../styles/Login.css";
 import { Context } from "../store/appContext";
 
