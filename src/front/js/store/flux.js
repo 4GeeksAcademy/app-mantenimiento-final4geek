@@ -53,30 +53,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 
-            createVehicle : async (data) => {
+            createVehicle: async (data) => {
                 try {
-                    const response = await fetch(`${process.env.BACKEND_URL}/vehicle`, {
+                    const response = await fetch(process.env.BACKEND_URL + '/api/vehicle', {
                         method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            // Si es necesario, agrega más cabeceras, por ejemplo para autorización
-                            // "Authorization": "Bearer tu_token",
-                        },
+                        headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(data),
                     });
-
-                    const result = await response.json();
-
-                    if (response.ok) {
-                        return result; // Si la respuesta es exitosa, retorna los datos o un estado adecuado
-                    } else {
-                        throw new Error(result.message || "Error al registrar el vehículo");
+            
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.message || "Error al registrar el vehículo");
                     }
+            
+                    const result = await response.json();
+                    return { success: true, result };
                 } catch (error) {
                     console.error("Error en la creación del vehículo:", error);
-                    return null; // Si hay error, puedes devolver null o algún otro valor
+                    return { success: false, error: error.message };
                 }
             },
+            
 
             getVehicles: async () => {
                 try {

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"; 
+import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";  // Para poder usar la navegación
 
@@ -12,12 +12,12 @@ const Vehicle = () => {
         mileage: "",
         license_plate: "",
     });
-git
-    const handleChange = (e) => { 
+    git
+    const handleChange = (e) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
     };
 
-    const handleRegistration = async (data) => { 
+    const handleRegistration = async (data) => {
         // Validación simple de campos
         if (!data.brand || !data.model || !data.year || !data.mileage || !data.license_plate) {
             alert("Por favor, completa todos los campos.");
@@ -25,13 +25,13 @@ git
         }
 
         const result = await actions.createVehicle(data);
-        if (result) { 
+        if (result) {
             navigate("/ScheduleVehicle");
         } else {
             alert("¡Ups! Algo salió mal. Vuelve a intentarlo.");
         }
     };
-    
+
 
     return (
         <div className="container d-flex justify-content-center align-items-center vh-100">
@@ -55,9 +55,9 @@ git
                                     <input
                                         type="text"
                                         className="form-control"
-                                        id="registerNombre"
+                                        id="brand" // Se cambia por que el endpoint pide id
                                         name="brand"
-                                        value={formData?.brand}
+                                        value={formData.brand}
                                         onChange={handleChange}
                                         style={{ backgroundColor: '#FFFFFF', height: '40px' }}
                                     />
@@ -69,7 +69,7 @@ git
                                     <input
                                         type="text"
                                         className="form-control"
-                                        id="registerApellido"
+                                        id="model" //idem arriba 
                                         name="model"
                                         value={formData?.model}
                                         onChange={handleChange}
@@ -81,9 +81,9 @@ git
                                         Año
                                     </label>
                                     <input
-                                        type="year"
+                                        type="number"// Se cambia a número no es year
                                         className="form-control"
-                                        id="registeryear"
+                                        id="year"
                                         name="year"
                                         value={formData?.year}
                                         onChange={handleChange}
@@ -98,9 +98,9 @@ git
                                         Kilómetros
                                     </label>
                                     <input
-                                        type="mileage"
+                                        type="number"// no hay type kilometraje en html
                                         className="form-control"
-                                        id="registermileage"
+                                        id="mileage"
                                         name="mileage"
                                         value={formData?.mileage}
                                         onChange={handleChange}
@@ -128,7 +128,7 @@ git
                                 <button
                                     type="button"
                                     className="btn fw-bold"
-                                    onClick={()=>{handleRegistration(formData)}}
+                                    onClick={() => { handleRegistration(formData) }}
                                     style={{ backgroundColor: '#7ED957' }}
                                 >
                                     Confirmar Registro
