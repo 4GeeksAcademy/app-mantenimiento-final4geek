@@ -244,7 +244,7 @@ def actualizar_servicio(id):
     
 #Endopoint 09-12-2024 para crear vehículos LIF
 
-@app.route('/vehicle', methods=['POST']) # Listo probado y funcionando nachito supercampeón.  
+@app.route('/api/vehicle', methods=['POST']) # Listo probado y funcionando nachito supercampeón.  
 @jwt_required()
 def crear_vehiculo():
     user_id = get_jwt_identity()  #  token del usuario autenticado
@@ -255,7 +255,7 @@ def crear_vehiculo():
         return jsonify({"msg": "Debes enviar información en el body"}), 400
     
     
-    required_fields = ['brand', 'model', 'year', 'license_plate']
+    required_fields = ['brand', 'model', 'year','mileage', 'license_plate']
     for field in required_fields:
         if field not in body or not body[field]:
             return jsonify({"msg": f"El campo '{field}' es obligatorio"}), 400
@@ -267,6 +267,7 @@ def crear_vehiculo():
             brand=body['brand'],
             model=body['model'],
             year=body['year'],
+            mileage=body['mileage'],
             license_plate=body['license_plate']
         )
         db.session.add(nuevo_vehiculo)
