@@ -27,7 +27,7 @@ const Vehicle = () => {
 
         const result = await actions.createVehicle(data);
         if (result) {
-            navigate("/ScheduleVehicle");
+            navigate("/AgendarServicio");
         } else {
             alert("¡Ups! Algo salió mal. Vuelve a intentarlo.");
         }

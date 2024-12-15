@@ -84,21 +84,20 @@ class Vehicles(db.Model):
 class Service_Type(db.Model):
     __tablename__ = 'service_type'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(30), unique=True, nullable=False)
+    name = db.Column((Enum('Cambio de Aceite y filtro','Alineación y Balanceo', 'Rotación de Neumáticos', 'Mecanica Ligera', name='name',)))
     description = db.Column(db.String(150))
-    price = db.Column(db.Numeric(10, 2), nullable=False)  # LIF Nuevo campo de precio para traerlo cuando agendamos cada servicio
-
+    cost = db.Column((Enum('$1.500','$12.000', '$4.000', '$8.000', name='cost',)))
     services = db.relationship('Services', back_populates='service_type')
 
     def __repr__(self):
-        return f'Service_Type {self.id} {self.name} {self.description} {self.price}'
+        return f'Service_Type {self.id} {self.name} {self.description} {self.cost}'
 
     def serialize(self):
         return {
             "id": self.id,
             "name": self.name,
             "description": self.description,
-            "price": str(self.price)  # LIF Se convierte a string para evitar problemas de serialización
+            "cost": str(self.cost)  # LIF Se convierte a string para evitar problemas de serialización
         }
 
     

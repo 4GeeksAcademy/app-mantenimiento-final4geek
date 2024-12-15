@@ -187,7 +187,7 @@ def get_vehicles():
 #Start Endpoints Ignacio
 
 #Agendar Servicios del lado de admin
-@app.route('/servicios', methods=['POST'])
+@app.route('/api/servicios', methods=['POST'])
 def crear_servicio():
     body = request.get_json(silent=True)
     if not body:

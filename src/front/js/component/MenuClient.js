@@ -47,7 +47,7 @@ const MenuHome = ({ closeMenu }) => {
                 <li >
                     <button className="btn w-100 botonMenu"
                         data-bs-toggle="modal"
-                        data-bs-target="#schedulevehicle"
+                        data-bs-target="#agendarservicio"
                     >
                         Agendar Servicio
                     </button>
