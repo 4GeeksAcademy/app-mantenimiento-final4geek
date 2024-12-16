@@ -1,26 +1,11 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LogoutButton from "./LogoutButton.js";
-import AgendarServicio from "./AgendarServicio.js";
-import ModalSeguimientos from "./modalSeguimientos.js";
-import RegistrarVehiculo from "./Vehicle.js"
-import VehiculosRegistrados from "./modalVehiculos.js"
+
 
 
 
 const MenuHome = ({ closeMenu }) => {
-
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const navigate = useNavigate();
-
-    const handleOpenModal = () => setIsModalOpen(true);
-    const handleCloseModal = () => setIsModalOpen(false);
-
-    const handleLogout = () => {
-        console.log("Forzando redirección y recarga...");
-        window.location.href = "/";
-        window.location.reload(); // Fuerza la recarga completa
-    };
 
 
 
@@ -60,10 +45,9 @@ const MenuHome = ({ closeMenu }) => {
                     </button>
                 </li>
                 <li >
-                    <button className="btn w-100 botonMenu"
-                        data-bs-toggle="modal"
-                        data-bs-target="#modalSeguimientos"
-                    >
+                    <button
+                        className="btn w-100 botonMenu"
+                        onClick={() => navigate("/seguimientos")}>
                         Seguimientos
                     </button>
                 </li>
@@ -72,10 +56,6 @@ const MenuHome = ({ closeMenu }) => {
                 <LogoutButton onBeforeLogout={closeMenu} />
 
             </div>
-            <AgendarServicio isOpen={isModalOpen} onClose={handleCloseModal} />
-            <ModalSeguimientos isOpen={isModalOpen} onClose={handleCloseModal} />
-            <RegistrarVehiculo isOpen={isModalOpen} onClose={handleCloseModal} />
-            <VehiculosRegistrados isOpen={isModalOpen} onClose={handleCloseModal} />
         </div>
     );
 };
