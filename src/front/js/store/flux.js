@@ -91,12 +91,53 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
 
                     const result = await response.json();
-                    return { success: true, result };
-                } catch (error) {
-                    console.error('Error creating vehicle:', error);
-                    return { success: false, error: error.message };
-                }
-            },
+                    
+                
+                  
+                      // Return success and the result
+                      return { success: true, result };
+                    } catch (error) {
+                      // Log the error and return an error response
+                      console.error('Error creating vehicle:', error);
+                      return { success: false, error: error.message };
+                    }
+                  },
+
+                  createService: async (data) => {
+                    try {
+                        const token = getStore().token;
+                        console.log(token)
+                        if (!token || token.split('.').length !== 3) {
+                            console.error("Invalid token format");
+                            return { success: false, error: "Invalid token format" };
+                        }
+    
+                        const response = await fetch(process.env.BACKEND_URL + '/api/crear-tipo-servicio', {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                'Authorization': `Bearer ${token}`
+                            },
+                            body: JSON.stringify(data),
+                        });
+    
+                        if (!response.ok) {
+                            const errorData = await response.json();
+                            console.error('Error data:', errorData);
+                            throw new Error('Error al registrar el servicio: ' + errorData.message);
+                        }
+                        const result = await response.json();
+                        
+                    
+                      
+                          // Return success and the result
+                          return { success: true, result };
+                        } catch (error) {
+                          // Log the error and return an error response
+                          console.error('Error creating service:', error);
+                          return { success: false, error: error.message };
+                        }
+                      },
 
             getVehicles: async () => {
                 try {

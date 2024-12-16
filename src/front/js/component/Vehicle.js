@@ -1,4 +1,4 @@
-import React, { useContext, useState,useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 
@@ -29,65 +29,103 @@ const Vehicle = () => {
 
         const result = await actions.createVehicle(data);
         if (result) {
-            navigate("/homeClient");
+            navigate("/cliente-dashboard");
         } else {
             alert("¡Ups! Algo salió mal. Vuelve a intentarlo.");
         }
     };
 
-    useEffect(() => {
-        const modal = new window.bootstrap.Modal(document.getElementById('modalVehicle'));
-        modal.show();
-    }, []);
+    const handleClose = () => {
+        navigate("/cliente-dashboard");
+    };
 
     return (
-        <div className="modal fade" id="modalVehicle" tabIndex="-1" aria-labelledby="modalVehicleLabel" aria-hidden="true">
-            <div className="modal-dialog">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <h5 className="modal-title text-dark" id="modalVehicleLabel">Registrar vehiculo</h5>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        <div className="container py-5 position-relative bg-light p-4 rounded shadow">
+            <div className="row justify-content-center">
+                <div className="col-lg-8 col-md-10 col-sm-12">
+                    <div className="d-flex justify-content-between align-items-center mb-4">
+                        <h5 className="text-dark">Registrar vehículo</h5>
+                        <button
+                            className="btn-close"
+                            aria-label="Cerrar"
+                            onClick={handleClose}
+                        ></button>
                     </div>
-                    <div className="modal-body">
-                        <form>
-                            <div className="row">
-                                <div className="col-md-6">
-                                    <div className="mb-3 text-start">
-                                        <label htmlFor="brand" className="form-label text-dark">Marca</label>
-                                        <input type="text" className="form-control" id="brand" name="brand" value={formData.brand} onChange={handleChange} style={{ backgroundColor: '#FFFFFF', height: '40px' }} />
-                                    </div>
-                                    <div className="mb-3 text-start">
-                                        <label htmlFor="model" className="form-label text-dark">Modelo</label>
-                                        <input type="text" className="form-control" id="model" name="model" value={formData.model} onChange={handleChange} style={{ backgroundColor: '#FFFFFF', height: '40px' }} />
-                                    </div>
-                                    <div className="mb-3 text-start">
-                                        <label htmlFor="year" className="form-label text-dark">Año</label>
-                                        <input type="number" className="form-control" id="year" name="year" value={formData.year} onChange={handleChange} style={{ backgroundColor: '#FFFFFF', height: '40px' }} />
-                                    </div>
-                                </div>
-                                <div className="col-md-6">
-                                    <div className="mb-3 text-start">
-                                        <label htmlFor="mileage" className="form-label text-dark">Kilómetros</label>
-                                        <input type="number" className="form-control" id="mileage" name="mileage" value={formData.mileage} onChange={handleChange} style={{ backgroundColor: '#FFFFFF', height: '40px' }} />
-                                    </div>
-                                    <div className="mb-3 text-start">
-                                        <label htmlFor="license_plate" className="form-label text-dark">Matrícula</label>
-                                        <input type="text" className="form-control" id="license_plate" name="license_plate" value={formData.license_plate} onChange={handleChange} style={{ backgroundColor: '#FFFFFF', height: '40px' }} />
-                                    </div>
-                                </div>
+                    <form className="">
+                        <div className="row g-3">
+                            <div className="col-md-6">
+                                <label htmlFor="brand" className="form-label text-dark">Marca</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="brand"
+                                    name="brand"
+                                    value={formData.brand}
+                                    onChange={handleChange}
+                                    required
+                                />
                             </div>
-                            <div className="row">
-                                <div className="col-md-12 d-flex justify-content-center mt-4">
-                                    <button type="button" className="btn fw-bold"
-                                        data-bs-dismiss="modal"
-                                        onClick={() => handleRegistration(formData)}
-                                        style={{ backgroundColor: '#7ED957' }}>
-                                        Confirmar Registro
-                                    </button>
-                                </div>
+                            <div className="col-md-6">
+                                <label htmlFor="model" className="form-label text-dark">Modelo</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="model"
+                                    name="model"
+                                    value={formData.model}
+                                    onChange={handleChange}
+                                    required
+                                />
                             </div>
-                        </form>
-                    </div>
+                            <div className="col-md-6">
+                                <label htmlFor="year" className="form-label text-dark">Año</label>
+                                <input
+                                    type="number"
+                                    className="form-control"
+                                    id="year"
+                                    name="year"
+                                    value={formData.year}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                            <div className="col-md-6">
+                                <label htmlFor="mileage" className="form-label text-dark">Kilómetros</label>
+                                <input
+                                    type="number"
+                                    className="form-control"
+                                    id="mileage"
+                                    name="mileage"
+                                    value={formData.mileage}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                            <div className="col-md-6">
+                                <label htmlFor="license_plate" className="form-label text-dark">Matrícula</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="license_plate"
+                                    name="license_plate"
+                                    value={formData.license_plate}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div className="row mt-4 justify-content-center">
+                            <div className="col-auto">
+                                <button
+                                    type="button"
+                                    className="btn btn-success fw-bold"
+                                    onClick={() => handleRegistration(formData)}
+                                >
+                                    Confirmar Registro
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
