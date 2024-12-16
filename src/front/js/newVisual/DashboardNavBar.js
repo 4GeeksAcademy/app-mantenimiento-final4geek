@@ -8,7 +8,7 @@ export default function DashboardNavbar() {
             <ul className="nav d-flex justify-content-between w-100 m-0 p-0">
                 {/* Botón para el menú */}
                 <li>
-                    <button className="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive" aria-controls="offcanvasResponsive">
+                    <button className="btn btn-green" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive" aria-controls="offcanvasResponsive">
                         Menú
                     </button>
                 </li>

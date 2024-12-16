@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 
-const Vehicle = () => {
+const RegistrarVehiculo = () => {
     const { actions } = useContext(Context);
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -40,13 +40,13 @@ const Vehicle = () => {
     };
 
     return (
-        <div className="container py-5 position-relative bg-light p-4 rounded shadow">
+        <div className="container py-5 position-relative p-4 rounded shadow"  style={{maxWidth:'600px', backgroundColor: '#312E2D' }}>
             <div className="row justify-content-center">
                 <div className="col-lg-8 col-md-10 col-sm-12">
                     <div className="d-flex justify-content-between align-items-center mb-4">
-                        <h5 className="text-dark">Registrar vehículo</h5>
+                        <h5 className="text-light">REGISTRAR VEHICULO</h5>
                         <button
-                            className="btn-close"
+                            className="btn-close btn-close-custom rounded-circle me-1"
                             aria-label="Cerrar"
                             onClick={handleClose}
                         ></button>
@@ -54,7 +54,7 @@ const Vehicle = () => {
                     <form className="">
                         <div className="row g-3">
                             <div className="col-md-6">
-                                <label htmlFor="brand" className="form-label text-dark">Marca</label>
+                                <label htmlFor="brand" className="form-label text-light">Marca</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -66,7 +66,7 @@ const Vehicle = () => {
                                 />
                             </div>
                             <div className="col-md-6">
-                                <label htmlFor="model" className="form-label text-dark">Modelo</label>
+                                <label htmlFor="model" className="form-label text-light">Modelo</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -78,7 +78,7 @@ const Vehicle = () => {
                                 />
                             </div>
                             <div className="col-md-6">
-                                <label htmlFor="year" className="form-label text-dark">Año</label>
+                                <label htmlFor="year" className="form-label text-light">Año</label>
                                 <input
                                     type="number"
                                     className="form-control"
@@ -90,7 +90,7 @@ const Vehicle = () => {
                                 />
                             </div>
                             <div className="col-md-6">
-                                <label htmlFor="mileage" className="form-label text-dark">Kilómetros</label>
+                                <label htmlFor="mileage" className="form-label text-light">Kilómetros</label>
                                 <input
                                     type="number"
                                     className="form-control"
@@ -102,7 +102,7 @@ const Vehicle = () => {
                                 />
                             </div>
                             <div className="col-md-6">
-                                <label htmlFor="license_plate" className="form-label text-dark">Matrícula</label>
+                                <label htmlFor="license_plate" className="form-label text-light">Matrícula</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -132,4 +132,4 @@ const Vehicle = () => {
     );
 };
 
-export default Vehicle;
+export default RegistrarVehiculo;

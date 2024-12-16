@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import ModalSeguimientos from "./modalSeguimientos";
 import ModalVehiculos from "./VehiculosRegistrados";
 
@@ -7,6 +7,10 @@ const ModalTesting = () => {
     const [isVehiculosOpen, setIsVehiculosOpen] = useState(false);
 
     // Fetchs y codigo asociado aqui
+    useEffect(() => {
+        const modal = new window.bootstrap.Modal(document.getElementById('modalVehicle'));
+        modal.show();
+    }, []);
 
     return (
         <div className="container mt-5">

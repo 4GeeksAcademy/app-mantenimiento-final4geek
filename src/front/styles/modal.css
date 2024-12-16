@@ -82,3 +82,19 @@ nav.d-flex a:hover {
   color: #143E79; /* Color gris al pasar el mouse */
 }
 
+.btn-close-custom {
+  background-color: white;
+  border: none;
+  opacity: 1; 
+}
+
+.btn-green {
+  background-color: #7ED957 !important; 
+  border-radius: 20% !important;          
+  border: none !important;               
+  opacity: 1 !important;                  
+}
+
+.btn-close-green:hover {
+  background-color: #6CBF4F !important;  
+}

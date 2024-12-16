@@ -10,7 +10,8 @@ export default function LeftPanelClient() {
                 <li className="nav-item"><NavLink to={"/agendar-servicio"} >Agendar Servicio</NavLink></li>
                 <li className="nav-item"><NavLink to={"/seguimiento"} >Seguimiento</NavLink></li>
                 <li className="nav-item"><NavLink to={"/"} >Page3</NavLink></li>
-                <li className="nav-item"><NavLink to={"/"} >Page4</NavLink></li>
+                <li className="nav-item"><NavLink to={"/vender"} >Vendé tu Vehículo Ya!</NavLink></li>
+               
             </ul>
         </nav>
     );

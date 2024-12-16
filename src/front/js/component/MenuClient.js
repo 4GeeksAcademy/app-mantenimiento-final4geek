@@ -51,6 +51,7 @@ const MenuHome = ({ closeMenu }) => {
                         Seguimientos
                     </button>
                 </li>
+                
             </ul>
             <div className="mt-auto text-center pb-3">
                 <LogoutButton onBeforeLogout={closeMenu} />

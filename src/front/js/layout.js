@@ -10,15 +10,16 @@ import SeguimientoClient from "./component/SeguimientoClient";
 import injectContext from "./store/appContext";
 
 import BackgroundAnimated from "./component/Backgroundanimated";
-import Vehicle from "./component/Vehicle";
+import Vehicle from "./component/RegistrarVehiculo";
 
 import ClientDashboard from "./newVisual/ClientDashboard";
 import { Context } from "../js/store/appContext";
 import AdminDashboard from "./newVisual/AdminDashboard";
+import RegistrarVehiculo from "./component/RegistrarVehiculo";
 
 import HomeAdm from "./pages/HomeAdm"
 import LoginPostRegister from "./pages/LoginPostRegister";
-import VenderVehiculo from "./pages/VenderVehiculo";
+import Vender from "./pages/Vender";
 import AgendarServicio from "./component/AgendarServicio";
 import VehiculosRegistrados from "./component/VehiculosRegistrados";
 
@@ -47,14 +48,20 @@ const Layout = () => {
                 </> :
                 store.userType === "client" ?
                   <Route element={<ClientDashboard />} >
+<<<<<<< HEAD
+                    <Route element={<RegistrarVehiculo />} path="/registrar-vehiculo" />
+                    <Route element={<SeguimientoClient />} path="/seguimiento" />
+=======
                     <Route element={<Vehicle />} path="/registrar-vehiculo" />
                     <Route element={<AgendarServicio />} path="agendar-servicio" />
                     <Route element={<VehiculosRegistrados />} path="/vehiculos-registrados" />
+                    <Route element={<Vender />} path="/vender" />
+>>>>>>> 544af156aeb27b9cdcb10558091c6a0115ce67f8
                     <Route element={<h1>No encontrado</h1>} path="*" />
                   </Route> :
                   <Route element={<AdminDashboard />} >
                     <Route element={<Vehicle />} path="/registrar-vehiculo" />
-                    <Route element={<VenderVehiculo />} path="/vender-vehiculo" />
+                   
                     <Route element={<h1>No encontrado</h1>} path="*" />
 
                   </Route>
