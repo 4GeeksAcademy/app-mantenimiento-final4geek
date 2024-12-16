@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import BackgroundAnimated from '../component/Backgroundanimated';
-import { useNavigate } from "react-router-dom";
-import Cloudinary from '../component/Cloudinary';
 
-const VenderVehiculo = () => {
+import { useNavigate } from "react-router-dom";
+import Integraapi from '../component/Integraapi';
+
+const Vender = () => {
     const navigate = useNavigate();
     const [uploadedImage, setUploadedImage] = useState(null); // Estado para manejar la URL de la imagen
 
@@ -18,7 +18,7 @@ const VenderVehiculo = () => {
 
     return (
         <div className="container d-flex justify-content-center align-items-center vh-100">
-            <BackgroundAnimated />
+       
 
             {/* Contenedor principal */}
             <div
@@ -75,7 +75,7 @@ const VenderVehiculo = () => {
                             </div>
 
                             {/* Componente Cloudinary */}
-                            <Cloudinary onImageUpload={handleImageUpload} />
+                            <Integraapi onImageUpload={handleImageUpload} />
 
                             {/* Precio de venta */}
                             <div className="mb-3 text-start">
@@ -130,4 +130,4 @@ const VenderVehiculo = () => {
     );
 };
 
-export default VenderVehiculo;
+export default Vender;

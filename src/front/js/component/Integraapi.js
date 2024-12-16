@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useState } from 'react';
 
-const Cloudinary = ({ onImageUpload }) => {
+const Integraapi = ({ onImageUpload }) => {
     const preset_name = "uplodadpicture"; // Nombre del preset
     const cloud_name = "doypxl96o";       // Cloud name de tu cuenta Cloudinary
 
@@ -54,4 +55,4 @@ const Cloudinary = ({ onImageUpload }) => {
     );
 };
 
-export default Cloudinary;
+export default Integraapi;

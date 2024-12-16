@@ -19,7 +19,9 @@ import RegistrarVehiculo from "./component/RegistrarVehiculo";
 
 import HomeAdm from "./pages/HomeAdm"
 import LoginPostRegister from "./pages/LoginPostRegister";
-import VenderVehiculo from "./pages/VenderVehiculo";
+import Vender from "./pages/Vender";
+import AgendarServicio from "./component/AgendarServicio";
+import VehiculosRegistrados from "./component/VehiculosRegistrados";
 
 
 //create your first component
@@ -41,18 +43,25 @@ const Layout = () => {
                 <>
                   <Route element={<Login />} path="/" />
                   <Route element={<Registro />} path="/registro" />
+                  <Route element={<LoginPostRegister />} path= "loginpostregister" />
                   <Route element={<Navigate to="/" replace />} path="*" />
                 </> :
                 store.userType === "client" ?
                   <Route element={<ClientDashboard />} >
+<<<<<<< HEAD
                     <Route element={<RegistrarVehiculo />} path="/registrar-vehiculo" />
                     <Route element={<SeguimientoClient />} path="/seguimiento" />
+=======
+                    <Route element={<Vehicle />} path="/registrar-vehiculo" />
+                    <Route element={<AgendarServicio />} path="agendar-servicio" />
+                    <Route element={<VehiculosRegistrados />} path="/vehiculos-registrados" />
+                    <Route element={<Vender />} path="/vender" />
+>>>>>>> 544af156aeb27b9cdcb10558091c6a0115ce67f8
                     <Route element={<h1>No encontrado</h1>} path="*" />
                   </Route> :
                   <Route element={<AdminDashboard />} >
                     <Route element={<Vehicle />} path="/registrar-vehiculo" />
-                    <Route VenderVehiculo={<Vehicle />} path="/VenderVehiculo" />
-
+                   
                     <Route element={<h1>No encontrado</h1>} path="*" />
 
                   </Route>
