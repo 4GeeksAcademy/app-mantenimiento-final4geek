@@ -19,17 +19,17 @@ import AdminDashboard from "./newVisual/AdminDashboard";
 import HomeAdm from "./pages/HomeAdm"
 import LoginPostRegister from "./pages/LoginPostRegister";
 import Vender from "./pages/Vender";
+import AgendarServicio from "./component/AgendarServicio";
+import VehiculosRegistrados from "./component/VehiculosRegistrados";
+
 
 //create your first component
 const Layout = () => {
   const { store } = useContext(Context);
 
   const basename = process.env.BASENAME || "";
-  console.log("Token:", store.token);
-  console.log("User Type:", store.userType);
-  
-  if (!process.env.BACKEND_URL || process.env.BACKEND_URL === "") return <BackendURL />;
 
+  if (!process.env.BACKEND_URL || process.env.BACKEND_URL === "") return <BackendURL />;
 
   return (
     <div>
@@ -39,28 +39,6 @@ const Layout = () => {
           <Routes>
             {
               !store.token ?
-              
-
-            <>
-              <Route element={<Login />} path="/" />
-              <Route element={<Registro />} path="/registro" />
-              <Route element={<Navigate to="/" replace />} path="*" />
-            </> :
-            store.userType === "client" ?
-           
-            <Route element={<ClientDashboard />} >
-              <Route element={<Vehicle />} path="/registrar-vehiculo" />
-              <Route element={<SeguimientoClient />} path="/seguimiento" />
-              <Route element={<Vender />} path="/vender" />
-              <Route element={<h1>No encontrado</h1>} path="*" />
-
-
-            </Route> :
-            <Route element={<AdminDashboard />} >
-              <Route element={<Vehicle />} path="/registrar-vehiculo" />
-
-
-              <Route element={<h1>No encontrado</h1>} path="*" />
                 <>
                   <Route element={<Login />} path="/" />
                   <Route element={<Registro />} path="/registro" />
@@ -72,14 +50,15 @@ const Layout = () => {
                     <Route element={<Vehicle />} path="/registrar-vehiculo" />
                     <Route element={<AgendarServicio />} path="agendar-servicio" />
                     <Route element={<VehiculosRegistrados />} path="/vehiculos-registrados" />
+                    <Route element={<Vender />} path="/vender" />
                     <Route element={<h1>No encontrado</h1>} path="*" />
                   </Route> :
                   <Route element={<AdminDashboard />} >
                     <Route element={<Vehicle />} path="/registrar-vehiculo" />
-                    <Route element={<VenderVehiculo />} path="/vender-vehiculo" />
+                   
                     <Route element={<h1>No encontrado</h1>} path="*" />
 
-            </Route>
+                  </Route>
             }
           </Routes>
         </ScrollToTop>
