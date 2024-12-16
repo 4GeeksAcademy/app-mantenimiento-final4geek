@@ -10,11 +10,12 @@ import SeguimientoClient from "./component/SeguimientoClient";
 import injectContext from "./store/appContext";
 
 import BackgroundAnimated from "./component/Backgroundanimated";
-import Vehicle from "./component/Vehicle";
+import Vehicle from "./component/RegistrarVehiculo";
 
 import ClientDashboard from "./newVisual/ClientDashboard";
 import { Context } from "../js/store/appContext";
 import AdminDashboard from "./newVisual/AdminDashboard";
+import RegistrarVehiculo from "./component/RegistrarVehiculo";
 
 const Layout = () => {
   const { store } = useContext(Context);
@@ -38,7 +39,7 @@ const Layout = () => {
                 </> :
                 store.userType === "client" ?
                   <Route element={<ClientDashboard />} >
-                    <Route element={<Vehicle />} path="/registrar-vehiculo" />
+                    <Route element={<RegistrarVehiculo />} path="/registrar-vehiculo" />
                     <Route element={<SeguimientoClient />} path="/seguimiento" />
                     <Route element={<h1>No encontrado</h1>} path="*" />
                   </Route> :

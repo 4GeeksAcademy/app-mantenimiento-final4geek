@@ -2,7 +2,7 @@ import React, { useContext, useState,useEffect } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 
-const Vehicle = () => {
+const RegistrarVehiculo = () => {
     const { actions } = useContext(Context);
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -94,4 +94,4 @@ const Vehicle = () => {
     );
 };
 
-export default Vehicle;
+export default RegistrarVehiculo;
