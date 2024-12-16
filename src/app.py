@@ -188,30 +188,40 @@ def get_vehicles():
 
 #Agendar Servicios del lado de admin
 @app.route('/api/servicios', methods=['POST'])
-def crear_servicio():
-    body = request.get_json(silent=True)
-    if not body:
-        return jsonify({"msg": "Debes enviar información en el body"}), 400
-    required_fields = ['vehicle_ID', 'Service_Type_ID', 'Start_Date', 'End_Date', 'Payment_status']
+@jwt_required()
+def create_service():
+    current_user_id = get_jwt_identity()
+
+    data = request.get_json()
+    if not data:
+        return jsonify({'error': 'Missing JSON data'}), 400
+
+    required_fields = ['vehicle_id', 'service_type_id', ...]
     for field in required_fields:
-        if field not in body or not body[field]:
-            return jsonify({"msg": f"El campo '{field}' es obligatorio"}), 400
+        if field not in data:
+            return jsonify({'error': f'Missing field: {field}'}), 400
+
+    # Data validation (adjust according to your needs)
     try:
-        nuevo_servicio = Services(
-            vehicle_ID=body['vehicle_ID'],
-            Service_Type_ID=body['Service_Type_ID'],
-            Status_ID=1,  # Estado inicial al ingresar al taller Revisar
-            Start_Date=body['Start_Date'],
-            End_Date=body['End_Date'],
-            Total_Cost=body['Total_Cost'],#Quitar se toma de la tabla de servicios.
-            Payment_status=body['Payment_status']
+        vehicle_id = int(data['vehicle_id'])
+        service_type_id = int(data['service_type_id'])
+        # ... other validations
+    except ValueError:
+        return jsonify({'error': 'Invalid data format'}), 400
+
+    try:
+        new_service = Service(
+            vehicle_id=vehicle_id,
+            service_type_id=service_type_id,
+            user_id=current_user_id
         )
-        db.session.add(nuevo_servicio)
+        db.session.add(new_service)
         db.session.commit()
-        return jsonify(nuevo_servicio.serialize()), 201
+
+        return jsonify({'message': 'Service created successfully', 'service': new_service.serialize()}), 201
     except Exception as e:
-        db.session.rollback()
-        return jsonify({"msg": f"Error al crear el servicio: {str(e)}"}), 500
+        db.session.rollback()  # Rollback transaction in case of error
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/api/servicios', methods=['GET'])
 def obtener_servicios():
@@ -356,11 +366,6 @@ def agendar():
         nuevo_servicio = Services(
             vehicle_ID=body['vehicle_ID'],
             Service_Type_ID=body['Service_Type_ID'],
-            Status_ID=1,  # Estado inicial: "Agendado"
-            Start_Date=body['Start_Date'],
-            End_Date=body['End_Date'],
-            Total_Cost=str(total_cost),  # Guardar el precio como Total_Cost
-            Payment_status='Pendiente',
             User_ID=user_id
         )
         db.session.add(nuevo_servicio)

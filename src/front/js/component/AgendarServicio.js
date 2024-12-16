@@ -31,19 +31,21 @@ const AgendarServicio = () => {
     };
 
     const handleSchedule = async (data) => {
-        console.log('Button clicked');
-        if (!data.vehicle_id || !data.service_type_id) {
-            alert("Por favor, selecciona un vehículo y un tipo de servicio.");
-            return;
+        try {
+          const result = await actions.createService(data);
+          if (result.ok) {
+            // Handle success
+            navigate('/cliente-dashboard');
+            alert('Servicio agendado correctamente');
+          } else {
+            const errorData = await result.json();
+            alert(`Error al agendar servicio: ${errorData.message}`);
+          }
+        } catch (error) {
+          console.error('Error scheduling service:', error);
+          alert('Error al agendar servicio. Por favor, inténtalo nuevamente.');
         }
-    
-        const result = await actions.createService(data);
-        if (result.success) {
-            navigate("/cliente-dashboard");
-        } else {
-            alert("¡Ups! Algo salió mal. Vuelve a intentarlo.");
-        }
-    };
+      };
 
     const handleClose = () => {
         navigate("/cliente-dashboard");
@@ -55,13 +57,6 @@ const AgendarServicio = () => {
                 <div className="col-lg-8 col-md-10 col-sm-12">
                     <div className="d-flex justify-content-between align-items-center mb-4">
                         <h5 className="text-dark">Agendar Servicio</h5>
-                        <button
-                            type="button"
-                            className="btn btn-success fw-bold"
-                            onClick={() => handleSchedule(formData)}
-                        >
-                            Ingresar Servicio
-                        </button>
                     </div>
                     <form>
                         <div className="mb-3 text-start">
@@ -116,7 +111,7 @@ const AgendarServicio = () => {
                         <div className="d-flex justify-content-center mt-4">
                             <button
                                 type="button"
-                                className="btn btn-success fw-bold"
+                                className="btn btn-green fw-bold"
                                 onClick={() => handleSchedule(formData)}
                             >
                                 Ingresar Servicio

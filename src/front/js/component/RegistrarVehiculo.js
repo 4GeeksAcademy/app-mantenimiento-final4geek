@@ -118,7 +118,7 @@ const RegistrarVehiculo = () => {
                             <div className="col-auto">
                                 <button
                                     type="button"
-                                    className="btn btn-success fw-bold"
+                                    className="btn btn-green fw-bold"
                                     onClick={() => handleRegistration(formData)}
                                 >
                                     Confirmar Registro

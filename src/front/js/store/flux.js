@@ -3,6 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         store: {
             vehicles: [],
             services: [],
+            scheduled_services: [],
             token: "",
             userType: "" // Agregamos userType al estado inicial
         },
@@ -105,39 +106,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                   createService: async (data) => {
                     try {
-                        const token = getStore().token;
-                        console.log(token)
-                        if (!token || token.split('.').length !== 3) {
-                            console.error("Invalid token format");
-                            return { success: false, error: "Invalid token format" };
-                        }
-    
-                        const response = await fetch(process.env.BACKEND_URL + '/api/crear-tipo-servicio', {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                                'Authorization': `Bearer ${token}`
-                            },
-                            body: JSON.stringify(data),
-                        });
-    
-                        if (!response.ok) {
-                            const errorData = await response.json();
-                            console.error('Error data:', errorData);
-                            throw new Error('Error al registrar el servicio: ' + errorData.message);
-                        }
-                        const result = await response.json();
-                        
-                    
-                      
-                          // Return success and the result
-                          return { success: true, result };
-                        } catch (error) {
-                          // Log the error and return an error response
-                          console.error('Error creating service:', error);
-                          return { success: false, error: error.message };
-                        }
-                      },
+                      const token = getStore().token;
+                      if (!token || token.split('.').length !== 3) {
+                        console.error('Invalid token format');
+                        return { success: false, error: 'Invalid token format' };
+                      }
+                  
+                      const response = await fetch(`${process.env.BACKEND_URL}/api/servicios`, {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json',
+                          'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify(data)
+                      });
+                  
+                      if (!response.ok) {
+                        const errorData = await response.json();
+                        console.error('Error creating service:', errorData);
+                        throw new Error(`Error creating service: ${errorData.message}`);
+                      }
+                  
+                      const result = await response.json();
+                      // Handle success, e.g., update store or redirect
+                      console.log('Service created successfully:', result);
+                      setStore({
+                        scheduledServices: [...getStore().scheduledServices, result]
+                      });
+                      navigate('/cliente-dashboard'); // Redirect to dashboard
+                  
+                    } catch (error) {
+                      console.error('Error creating service:', error);
+                      // Handle error, e.g., display an error message to the user
+                      return { success: false, error: 'Error creating service' };
+                    }
+                  },
 
             getVehicles: async () => {
                 try {
