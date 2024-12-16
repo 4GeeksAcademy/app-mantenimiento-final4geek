@@ -168,25 +168,25 @@ const getState = ({ getStore, getActions, setStore }) => {
                       // Handle error, e.g., display an error message to the user
                     }
                   },
-            getServices: async () => {
-                try {
-                    const response = await fetch(`${process.env.BACKEND_URL}/api/servicios`, {
-                        method: 'GET',
-                        headers: {
-                            'Authorization': `Bearer ${getStore().token}`
+                  getServiceTypes: async () => {
+                    try {
+                        const response = await fetch(`${process.env.BACKEND_URL}/api/servicetypes`, {
+                            method: 'GET',
+                            headers: {
+                                'Authorization': `Bearer ${getStore().token}`
+                            }
+                        });
+                        if (!response.ok) {
+                            const errorData = await response.json();
+                            console.error('Error data:', errorData);
+                            throw new Error('Error al obtener tipos de servicios: ' + errorData.msg);
                         }
-                    });
-                    if (!response.ok) {
-                        const errorData = await response.json();
-                        console.error('Error data:', errorData);
-                        throw new Error('Error al obtener servicios: ' + errorData.msg);
+                        const data = await response.json();
+                        setStore({ services: data });
+                    } catch (error) {
+                        console.error('Error:', error);
                     }
-                    const data = await response.json();
-                    setStore({ services: data });
-                } catch (error) {
-                    console.error('Error:', error);
-                }
-            },
+                },
             updateService: async (serviceId, statusId) => {
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}/api/servicios/${serviceId}`, {

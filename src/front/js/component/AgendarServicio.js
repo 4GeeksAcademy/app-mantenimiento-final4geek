@@ -7,11 +7,14 @@ const AgendarServicio = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         vehicle_id: "",
+        service_type_id: ""
     });
 
     useEffect(() => {
-        actions.getVehicles(); // Fetch vehiculo de usuario logueado
+        actions.getVehicles(); // Fetch vehicles
+        actions.getServiceTypes(); // Fetch service types
         console.log('Vehicles fetched:', store.vehicles);
+        console.log('Service types fetched:', store.services);
     }, []);
 
     const handleChange = (e) => {
@@ -22,10 +25,15 @@ const AgendarServicio = () => {
         }));
     };
 
+    const getServiceCost = (serviceTypeId) => {
+        const service = store.services.find(service => service.id === parseInt(serviceTypeId));
+        return service ? service.cost : '';
+    };
+
     const handleSchedule = async (data) => {
         console.log('Button clicked');
-        if (!data.vehicle_id) {
-            alert("Por favor, selecciona un vehículo.");
+        if (!data.vehicle_id || !data.service_type_id) {
+            alert("Por favor, selecciona un vehículo y un tipo de servicio.");
             return;
         }
     
@@ -42,7 +50,7 @@ const AgendarServicio = () => {
     };
 
     return (
-        <div className="container py-5 position-relative bg-light p-4 rounded shadow">
+        <div className="container py-5 position-relative p-4 rounded shadow"  style={{maxWidth:'600px', backgroundColor: '#312E2D' }}>
             <div className="row justify-content-center">
                 <div className="col-lg-8 col-md-10 col-sm-12">
                     <div className="d-flex justify-content-between align-items-center mb-4">
@@ -73,6 +81,36 @@ const AgendarServicio = () => {
                                     </option>
                                 ))}
                             </select>
+                        </div>
+
+                        <div className="mb-3 text-start">
+                            <label htmlFor="selectServiceType" className="form-label text-dark">Seleccione un tipo de servicio</label>
+                            <select
+                                className="form-control"
+                                id="selectServiceType"
+                                name="service_type_id"
+                                value={formData.service_type_id}
+                                onChange={handleChange}
+                                required
+                            >
+                                <option value="" disabled>Elija el tipo de servicio</option>
+                                {store.services.map(service => (
+                                    <option key={service.id} value={service.id}>
+                                        {service.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div className="mb-3 text-start">
+                            <label htmlFor="serviceCost" className="form-label text-dark">Precio estimado</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="serviceCost"
+                                value={getServiceCost(formData.service_type_id)}
+                                readOnly
+                            />
                         </div>
 
                         <div className="d-flex justify-content-center mt-4">

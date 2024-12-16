@@ -222,6 +222,16 @@ def obtener_servicios():
         return jsonify([s.serialize() for s in servicios]), 200
     except Exception as e:
         return jsonify({"msg": f"Error al obtener los servicios: {str(e)}"}), 500
+    
+@app.route('/api/servicetypes', methods=['GET'])
+def obtener_service_types():
+    try:
+        service_types = Service_Type.query.all()
+        if not service_types:
+            return jsonify({"msg": "No se encontraron tipos de servicios"}), 404
+        return jsonify([st.serialize() for st in service_types]), 200
+    except Exception as e:
+        return jsonify({"msg": f"Error al obtener los tipos de servicios: {str(e)}"}), 500
 
 @app.route('/api/servicios/<int:id>', methods=['PUT'])
 def actualizar_servicio(id):
