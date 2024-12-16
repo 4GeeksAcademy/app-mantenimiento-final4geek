@@ -20,9 +20,9 @@ const Login = () => {
         if (response.success) {
             const { user_type } = response.data;
             if (user_type === "client") {
-                navigate("/homeClient");
+                navigate("/cliente-dashboard");
             } else {
-                navigate("/HomeAdmin");
+                navigate("/admin-dashboard");
             }
         } else {
             setErrorMessage('Login failed. Please check your email and password.');

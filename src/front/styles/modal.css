@@ -50,3 +50,35 @@
     border: none;
   }
   
+
+  .leftPanel {
+    background-color: '#143E79';
+  }
+
+
+  .offcanvas-start {
+    background-color: #143E79 !important; /* bg-dark */
+    color: white; /* Para texto blanco */
+}
+
+.offcanvas-body {
+    background-color: #143E79 !important; /* bg-dark */
+    color: white; /* Para texto blanco */
+}
+
+/* Estilo global para LeftPanelClient */
+nav.d-flex {
+  background-color: #143E79 !important; /* Fondo oscuro (bg-dark) */
+  color: white !important; /* Texto blanco */
+}
+
+/* Ajustar los enlaces dentro del nav */
+nav.d-flex a {
+  color: white !important; /* Color del texto de los enlaces */
+  text-decoration: none; /* Remover subrayado */
+}
+
+nav.d-flex a:hover {
+  color: #143E79; /* Color gris al pasar el mouse */
+}
+

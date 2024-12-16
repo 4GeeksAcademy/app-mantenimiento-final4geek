@@ -9,8 +9,8 @@
     background-color: #619546;
 }
 
-.menuHome {
-    background-color: #143E79;
+.menuHome  {
+    background-color: #143E79 !important; 
     padding: 0;
     margin: 0;
     width: 100px;

@@ -23,9 +23,9 @@ const LoginPostRegister = () => {
         if (response.success) {
             const { user_type } = response.data;
             if (user_type === "client") {
-                navigate("/homeClient");
+                navigate("/cliente-dashboard");
             } else {
-                navigate("/HomeAdmin");
+                navigate("/admin-dashboard");
             }
         } else {
             setErrorMessage('Credenciales incorrectas, vuelve a intentarlo');

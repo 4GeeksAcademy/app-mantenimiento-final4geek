@@ -1,15 +1,22 @@
 import React, { useState } from "react";
 import LogoutButton from "./LogoutButton.js";
+import { useNavigate } from "react-router-dom";
 import AdminAgendarServicio from "./admin_ingreso_servicios.js";
-import ModalSeguimientoAdmin from "./ModalSeguiAdmin.js";
-import ModalVehicleAdmin from "./ModalVehicleadmin.js";
-import Vehicle from "./Vehicle.js";
+
+
 
 const MenuHomeAdm = ({ closeMenu }) => {
-    const [isAgendarServicioOpen, setIsAgendarServicioOpen] = useState(false);
-    const [isSeguimientoOpen, setIsSeguimientoOpen] = useState(false);
-    const [isVehicleAdminOpen, setIsVehicleAdminOpen] = useState(false);
-    const [isRegVehiculoOpen, setIsRegVehiculoOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const navigate = useNavigate();
+
+    const handleOpenModal = () => setIsModalOpen(true);
+    const handleCloseModal = () => setIsModalOpen(false);
+
+    const handleLogout = () => {
+        console.log("Forzando redirección y recarga...");
+        window.location.href = "/";
+        window.location.reload(); // Fuerza la recarga completa
+    };
 
     return (
         <div
@@ -23,22 +30,25 @@ const MenuHomeAdm = ({ closeMenu }) => {
             </div>
             <ul className="list-unstyled text-center m-0">
                 <li>
-                    <button className="btn w-100 botonMenu" onClick={() => setIsAgendarServicioOpen(true)}>
+                    <button className="btn w-100 botonMenu"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalAgendarAdmin"
+                        >
                         Agendar Servicio
                     </button>
                 </li>
                 <li>
-                    <button className="btn w-100 botonMenu" onClick={() => setIsSeguimientoOpen(true)}>
+                    <button className="btn w-100 botonMenu" >
                         Seguimientos
                     </button>
                 </li>
                 <li>
-                    <button className="btn w-100 botonMenu" onClick={() => setIsVehicleAdminOpen(true)}>
+                    <button className="btn w-100 botonMenu" >
                         Vehículos Registrados
                     </button>
                 </li>
                 <li>
-                    <button className="btn w-100 botonMenu" onClick={() => setIsRegVehiculoOpen(true)}>
+                    <button className="btn w-100 botonMenu" >
                         Registrar Vehículo
                     </button>
                 </li>
@@ -46,11 +56,9 @@ const MenuHomeAdm = ({ closeMenu }) => {
             <div className="mt-auto text-center pb-3">
                 <LogoutButton onBeforeLogout={closeMenu} />
             </div>
+            <AdminAgendarServicio isOpen={isModalOpen} onClose={handleCloseModal} />
 
-            <AdminAgendarServicio isOpen={isAgendarServicioOpen} onClose={() => setIsAgendarServicioOpen(false)} />
-            <ModalSeguimientoAdmin isOpen={isSeguimientoOpen} onClose={() => setIsSeguimientoOpen(false)} />
-            <ModalVehicleAdmin isOpen={isVehicleAdminOpen} onClose={() => setIsVehicleAdminOpen(false)} />
-            
+
         </div>
     );
 };
