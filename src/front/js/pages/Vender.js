@@ -21,16 +21,13 @@ const Vender = () => {
        
 
             {/* Contenedor principal */}
-            <div
-                className="card p-4"
-                style={{ width: '1130px', height: '777px', backgroundColor: '#312E2D' }}
-            >
+           
                 {/* Inicio contenedor vender vehículos */}
                 <div
                     className="d-flex flex-column align-item-center position-relative"
                     style={{
                         width: '786px',
-                        backgroundColor: '#143E79',
+                        backgroundColor: '#312E2D',
                         borderRadius: '20px',
                         margin: 'auto',
                         padding: '20px'
@@ -48,7 +45,7 @@ const Vender = () => {
                             borderRadius: '50%',
                             cursor: 'pointer',
                             border: '2px solid #FFFFFF',
-                            backgroundColor: '#143E79',
+                            backgroundColor: '#312E2D',
                             zIndex: 1,
                         }}
                     >
@@ -56,7 +53,7 @@ const Vender = () => {
                     </div>
 
                     <div className="card-body">
-                        <h2 className="text-white text-center mb-4" style={{ fontSize: '20px' }}>
+                        <h2 className="text-white text-center mb-4" style={{ fontSize: '40px' }}>
                             Vender Vehículo
                         </h2>
 
@@ -99,7 +96,7 @@ const Vender = () => {
                                         backgroundColor: '#7ED957',
                                         width: '206px',
                                         height: '33px',
-                                        color: 'white'
+                                        color: '#312E2D'
                                     }}
                                 >
                                     Publicar Vehículo
@@ -126,7 +123,7 @@ const Vender = () => {
                     )}
                 </div>
             </div>
-        </div>
+        
     );
 };
 

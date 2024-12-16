@@ -40,11 +40,17 @@ const RegistrarVehiculo = () => {
     };
 
     return (
-        <div className="container py-5 position-relative p-4 rounded shadow"  style={{maxWidth:'600px', backgroundColor: '#312E2D' }}>
+        <div className="container py-5 position-relative p-4"   style={{
+            width: '786px',
+            backgroundColor: '#312E2D',
+            borderRadius: '20px',
+            margin: 'auto',
+            padding: '20px'
+        }}>
             <div className="row justify-content-center">
                 <div className="col-lg-8 col-md-10 col-sm-12">
                     <div className="d-flex justify-content-between align-items-center mb-4">
-                        <h5 className="text-light">REGISTRAR VEHICULO</h5>
+                        <h5 className="text-light">Registrar Vehiculo</h5>
                         <button
                             className="btn-close btn-close-custom rounded-circle me-1"
                             aria-label="Cerrar"
