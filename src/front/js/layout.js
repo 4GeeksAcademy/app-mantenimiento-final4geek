@@ -48,15 +48,10 @@ const Layout = () => {
                 </> :
                 store.userType === "client" ?
                   <Route element={<ClientDashboard />} >
-<<<<<<< HEAD
-                    <Route element={<RegistrarVehiculo />} path="/registrar-vehiculo" />
-                    <Route element={<SeguimientoClient />} path="/seguimiento" />
-=======
                     <Route element={<Vehicle />} path="/registrar-vehiculo" />
                     <Route element={<AgendarServicio />} path="agendar-servicio" />
                     <Route element={<VehiculosRegistrados />} path="/vehiculos-registrados" />
                     <Route element={<Vender />} path="/vender" />
->>>>>>> 544af156aeb27b9cdcb10558091c6a0115ce67f8
                     <Route element={<h1>No encontrado</h1>} path="*" />
                   </Route> :
                   <Route element={<AdminDashboard />} >
