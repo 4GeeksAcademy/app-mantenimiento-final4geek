@@ -19,6 +19,7 @@ import AdminDashboard from "./newVisual/AdminDashboard";
 import HomeAdm from "./pages/HomeAdm"
 import LoginPostRegister from "./pages/LoginPostRegister";
 import VenderVehiculo from "./pages/VenderVehiculo";
+import AgendarServicio from "./component/AgendarServicio";
 
 
 //create your first component
@@ -45,13 +46,13 @@ const Layout = () => {
                 store.userType === "client" ?
                   <Route element={<ClientDashboard />} >
                     <Route element={<Vehicle />} path="/registrar-vehiculo" />
+                    <Route element={<AgendarServicio />} path="agendar-servicio" />
                     <Route element={<SeguimientoClient />} path="/seguimiento" />
                     <Route element={<h1>No encontrado</h1>} path="*" />
                   </Route> :
                   <Route element={<AdminDashboard />} >
                     <Route element={<Vehicle />} path="/registrar-vehiculo" />
-                    <Route VenderVehiculo={<Vehicle />} path="/VenderVehiculo" />
-
+                    <Route element={<VenderVehiculo />} path="/vender-vehiculo" />
                     <Route element={<h1>No encontrado</h1>} path="*" />
 
                   </Route>

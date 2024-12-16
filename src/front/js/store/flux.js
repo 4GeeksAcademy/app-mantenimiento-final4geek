@@ -90,7 +90,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
                   },
 
-                  createService: async (data) => {
+                  createService: async (data, userId) => {
                     try {
                         const token = getStore().token;
                         console.log(token)
@@ -98,7 +98,38 @@ const getState = ({ getStore, getActions, setStore }) => {
                             console.error("Invalid token format");
                             return { success: false, error: "Invalid token format" };
                         }
-    
+                
+                        // Fetch vehicles for the user
+                        const vehiclesResponse = await fetch(`${process.env.BACKEND_URL}/vehicles/${userId}`, {
+                            method: 'GET',
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        });
+                        if (!vehiclesResponse.ok) {
+                            const errorData = await vehiclesResponse.json();
+                            console.error('Error data:', errorData);
+                            throw new Error('Error al obtener vehículos: ' + errorData.msg);
+                        }
+                        const vehicles = await vehiclesResponse.json();
+                        console.log('Vehículos:', vehicles);
+                
+                        // Fetch services
+                        const servicesResponse = await fetch(`${process.env.BACKEND_URL}/api/servicios`, {
+                            method: 'GET',
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        });
+                        if (!servicesResponse.ok) {
+                            const errorData = await servicesResponse.json();
+                            console.error('Error data:', errorData);
+                            throw new Error('Error al obtener servicios: ' + errorData.msg);
+                        }
+                        const services = await servicesResponse.json();
+                        console.log('Servicios:', services);
+                
+                        // Post the scheduled service
                         const response = await fetch(process.env.BACKEND_URL + '/api/crear-tipo-servicio', {
                             method: "POST",
                             headers: {
@@ -107,25 +138,21 @@ const getState = ({ getStore, getActions, setStore }) => {
                             },
                             body: JSON.stringify(data),
                         });
-    
+                
                         if (!response.ok) {
                             const errorData = await response.json();
                             console.error('Error data:', errorData);
                             throw new Error('Error al registrar el servicio: ' + errorData.message);
                         }
                         const result = await response.json();
-                        
-                    
-                      
-                          // Return success and the result
-                          return { success: true, result };
-                        } catch (error) {
-                          // Log the error and return an error response
-                          console.error('Error creating service:', error);
-                          return { success: false, error: error.message };
-                        }
-                      },
-
+                        console.log('Servicio registrado:', result);
+                
+                        return { success: true, result };
+                    } catch (error) {
+                        console.error('Error creating service:', error);
+                        return { success: false, error: error.message };
+                    }
+                },
             getVehicles: async () => {
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}/vehicles`, {
