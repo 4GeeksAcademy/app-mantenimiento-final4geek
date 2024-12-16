@@ -12,12 +12,12 @@ const ClientDashboard = () => {
             {/* LEFT PANEL */}
             <div className="offcanvas offcanvas-start " tabIndex="-1" id="offcanvasResponsive" aria-labelledby="offcanvasResponsiveLabel" style={{ width: "300px" }}>
 
-                <div className="offcanvas-header ">
-                    <h5 className="offcanvas-title" id="offcanvasLabel" >Menú</h5>
-                    <button type="button" className="btn-close btn-close-green" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <div className="offcanvas-header fw-bold ">
+                    <h5 className="offcanvas-title " id="offcanvasLabel" >Menú</h5>
+                    <button type="button" className="btn-close btn-close-green " data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
 
-                <div className="offcanvas-body" >
+                <div className="offcanvas-body fw-white" >
                     <LeftPanelClient />
                 </div>
             </div>

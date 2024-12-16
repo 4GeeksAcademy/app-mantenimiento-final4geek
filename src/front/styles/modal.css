@@ -68,18 +68,23 @@
 
 /* Estilo global para LeftPanelClient */
 nav.d-flex {
+  background-color: #312E2D !important; /* Fondo oscuro (bg-dark) */
+  color: white !important; /* Texto blanco */
+}
+
+nav.d-flex-flex {
   background-color: #143E79 !important; /* Fondo oscuro (bg-dark) */
   color: white !important; /* Texto blanco */
 }
 
 /* Ajustar los enlaces dentro del nav */
-nav.d-flex a {
+nav.d-flex-flex a {
   color: white !important; /* Color del texto de los enlaces */
   text-decoration: none; /* Remover subrayado */
 }
 
 nav.d-flex a:hover {
-  color: #143E79; /* Color gris al pasar el mouse */
+  color: #143E79 !important; /* Color gris al pasar el mouse */
 }
 
 .btn-close-custom {
@@ -90,7 +95,7 @@ nav.d-flex a:hover {
 
 .btn-green {
   background-color: #7ED957 !important; 
-  border-radius: 20% !important;          
+  border-radius: 5% !important;          
   border: none !important;               
   opacity: 1 !important;                  
 }
