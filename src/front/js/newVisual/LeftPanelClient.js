@@ -8,16 +8,16 @@ export default function LeftPanelClient() {
             <ul className="nav flex-column">
                 <li className="nav-item"><NavLink to={"/registrar-vehiculo"} >Registrar Vehículo</NavLink></li>
                 <li className="nav-item"><NavLink to={"/agendar-servicio"} >Agendar Servicio</NavLink></li>
-                <li className="nav-item"><NavLink to={"/seguimiento"} >Vehiculos Registrados</NavLink></li>
+                <li className="nav-item"><NavLink to={"/vehiculos-registrados"} >Vehiculos Registrados</NavLink></li>
                 <li className="nav-item"><NavLink to={"/"} >Seguimiento de Servicios</NavLink></li>
                 <li className="nav-item"><NavLink to={"/vender"} style={({ isActive }) => ({
-    color: isActive ? "red" : "white",
-    fontWeight: isActive ? "bold" : "normal"
-})}>
-    Vendé tu auto Ya!
-</NavLink>
-</li>
-               
+                    color: isActive ? "red" : "white",
+                    fontWeight: isActive ? "bold" : "normal"
+                })}>
+                    Vendé tu auto Ya!
+                </NavLink>
+                </li>
+
             </ul>
         </nav>
     );

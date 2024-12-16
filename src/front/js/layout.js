@@ -10,7 +10,7 @@ import SeguimientoClient from "./component/SeguimientoClient";
 import injectContext from "./store/appContext";
 
 import BackgroundAnimated from "./component/Backgroundanimated";
-import Vehicle from "./component/RegistrarVehiculo";
+import RegistrarVehiculoVehicle from "./component/RegistrarVehiculo";
 
 import ClientDashboard from "./newVisual/ClientDashboard";
 import { Context } from "../js/store/appContext";
@@ -22,7 +22,8 @@ import LoginPostRegister from "./pages/LoginPostRegister";
 import Vender from "./pages/Vender";
 import AgendarServicio from "./component/AgendarServicio";
 import VehiculosRegistrados from "./component/VehiculosRegistrados";
-
+import RegistrarVehiculoAdmin from "./component/RegistrarVehiculoAdmin";
+import AgendarServicioAdmin from "./component/AgendarServicioAdmin";
 
 //create your first component
 const Layout = () => {
@@ -48,14 +49,16 @@ const Layout = () => {
                 </> :
                 store.userType === "client" ?
                   <Route element={<ClientDashboard />} >
-                    <Route element={<Vehicle />} path="/registrar-vehiculo" />
+                    <Route element={<RegistrarVehiculoVehicle />} path="/registrar-vehiculo" />
                     <Route element={<AgendarServicio />} path="agendar-servicio" />
                     <Route element={<VehiculosRegistrados />} path="/vehiculos-registrados" />
                     <Route element={<Vender />} path="/vender" />
                     <Route element={<h1>No encontrado</h1>} path="*" />
                   </Route> :
                   <Route element={<AdminDashboard />} >
-                    <Route element={<Vehicle />} path="/registrar-vehiculo" />
+                    <Route element={<RegistrarVehiculoAdmin />} path="/registrar-vehiculo-admin" />
+                    <Route element={<AgendarServicioAdmin />} path="/agendar-servicio-admin" />
+
                    
                     <Route element={<h1>No encontrado</h1>} path="*" />
 
