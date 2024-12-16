@@ -23,6 +23,7 @@ import Vehicle from "./component/Vehicle";
 
 import HomeAdm from "./pages/HomeAdm"
 import LoginPostRegister from "./pages/LoginPostRegister";
+import VenderVehiculo from "./pages/VenderVehiculo";
 
 
 //create your first component
@@ -49,6 +50,8 @@ const Layout = () => {
                         <Route element={<HomeAdm />} path="/HomeAdmin" />
                         <Route element={<ModalSeguimientos />} path="/seguiadmin" />
                         <Route element={<SeguimientoClient />} path="/SeguimientoClient" />
+                        <Route element={<VenderVehiculo />} path="/VenderVehiculo" />
+
                         <Route element={<h1>Not found!</h1>} path="*" />
                     </Routes>
                 </ScrollToTop>
