@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ModalSeguimientos from "./modalSeguimientos";
-import ModalVehiculos from "./modalVehiculos";
+import ModalVehiculos from "./VehiculosRegistrados";
 
 const ModalTesting = () => {
     const [isSeguimientosOpen, setIsSeguimientosOpen] = useState(false);
