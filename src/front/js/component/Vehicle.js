@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState,useEffect } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 
@@ -34,6 +34,11 @@ const Vehicle = () => {
             alert("¡Ups! Algo salió mal. Vuelve a intentarlo.");
         }
     };
+
+    useEffect(() => {
+        const modal = new window.bootstrap.Modal(document.getElementById('modalVehicle'));
+        modal.show();
+    }, []);
 
     return (
         <div className="modal fade" id="modalVehicle" tabIndex="-1" aria-labelledby="modalVehicleLabel" aria-hidden="true">
