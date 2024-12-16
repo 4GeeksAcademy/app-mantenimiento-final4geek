@@ -16,6 +16,12 @@ import ClientDashboard from "./newVisual/ClientDashboard";
 import { Context } from "../js/store/appContext";
 import AdminDashboard from "./newVisual/AdminDashboard";
 
+import HomeAdm from "./pages/HomeAdm"
+import LoginPostRegister from "./pages/LoginPostRegister";
+import VenderVehiculo from "./pages/VenderVehiculo";
+
+
+//create your first component
 const Layout = () => {
   const { store } = useContext(Context);
 
@@ -44,7 +50,10 @@ const Layout = () => {
                   </Route> :
                   <Route element={<AdminDashboard />} >
                     <Route element={<Vehicle />} path="/registrar-vehiculo" />
+                    <Route VenderVehiculo={<Vehicle />} path="/VenderVehiculo" />
+
                     <Route element={<h1>No encontrado</h1>} path="*" />
+
                   </Route>
             }
           </Routes>
