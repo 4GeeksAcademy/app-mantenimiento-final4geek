@@ -16,9 +16,6 @@ export default function DashboardNavbar() {
                 {/* Links del Navbar */}
                 <div className="d-flex">
                     <li className="nav-item m-0 p-0">
-                        <Link className="nav-link" to={"/"} >Profile</Link>
-                    </li>
-                    <li className="nav-item m-0 p-0">
                         <Link className="nav-link" to={"/"} >Logout</Link>
                     </li>
                 </div>
