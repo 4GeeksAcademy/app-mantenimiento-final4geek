@@ -153,25 +153,35 @@ const getState = ({ getStore, getActions, setStore }) => {
                         return { success: false, error: error.message };
                     }
                 },
-            getVehicles: async () => {
-                try {
-                    const response = await fetch(`${process.env.BACKEND_URL}/vehicles`, {
+                getVehicles: async () => {
+                    try {
+                      const response = await fetch(`${process.env.BACKEND_URL}/vehicles`, {
                         method: 'GET',
                         headers: {
-                            'Authorization': `Bearer ${getStore().token}`
+                          'Authorization': `Bearer ${getStore().token}`
                         }
-                    });
-                    if (!response.ok) {
+                      });
+                  
+                      if (!response.ok) {
                         const errorData = await response.json();
-                        console.error('Error data:', errorData);
-                        throw new Error('Error al obtener vehículos: ' + errorData.msg);
+                        const errorMessage = `Error fetching vehicles: ${errorData.msg} (HTTP Status: ${response.status})`;
+                        console.error(errorMessage);
+                        throw new Error(errorMessage);
+                      }
+                  
+                      const data = await response.json();
+                  
+                      // Validación de datos
+                      if (!Array.isArray(data) || !data.every(vehicle => typeof vehicle === 'object')) {
+                        throw new Error('Invalid vehicle data format');
+                      }
+                  
+                      setStore({ vehicles: data });
+                    } catch (error) {
+                      console.error('Error fetching vehicles:', error);
+                      // Handle error, e.g., display an error message to the user
                     }
-                    const data = await response.json();
-                    setStore({ vehicles: data });
-                } catch (error) {
-                    console.error('Error:', error);
-                }
-            },
+                  },
             getServices: async () => {
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}/api/servicios`, {
