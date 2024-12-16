@@ -50,7 +50,10 @@ const Layout = () => {
                   </Route> :
                   <Route element={<AdminDashboard />} >
                     <Route element={<Vehicle />} path="/registrar-vehiculo" />
+                    <Route VenderVehiculo={<Vehicle />} path="/VenderVehiculo" />
+
                     <Route element={<h1>No encontrado</h1>} path="*" />
+
                   </Route>
             }
           </Routes>
