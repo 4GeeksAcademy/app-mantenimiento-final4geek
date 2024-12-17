@@ -69,6 +69,38 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return { success: false, error: error.message };
                 }
             },
+            logoutUser: async () => {
+                try {
+                    const token = localStorage.getItem("token");
+                    if (!token) {
+                        console.log("No token found");
+                        return { success: false, error: "No token found" };
+                    }
+            
+                    const response = await fetch(`${process.env.BACKEND_URL}/logout`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+            
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        console.error('Error data:', errorData);
+                        throw new Error('Error en el cierre de sesión: ' + errorData.message);
+                    }
+            
+                    localStorage.removeItem("token");
+                    setStore({ token: null, userType: null });
+            
+                    console.log("Token eliminado del store");
+                    return { success: true };
+                } catch (error) {
+                    console.error('Error en logoutUser:', error);
+                    return { success: false, error: error.message };
+                }
+            },
 
             createVehicle: async (data) => {
                 try {
