@@ -6,8 +6,8 @@ const AgendarServicio = () => {
     const { actions, store } = useContext(Context);
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        vehicle_id: "",
-        service_type_id: ""
+        vehicle_ID: "",
+        Service_Type_ID: ""
     });
 
     useEffect(() => {
@@ -33,8 +33,9 @@ const AgendarServicio = () => {
     const handleSchedule = async (data) => {
         try {
           const result = await actions.createService(data);
-          if (result.ok) {
+          if (result) {
             // Handle success
+            console.log(result)
             navigate('/cliente-dashboard');
             alert('Servicio agendado correctamente');
           } else {
@@ -76,8 +77,8 @@ const AgendarServicio = () => {
                             <select
                                 className="form-control"
                                 id="selectVehicle"
-                                name="vehicle_id"
-                                value={formData.vehicle_id}
+                                name="vehicle_ID"
+                                value={formData.vehicle_ID}
                                 onChange={handleChange}
                                 required
                             >
@@ -95,8 +96,8 @@ const AgendarServicio = () => {
                             <select
                                 className="form-control"
                                 id="selectServiceType"
-                                name="service_type_id"
-                                value={formData.service_type_id}
+                                name="Service_Type_ID"
+                                value={formData.Service_Type_ID}
                                 onChange={handleChange}
                                 required
                             >
@@ -115,7 +116,7 @@ const AgendarServicio = () => {
                                 type="text"
                                 className="form-control"
                                 id="serviceCost"
-                                value={getServiceCost(formData.service_type_id)}
+                                value={getServiceCost(formData.Service_Type_ID)}
                                 readOnly
                             />
                         </div>

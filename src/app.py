@@ -2,9 +2,10 @@ from flask import Flask, request, jsonify, send_from_directory
 import os
 from flask_migrate import Migrate
 from flask_swagger import swagger
+
 from flask_jwt_extended import create_access_token
 from api.utils import APIException, generate_sitemap
-from api.models import db, Services, Vehicles, User, Service_status, Service_Type
+from api.models import db, Services, Vehicles, User, Service_Type
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
@@ -88,6 +89,19 @@ def login():
     print(user.serialize())
     print(f"Token JWT:{access_token} ") #Borrar luego, es para probar token en el resto de los endpoints
     return jsonify({"access_token":access_token, "user_type":user.serialize()["user_type"]}), 200
+#Logout
+@app.route('/logout', methods=['POST'])
+def logout():
+  auth_header = request.headers.get('Authorization')
+  if not auth_header:
+    return jsonify({'message': 'Missing authorization header'}), 401
+  try:
+    token_type, token = auth_header.split(maxsplit=1)
+    if token_type.lower() != 'bearer':
+      return jsonify({'message': 'Invalid authorization type'}), 401
+  except ValueError:
+    return jsonify({'message': 'Invalid authorization header'}), 401
+  return jsonify({'message': 'Successfully logged out'}), 200
 
 #Crear userAdmin
 @app.route('/registro-admin', methods=['POST'])
@@ -196,24 +210,24 @@ def create_service():
     if not data:
         return jsonify({'error': 'Missing JSON data'}), 400
 
-    required_fields = ['vehicle_id', 'service_type_id', ...]
+    required_fields = ['vehicle_ID', 'Service_Type_ID']
     for field in required_fields:
         if field not in data:
             return jsonify({'error': f'Missing field: {field}'}), 400
 
     # Data validation (adjust according to your needs)
     try:
-        vehicle_id = int(data['vehicle_id'])
-        service_type_id = int(data['service_type_id'])
+        vehicle_ID = int(data['vehicle_ID'])
+        Service_Type_ID = int(data['Service_Type_ID'])
         # ... other validations
     except ValueError:
         return jsonify({'error': 'Invalid data format'}), 400
 
     try:
-        new_service = Service(
-            vehicle_id=vehicle_id,
-            service_type_id=service_type_id,
-            user_id=current_user_id
+        new_service = Services(
+            vehicle_ID=vehicle_ID,
+            Service_Type_ID=Service_Type_ID,
+            User_ID=current_user_id,
         )
         db.session.add(new_service)
         db.session.commit()

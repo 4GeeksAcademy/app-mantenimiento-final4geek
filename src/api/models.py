@@ -102,37 +102,37 @@ class Service_Type(db.Model):
 
     
 
-class Service_status(db.Model):
-    __tablename__ = 'service_status'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column((Enum('Agendado','Ingresado', 'En Proceso', 'Finalizado', name='name', default='Agendado')))
+# class Service_status(db.Model):
+#     __tablename__ = 'service_status'
+#     id = db.Column(db.Integer, primary_key=True)
+#     status = db.Column((Enum('Agendado','Ingresado', 'En Proceso', 'Finalizado', name='name', default='Agendado')))
 
-    description = db.Column(db.String(150))
-
-
-    status = db.relationship('Services', back_populates = 'service_status')
+#     description = db.Column(db.String(150))
 
 
+#     status = db.relationship('Services', back_populates = 'service_status')
 
-    def __repr__(self):
-     return f'Service_status {self.id}{self.name}{self.description}'
 
-    def serialize(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "description": self.description,
+
+#     def __repr__(self):
+#      return f'Service_status {self.id}{self.name}{self.description}'
+
+#     def serialize(self):
+#         return {
+#             "id": self.id,
+#             "name": self.name,
+#             "description": self.description,
             
 
-        }
+#         }
     
 
 class Services(db.Model):
     __tablename__ = 'services'
     id = db.Column(db.Integer, primary_key=True)
-    vehicle_ID = db.Column(db.Integer, db.ForeignKey('vehicles.id'), unique=True, nullable=False)
+    vehicle_ID = db.Column(db.Integer, db.ForeignKey('vehicles.id'), nullable=False)
     Service_Type_ID = db.Column(db.Integer, db.ForeignKey('service_type.id'),unique=False, nullable=False)
-    Status_ID = db.Column(db.Integer, db.ForeignKey('service_status.id'), unique=False, nullable=False)
+    status = db.Column((Enum('Agendado','Ingresado', 'En Proceso', 'Finalizado', name='name', default='Agendado')))
     Start_Date = db.Column(db.String(30))
     End_Date = db.Column(db.String(30))
     Total_Cost = db.Column(db.String(50))
@@ -146,21 +146,19 @@ class Services(db.Model):
     notes = db.relationship('Notes', back_populates = 'service')
     vehicle = db.relationship('Vehicles', back_populates = 'service')
     service_type = db.relationship('Service_Type', back_populates = 'services')
-    service_status = db.relationship('Service_status', back_populates = 'status')
     parts = db.relationship('Parts_Service',back_populates='service_id')
 
 
 
 
     def __repr__(self):
-        return f'User {self.id}{self.vehicle_ID}{self.Service_Type_ID}{self.Status_ID}{self.Start_Date}{self.End_Date}{self.Total_Cost}{self.Payment_status}'
+        return f'User {self.id}{self.vehicle_ID}{self.Service_Type_ID}{self.Start_Date}{self.End_Date}{self.Total_Cost}{self.Payment_status}'
 
     def serialize(self):
         return {
             "id": self.id,
             "vehicle_ID": self.vehicle_ID,
             "Service_Type_ID": self.Service_Type_ID,
-            "Status_ID": self.Status_ID,
             "Start_Date": self.Start_Date,
             "End_Date": self.End_Date,
             "Total_Cost": self.Total_Cost,

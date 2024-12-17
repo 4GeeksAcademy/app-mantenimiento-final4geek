@@ -1,3 +1,4 @@
+
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
@@ -131,10 +132,10 @@ const getState = ({ getStore, getActions, setStore }) => {
                       // Handle success, e.g., update store or redirect
                       console.log('Service created successfully:', result);
                       setStore({
-                        scheduledServices: [...getStore().scheduledServices, result]
+                        scheduled_services: [...getStore().scheduled_services, result.service]
                       });
-                      navigate('/cliente-dashboard'); // Redirect to dashboard
-                  
+                    
+                  return result
                     } catch (error) {
                       console.error('Error creating service:', error);
                       // Handle error, e.g., display an error message to the user
