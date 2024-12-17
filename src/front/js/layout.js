@@ -6,7 +6,7 @@ import { BackendURL } from "./component/backendURL";
 import Login from "./pages/LoginPrincipal";
 import Registro from "./component/Registro";
 
-import SeguimientoClient from "./component/SeguimientoClient";
+
 import injectContext from "./store/appContext";
 
 import BackgroundAnimated from "./component/Backgroundanimated";
@@ -24,7 +24,10 @@ import AgendarServicio from "./component/AgendarServicio";
 import VehiculosRegistrados from "./component/VehiculosRegistrados";
 import RegistrarVehiculoAdmin from "./component/RegistrarVehiculoAdmin";
 import AgendarServicioAdmin from "./component/AgendarServicioAdmin";
-
+import ClienteSeguimientos from "./component/ClienteSeguimientos";
+import ClienteVehiculos from "./component/ClienteVehiculos";
+import AdminSeguimientos from "./component/AdminSeguimientos";
+import AdminVehiculos from "./component/AdminVehiculos";
 //create your first component
 const Layout = () => {
   const { store } = useContext(Context);
@@ -51,13 +54,16 @@ const Layout = () => {
                   <Route element={<ClientDashboard />} >
                     <Route element={<RegistrarVehiculoVehicle />} path="/registrar-vehiculo" />
                     <Route element={<AgendarServicio />} path="agendar-servicio" />
-                    <Route element={<VehiculosRegistrados />} path="/vehiculos-registrados" />
+                    <Route element={<ClienteSeguimientos />} path="seguimiento-servicios" />
+                   <Route element={<ClienteVehiculos />} path="vehiculos-registrados" />
                     <Route element={<Vender />} path="/vender" />
                     <Route element={<h1>No encontrado</h1>} path="*" />
                   </Route> :
                   <Route element={<AdminDashboard />} >
                     <Route element={<RegistrarVehiculoAdmin />} path="/registrar-vehiculo-admin" />
                     <Route element={<AgendarServicioAdmin />} path="/agendar-servicio-admin" />
+                    <Route element={<AdminSeguimientos />} path="seguimiento-servicios" />
+                    <Route element={<AdminVehiculos />} path="vehiculos-registrados" />
 
                    
                     <Route element={<h1>No encontrado</h1>} path="*" />

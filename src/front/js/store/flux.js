@@ -4,6 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         store: {
             vehicles: [],
             services: [],
+            clients: [],
             scheduled_services: [],
             token: "",
             userType: "" // Agregamos userType al estado inicial
@@ -172,6 +173,27 @@ const getState = ({ getStore, getActions, setStore }) => {
                       // Handle error, e.g., display an error message to the user
                     }
                   },
+
+                  getClients: async () => {
+                    try {
+                        const response = await fetch(`${process.env.BACKEND_URL}/clientes`, {
+                            method: "GET",
+                            headers: {
+                                "Content-Type": "application/json",
+                                Authorization: `Bearer ${localStorage.getItem("auth_token")}`
+                            }
+                        });
+                        if (response.ok) {
+                            const data = await response.json();
+                            setStore({ clients: data });
+                        } else {
+                            console.error("Error fetching clients:", response.status);
+                        }
+                    } catch (error) {
+                        console.error("Error fetching clients:", error);
+                    }
+                },
+    
                   getServiceTypes: async () => {
                     try {
                         const response = await fetch(`${process.env.BACKEND_URL}/api/servicetypes`, {
@@ -191,6 +213,26 @@ const getState = ({ getStore, getActions, setStore }) => {
                         console.error('Error:', error);
                     }
                 },
+                getServices: async () => {
+                    try {
+                        const response = await fetch(`${process.env.BACKEND_URL}/api/todos-los-servicios`, {
+                            method: "GET",
+                            headers: {
+                                "Content-Type": "application/json",
+                                Authorization: `Bearer ${getStore().token}`
+                            }
+                        });
+                        if (response.ok) {
+                            const data = await response.json();
+                            setStore({ services: data });
+                        } else {
+                            console.error("Error fetching services:", response.status);
+                        }
+                    } catch (error) {
+                        console.error("Error fetching services:", error);
+                    }
+                },
+                
             updateService: async (serviceId, statusId) => {
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}/api/servicios/${serviceId}`, {
