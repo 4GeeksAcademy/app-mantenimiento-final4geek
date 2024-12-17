@@ -5,7 +5,7 @@
   }
   
   .custom-modal-header {
-    background-color: #004AAD;
+    background-color: #332D2D;
     color: white;
     display: flex;
     align-items: center;
@@ -37,7 +37,7 @@
   }
   
   .custom-modal-body {
-    background-color: #004AAD;
+    background-color: #332D2D;
     padding: 10px;
   }
   

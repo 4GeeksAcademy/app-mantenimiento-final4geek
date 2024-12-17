@@ -2,20 +2,18 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 import { Modal } from "react-bootstrap";
-import { jwtDecode } from "jwt-decode";
 import "../../styles/modal.css";
 
-const ClienteVehiculos = () => {
+const AdminVehiculos = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
+    const [selectedClient, setSelectedClient] = useState("");
     const [filteredVehicles, setFilteredVehicles] = useState([]);
     const [loading, setLoading] = useState(true);
-    const token = localStorage.getItem("token");
-    const userId = token ? jwtDecode(token).sub : null;
 
     const columnConfig = [
         { key: "id", label: "ID" },
-        { key: "user_id", label: "Usuario" },
+        { key: "user_id", label: "ID Cliente" },
         { key: "brand", label: "Marca" },
         { key: "model", label: "Modelo" },
         { key: "year", label: "Año" },
@@ -24,24 +22,29 @@ const ClienteVehiculos = () => {
     ];
 
     useEffect(() => {
-        actions.getVehicles().then(() => {
-            setLoading(false);
-        });
-    }, []);
+        Promise.all([actions.getVehicles(), actions.getClients()])
+            .then(() => setLoading(false))
+            .catch(err => {
+                console.error("Error al obtener datos:", err);
+                setLoading(false);
+            });
+    }, [actions]);
 
     useEffect(() => {
-        if (userId) {
-            const filtered = store.vehicles.filter(vehicle => {
-                return parseInt(vehicle.user_id) === parseInt(userId);
-            });
+        if (selectedClient) {
+            const filtered = store.vehicles.filter(vehicle => parseInt(vehicle.user_id) === parseInt(selectedClient));
             setFilteredVehicles(filtered);
         } else {
             setFilteredVehicles(store.vehicles);
         }
-    }, [userId, store.vehicles]);
+    }, [selectedClient, store.vehicles]);
 
     const handleClose = () => {
-        navigate("/cliente-dashboard");
+        navigate("/admin-dashboard");
+    };
+
+    const handleClientChange = (e) => {
+        setSelectedClient(e.target.value ? parseInt(e.target.value) : "");
     };
 
     return (
@@ -53,6 +56,23 @@ const ClienteVehiculos = () => {
                 <Modal.Title className="custom-modal-title">Vehículos Ingresados</Modal.Title>
             </Modal.Header>
             <Modal.Body className="custom-modal-body">
+                <div className="mb-3">
+                    <label htmlFor="clientSelect" className="form-label text-white">Filtrar por Cliente</label>
+                    <select
+                        id="clientSelect"
+                        className="form-select"
+                        value={selectedClient}
+                        onChange={handleClientChange}
+                    >
+                        <option value="">Todos los Clientes</option>
+                        {store.clients.map(client => (
+                            <option key={client.id} value={client.id}>
+                                {client.name} {client.email}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
                 {loading ? (
                     <div className="custom-content-box text-center">
                         Cargando...
@@ -90,4 +110,4 @@ const ClienteVehiculos = () => {
     );
 };
 
-export default ClienteVehiculos;
+export default AdminVehiculos;

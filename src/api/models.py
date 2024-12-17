@@ -162,7 +162,8 @@ class Services(db.Model):
             "Start_Date": self.Start_Date,
             "End_Date": self.End_Date,
             "Total_Cost": self.Total_Cost,
-            "Payment_Status": self.Payment_status
+            "Payment_Status": self.Payment_status,
+            "User_ID": self.User_ID
 
             
         }
