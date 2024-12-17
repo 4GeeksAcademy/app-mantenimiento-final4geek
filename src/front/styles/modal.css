@@ -103,3 +103,11 @@ nav.d-flex a:hover {
 .btn-close-green:hover {
   background-color: #6CBF4F !important;  
 }
+
+.fa-right-from-bracket{
+  font-size: 20px;
+}
+
+.fa-right-from-bracket:hover{
+  color: red !important;
+}

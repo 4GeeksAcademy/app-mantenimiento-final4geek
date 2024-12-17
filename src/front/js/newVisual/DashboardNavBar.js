@@ -16,7 +16,7 @@ const DashboardNavbar = () => {
         {/* Botón para el menú */}
         <li>
           <button className="btn btn-green fw-bold" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive" aria-controls="offcanvasResponsive">
-            Menú
+          <i class="fa-solid fa-bars"></i>
           </button>
         </li>
 
@@ -24,7 +24,7 @@ const DashboardNavbar = () => {
         <div className="d-flex">
           <li className="nav-item m-0 p-0">
             <Link className="nav-link text-white" to="/" onClick={handleLogout}>
-              Logout
+            <i class="fa-solid fa-right-from-bracket"></i>
             </Link>
           </li>
         </div>

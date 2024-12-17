@@ -10,15 +10,11 @@ export default function LeftPanelClient() {
                 <li className="nav-item"><NavLink to={"/agendar-servicio"} >Agendar Servicio</NavLink></li>
                 <li className="nav-item"><NavLink to={"/seguimiento-servicios"} >Seguimiento de Servicios</NavLink></li>
                 <li className="nav-item"><NavLink to={"/vehiculos-registrados"} >Vehiculos Registrados</NavLink></li>
-                <li className="nav-item"><NavLink to={"/vender"} style={({ isActive }) => ({
-                    color: isActive ? "red" : "white",
-                    fontWeight: isActive ? "bold" : "normal"
-                })}>
-                    Vendé tu auto Ya!
-                </NavLink>
-                </li>
-
-            </ul>
-        </nav>
-    );
-}
+                     <li className="nav-item"><NavLink to={"/vender"}>Vendé tu vehiculo Ya!
+                       </NavLink>
+                       </li>
+       
+                   </ul>
+               </nav>
+           );
+       }

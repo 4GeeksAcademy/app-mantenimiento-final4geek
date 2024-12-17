@@ -50,7 +50,7 @@ const RegistrarVehiculo = () => {
             <div className="row justify-content-center">
                 <div className="col-lg-8 col-md-10 col-sm-12">
                     <div className="d-flex justify-content-between align-items-center mb-4">
-                        <h5 className="text-light">Registrar Vehiculo</h5>
+                    <h5 className=" text-center fw-bold text-light text-shadow" style={{ fontSize: "40px" }}>Registrar Vehiculo</h5>
                         <button
                             className="btn-close btn-close-custom rounded-circle me-1"
                             aria-label="Cerrar"
