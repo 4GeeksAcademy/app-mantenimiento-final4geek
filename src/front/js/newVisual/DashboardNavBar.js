@@ -23,8 +23,8 @@ const DashboardNavbar = () => {
         {/* Links del Navbar */}
         <div className="d-flex">
           <li className="nav-item m-0 p-0">
-            <Link className="nav-link text-white" to="/" onClick={handleLogout}>
-            <i class="fa-solid fa-right-from-bracket"></i>
+            <Link className="nav-link text-white cerrarSesion" to="/" onClick={handleLogout}>
+            <span className='cerrarSesion'>Cerrar sesion <i className="fa-solid fa-right-from-bracket "></i></span>
             </Link>
           </li>
         </div>
