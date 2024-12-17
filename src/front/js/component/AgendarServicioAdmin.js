@@ -52,15 +52,26 @@ const AgendarServicioAdmin = () => {
     };
 
     return (
-        <div className="container py-5 position-relative p-4 rounded shadow"  style={{maxWidth:'600px', backgroundColor: '#312E2D' }}>
+        <div className="container py-5 position-relative p-4 rounded shadow"  style={{
+            width: '786px',
+            backgroundColor: '#312E2D',
+            borderRadius: '20px',
+            margin: 'auto',
+            padding: '20px'
+        }}>
             <div className="row justify-content-center">
                 <div className="col-lg-8 col-md-10 col-sm-12">
                     <div className="d-flex justify-content-between align-items-center mb-4">
-                        <h5 className="text-dark">Agendar Servicio</h5>
+                        <h5 className="text-center fw-bold text-light text-shadow" style={{ fontSize: '40px' }}>Agendar Servicio</h5>
+                        <button
+                            className="btn-close btn-close-custom rounded-circle me-1"
+                            aria-label="Cerrar"
+                            onClick={handleClose}
+                        ></button>
                     </div>
                     <form>
                         <div className="mb-3 text-start">
-                            <label htmlFor="selectVehicle" className="form-label text-dark">Seleccione un vehículo</label>
+                            <label htmlFor="selectVehicle" className="form-label text-light">Seleccione un vehículo</label>
                             <select
                                 className="form-control"
                                 id="selectVehicle"
@@ -79,7 +90,7 @@ const AgendarServicioAdmin = () => {
                         </div>
 
                         <div className="mb-3 text-start">
-                            <label htmlFor="selectServiceType" className="form-label text-dark">Seleccione un tipo de servicio</label>
+                            <label htmlFor="selectServiceType" className="form-label text-light">Seleccione un tipo de servicio</label>
                             <select
                                 className="form-control"
                                 id="selectServiceType"
@@ -98,7 +109,7 @@ const AgendarServicioAdmin = () => {
                         </div>
 
                         <div className="mb-3 text-start">
-                            <label htmlFor="serviceCost" className="form-label text-dark">Precio estimado</label>
+                            <label htmlFor="serviceCost" className="form-label text-light">Precio estimado</label>
                             <input
                                 type="text"
                                 className="form-control"

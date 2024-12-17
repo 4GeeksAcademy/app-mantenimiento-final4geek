@@ -68,7 +68,7 @@
 
 /* Estilo global para LeftPanelClient */
 nav.d-flex {
-  background-color: #312E2D !important; /* Fondo oscuro (bg-dark) */
+  background-color: #143E79 !important; /* Fondo oscuro (bg-dark) */
   color: white !important; /* Texto blanco */
 }
 
@@ -104,10 +104,26 @@ nav.d-flex a:hover {
   background-color: #6CBF4F !important;  
 }
 
-.fa-right-from-bracket{
+.cerrarSesion{
   font-size: 20px;
 }
 
-.fa-right-from-bracket:hover{
-  color: red !important;
+.cerrarSesion:hover{
+  color: #6CBF4F !important;
+  transform: scale(1.05);
+}
+
+li.enlaceAdmin a {
+  color: white !important; /* Color del texto de los enlaces */
+  text-decoration: none; /* Remover subrayado */
+  font-size: 16px; /* Tamaño de la fuente */
+  font-weight: 500; /* Grosor de la fuente */
+  display: inline-block; /* Permite agregar márgenes */
+  margin-bottom: 10px; /* Espacio entre los enlaces */
+  transition: color 0.3s ease-in-out; /* Efecto suave al cambiar el color */
+}
+
+li.enlaceAdmin a:hover {
+  color: #6CBF4F !important; /* Color al pasar el cursor */
+  transform: scale(1.10); /* Efecto de zoom leve */
 }

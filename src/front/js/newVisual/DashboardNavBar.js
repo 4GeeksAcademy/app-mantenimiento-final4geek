@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Context } from '../store/appContext';
 
 const DashboardNavbar = () => {
+  const { actions } = useContext(Context);
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    // Eliminando el token
-    localStorage.removeItem('token');
-    navigate('/'); 
+  const handleLogout = async () => {
+    const result = await actions.logoutUser();
+    if (result.success) {
+      navigate('/');
+    } else {
+      alert("Error al cerrar sesión: " + result.error);
+    }
   };
 
   return (
@@ -16,15 +21,15 @@ const DashboardNavbar = () => {
         {/* Botón para el menú */}
         <li>
           <button className="btn btn-green fw-bold" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive" aria-controls="offcanvasResponsive">
-          <i class="fa-solid fa-bars"></i>
+            <i className="fa-solid fa-bars"></i>
           </button>
         </li>
 
         {/* Links del Navbar */}
         <div className="d-flex">
           <li className="nav-item m-0 p-0">
-            <Link className="nav-link text-white" to="/" onClick={handleLogout}>
-            <i class="fa-solid fa-right-from-bracket"></i>
+            <Link className="nav-link text-white cerrarSesion" to="/" onClick={handleLogout}>
+            <span className='cerrarSesion'>Cerrar sesion <i className="fa-solid fa-right-from-bracket "></i></span>
             </Link>
           </li>
         </div>

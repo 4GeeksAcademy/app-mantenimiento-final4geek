@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import LogoutButton from "./LogoutButton.js";
 import { useNavigate } from "react-router-dom";
 import AdminAgendarServicio from "./admin_ingreso_servicios.js";
 
