@@ -29,6 +29,7 @@ const RegistrarVehiculo = () => {
 
         const result = await actions.createVehicle(data);
         if (result) {
+            alert("¡Vehículo registrado con éxito! Ahora puedes agendar servicio.");
             navigate("/cliente-dashboard");
         } else {
             alert("¡Ups! Algo salió mal. Vuelve a intentarlo.");

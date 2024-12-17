@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Context } from '../store/appContext';
 
 const DashboardNavbar = () => {
+  const { actions } = useContext(Context);
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    // Eliminando el token
-    localStorage.removeItem('token');
-    navigate('/'); 
+  const handleLogout = async () => {
+    const result = await actions.logoutUser();
+    if (result.success) {
+      navigate('/');
+    } else {
+      alert("Error al cerrar sesión: " + result.error);
+    }
   };
 
   return (
@@ -16,7 +21,7 @@ const DashboardNavbar = () => {
         {/* Botón para el menú */}
         <li>
           <button className="btn btn-green fw-bold" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive" aria-controls="offcanvasResponsive">
-          <i class="fa-solid fa-bars"></i>
+            <i className="fa-solid fa-bars"></i>
           </button>
         </li>
 
