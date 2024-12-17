@@ -269,5 +269,28 @@ class Schedule(db.Model):
 
 
         }   
+#Tabla vender vahículo
+class VehicleSales(db.Model):
+    __tablename__ = 'vehicle_sales'
+    id = db.Column(db.Integer, primary_key=True)
+    vehicle_id = db.Column(db.Integer, db.ForeignKey('vehicles.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  # Vendedor
+    sale_price = db.Column(DECIMAL(10, 2), nullable=False)
+  
+
+    # Relaciones
+    vehicle = db.relationship('Vehicles', backref='sales')
+    user = db.relationship('User', backref='sales')
+
+    def __repr__(self):
+        return f"VehicleSales {self.id} - Vehicle ID {self.vehicle_id} - Sold by User {self.user_id} - Price {self.sale_price}"
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "vehicle_id": self.vehicle_id,
+            "user_id": self.user_id,
+          "sale_price": str(self.sale_price),
+                 }
 
 

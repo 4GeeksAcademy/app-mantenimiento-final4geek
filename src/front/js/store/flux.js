@@ -6,8 +6,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             services: [],
             clients: [],
             scheduled_services: [],
+            sell_vehicle:[],
             token: "",
             userType: "" // Agregamos userType al estado inicial
+
         },
         actions: {
             registerUser: async (userData) => {
@@ -143,7 +145,54 @@ const getState = ({ getStore, getActions, setStore }) => {
                       return { success: false, error: 'Error creating service' };
                     }
                   },
-
+                // Acción vender Vehículo
+                sellingvehicle: async (data) => {
+                  try {
+                      const token = getStore().token;
+              
+                      // Validar formato del token
+                      if (!token || token.split('.').length !== 3) {
+                          console.error('Invalid token format');
+                          return { success: false, error: 'Invalid token format' };
+                      }
+              
+                      // Enviar todos los datos necesarios
+                      const response = await fetch(`${process.env.BACKEND_URL}/api/vender`, {
+                          method: 'POST',
+                          headers: {
+                              'Content-Type': 'application/json',
+                              'Authorization': `Bearer ${token}`
+                          },
+                          body: JSON.stringify({
+                              vehicle_id: data.vehicle_ID, 
+                              sale_price: data.sale_price,
+                              
+                          })
+                      });
+              
+                      // Manejo de errores en la respuesta
+                      if (!response.ok) {
+                          const errorData = await response.json();
+                          console.error('Error selling vehicle:', errorData);
+                          throw new Error(`Error selling vehicle: ${errorData.error || 'Unknown error'}`);
+                      }
+              
+                      // Respuesta exitosa
+                      const result = await response.json();
+                      console.log('Vehicle sold successfully:', result);
+              
+                      // Actualizar el Store
+                      setStore({
+                          sell_vehicle: [...(getStore().sell_vehicle || []), result.sale]
+                      });
+              
+                      return { success: true, data: result.sale };
+                  } catch (error) {
+                      console.error('Error selling vehicle:', error.message);
+                      return { success: false, error: 'Error selling vehicle' };
+                  }
+              },
+              
             getVehicles: async () => {
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}/vehicles`, {
