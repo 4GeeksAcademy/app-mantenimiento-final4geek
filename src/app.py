@@ -168,16 +168,21 @@ def register():
 
     new_user = User(email=email, password=hashed_password, is_active=True, user_type="client")
     db.session.add(new_user)
-    db.session.commit()
 
-    # Incluir todos los campos necesarios en la respuesta
-    return jsonify({
-        "email": new_user.email,
-        "first_name": first_name,
-        "last_name": last_name,
-        "phone": phone,
-        "ci_rut": ci_rut
-    }), 201
+    try:
+
+        db.session.commit()
+
+        # Incluir todos los campos necesarios en la respuesta
+        return jsonify({
+            "email": new_user.email,
+            "first_name": first_name,
+            "last_name": last_name,
+            "phone": phone,
+            "ci_rut": ci_rut
+        }), 201
+    except Exception as err:
+        return jsonify(f"Error: f{err.args}"), 500
 
 
 
