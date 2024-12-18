@@ -9,24 +9,33 @@ const ClienteVehiculos = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
     const [filteredVehicles, setFilteredVehicles] = useState([]);
+    const [loading, setLoading] = useState(true);
     const token = localStorage.getItem("token");
     const userId = token ? jwtDecode(token).sub : null;
-    const decodedToken = jwtDecode(token);
-    console.log(decodedToken);
+
+    const columnConfig = [
+        { key: "id", label: "ID" },
+        { key: "user_id", label: "Usuario" },
+        { key: "brand", label: "Marca" },
+        { key: "model", label: "Modelo" },
+        { key: "year", label: "Año" },
+        { key: "mileage", label: "Kilometraje" },
+        { key: "license_plate", label: "Matrícula" }
+    ];
 
     useEffect(() => {
-        actions.getVehicles();
+        actions.getVehicles().then(() => {
+            setLoading(false);
+        });
     }, []);
 
     useEffect(() => {
         if (userId) {
             const filtered = store.vehicles.filter(vehicle => {
-                console.log(vehicle.user_id, userId)
                 return parseInt(vehicle.user_id) === parseInt(userId);
             });
             setFilteredVehicles(filtered);
         } else {
-            console.log(userId)
             setFilteredVehicles(store.vehicles);
         }
     }, [userId, store.vehicles]);
@@ -44,21 +53,27 @@ const ClienteVehiculos = () => {
                 <Modal.Title className="custom-modal-title">Vehículos Ingresados</Modal.Title>
             </Modal.Header>
             <Modal.Body className="custom-modal-body">
-                {filteredVehicles && filteredVehicles.length > 0 ? (
+                {loading ? (
+                    <div className="custom-content-box text-center">
+                        Cargando...
+                    </div>
+                ) : filteredVehicles && filteredVehicles.length > 0 ? (
                     <div className="table-responsive">
                         <table className="table table-hover table-striped">
                             <thead>
                                 <tr>
-                                    {Object.keys(filteredVehicles[0]).map((key, index) => (
-                                        <th key={index} className="text-nowrap">{key}</th>
+                                    {columnConfig.map((column, index) => (
+                                        <th key={index} className="text-nowrap">{column.label}</th>
                                     ))}
                                 </tr>
                             </thead>
                             <tbody>
                                 {filteredVehicles.map((vehicle, rowIndex) => (
                                     <tr key={rowIndex}>
-                                        {Object.values(vehicle).map((value, colIndex) => (
-                                            <td key={colIndex} className="text-nowrap">{value}</td>
+                                        {columnConfig.map((column, colIndex) => (
+                                            <td key={colIndex} className="text-nowrap">
+                                                {vehicle[column.key]}
+                                            </td>
                                         ))}
                                     </tr>
                                 ))}

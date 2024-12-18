@@ -152,17 +152,19 @@ class Services(db.Model):
 
 
     def __repr__(self):
-        return f'User {self.id}{self.vehicle_ID}{self.Service_Type_ID}{self.Start_Date}{self.End_Date}{self.Total_Cost}{self.Payment_status}'
+        return f'User {self.id}{self.vehicle_ID}{self.Service_Type_ID}{self.status}{self.Start_Date}{self.End_Date}{self.Total_Cost}{self.Payment_status}'
 
     def serialize(self):
         return {
             "id": self.id,
             "vehicle_ID": self.vehicle_ID,
             "Service_Type_ID": self.Service_Type_ID,
+            "status" : self.status,
             "Start_Date": self.Start_Date,
             "End_Date": self.End_Date,
             "Total_Cost": self.Total_Cost,
-            "Payment_Status": self.Payment_status
+            "Payment_Status": self.Payment_status,
+            "User_ID": self.User_ID
 
             
         }
@@ -269,5 +271,28 @@ class Schedule(db.Model):
 
 
         }   
+#Tabla vender vahículo
+class VehicleSales(db.Model):
+    __tablename__ = 'vehicle_sales'
+    id = db.Column(db.Integer, primary_key=True)
+    vehicle_id = db.Column(db.Integer, db.ForeignKey('vehicles.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  # Vendedor
+    sale_price = db.Column(DECIMAL(10, 2), nullable=False)
+  
+
+    # Relaciones
+    vehicle = db.relationship('Vehicles', backref='sales')
+    user = db.relationship('User', backref='sales')
+
+    def __repr__(self):
+        return f"VehicleSales {self.id} - Vehicle ID {self.vehicle_id} - Sold by User {self.user_id} - Price {self.sale_price}"
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "vehicle_id": self.vehicle_id,
+            "user_id": self.user_id,
+          "sale_price": str(self.sale_price),
+                 }
 
 

@@ -2,9 +2,13 @@ import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Context } from '../store/appContext';
 
+
 const DashboardNavbar = () => {
   const { actions } = useContext(Context);
   const navigate = useNavigate();
+
+
+
 
   const handleLogout = async () => {
     const result = await actions.logoutUser();
@@ -29,7 +33,7 @@ const DashboardNavbar = () => {
         <div className="d-flex">
           <li className="nav-item m-0 p-0">
             <Link className="nav-link text-white cerrarSesion" to="/" onClick={handleLogout}>
-            <span className='cerrarSesion'>Cerrar sesion <i className="fa-solid fa-right-from-bracket "></i></span>
+              <span className='cerrarSesion'>Cerrar sesion <i className="fa-solid fa-right-from-bracket "></i></span>
             </Link>
           </li>
         </div>

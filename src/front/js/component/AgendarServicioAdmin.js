@@ -74,7 +74,7 @@ const AgendarServicioAdmin = () => {
                                 onChange={handleChange}
                                 required
                             >
-                                <option value="" disabled>Elija la marca, modelo y matrícula de su vehículo</option>
+                                <option value="" disabled>Seleccione un vehículo</option>
                                 {store.vehicles.map(vehicle => (
                                     <option key={vehicle.id} value={vehicle.id}>
                                         {vehicle.brand} {vehicle.model} - {vehicle.license_plate}

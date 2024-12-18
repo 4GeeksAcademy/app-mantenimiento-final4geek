@@ -1,25 +1,72 @@
-import React, { useState } from 'react';
-
-
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext";
 import Integraapi from '../component/Integraapi';
 
 
 const Vender = () => {
+    const { actions, store } = useContext(Context);
     const navigate = useNavigate();
-    const [uploadedImage, setUploadedImage] = useState(null); // Estado para manejar la URL de la imagen
 
+    // Estado para manejar los campos del formulario
+    const [formData, setFormData] = useState({
+        vehicle_ID: "",
+        sale_price: "",
+        image_url: ""
+    });
 
+    // Estado para manejar la imagen subida
+    const [uploadedImage, setUploadedImage] = useState(null);
+
+    useEffect(() => {
+        actions.getVehicles(); // Obtener vehículos al cargar
+    }, []);
+
+    // Función para manejar cambios en los inputs
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    // Función para recibir la URL de Cloudinary
+    const handleImageUpload = (imageUrl) => {
+        setUploadedImage(imageUrl);
+        setFormData((prevData) => ({
+            ...prevData,
+            image_url: imageUrl,
+        }));
+    };
+
+    // Función para manejar el envío del formulario
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        // Crear el objeto a enviar
+        const dataToSend = {
+            vehicle_ID: formData.vehicle_ID,
+            sale_price: formData.sale_price,
+           
+        };
+
+        // Llamar a la acción del contexto
+        const result = await actions.sellingvehicle(dataToSend);
+
+        // Manejo de la respuesta
+        if (result.success) {
+            alert("Vehículo publicado con éxito");
+            navigate('/cliente-dashboard');
+        } else {
+            alert("Error al publicar el vehículo. Inténtalo nuevamente.");
+        }
+    };
+
+    // Función para cerrar el formulario
     const handleClose = () => {
         navigate("/cliente-dashboard");
     };
-
-
-    // Función para recibir la URL desde Cloudinary
-    const handleImageUpload = (imageUrl) => {
-        setUploadedImage(imageUrl);
-    };
-
 
     return (
         <div className="container py-5 position-relative mx-auto p-4"
@@ -61,6 +108,9 @@ const Vender = () => {
                         <label className="form-label text-white">Precio de venta USD</label>
                         <input
                             type="number"
+                            name="sale_price"
+                            value={formData.sale_price}
+                            onChange={handleChange}
                             className="form-control"
                             placeholder="Precio de venta en Dólares"
                         />

@@ -5,7 +5,7 @@ from flask_swagger import swagger
 
 from flask_jwt_extended import create_access_token
 from api.utils import APIException, generate_sitemap
-from api.models import db, Services, Vehicles, User, Service_Type
+from api.models import db, Services, Vehicles, User, Service_Type, VehicleSales
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
@@ -15,6 +15,7 @@ from flask_jwt_extended import get_jwt_identity
 from flask_cors import CORS  # Importa Flask-CORS
 from werkzeug.security import generate_password_hash  # Solución para hashear contraseña, y asegurar que no se guarden en texto plano. 
 from werkzeug.security import check_password_hash
+from flask import Blueprint, request, jsonify
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
@@ -455,6 +456,44 @@ def crear_tipo_servicio():
     except Exception as e:
         db.session.rollback()
         return jsonify({"msg": f"Error al crear el tipo de servicio: {str(e)}"}), 500
+    
+    #Registrar venta de vehículos
+
+
+
+@app.route('/api/vender', methods=['POST'])
+@jwt_required()
+def sell_vehicle():
+    user_id = get_jwt_identity()  # Usuario autenticado
+    data = request.get_json()
+    vehicle_id = data.get("vehicle_id")
+    print(vehicle_id)
+
+    sale_price = data.get("sale_price")
+
+    if not vehicle_id or not sale_price:
+        return jsonify({"error": "vehicle_id y sale_price son requeridos"}), 400
+
+    # Verificar si el vehículo pertenece al usuario
+    vehicle = Vehicles.query.filter_by(id=vehicle_id, user_id=user_id).first()
+    if not vehicle:
+        return jsonify({"error": "Vehículo no encontrado o no pertenece al usuario"}), 404
+
+    # Crear la venta
+    try:
+        sale = VehicleSales(
+            vehicle_id=vehicle_id,
+            user_id=user_id,
+            sale_price=sale_price
+        )
+        db.session.add(sale)
+        db.session.commit()
+        return jsonify(sale.serialize()), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+
 
     
 
