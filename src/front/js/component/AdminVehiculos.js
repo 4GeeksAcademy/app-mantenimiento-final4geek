@@ -9,15 +9,30 @@ const AdminVehiculos = () => {
     const navigate = useNavigate();
     const [selectedClient, setSelectedClient] = useState("");
     const [filteredVehicles, setFilteredVehicles] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const columnConfig = [
+        { key: "id", label: "ID" },
+        { key: "user_id", label: "ID Cliente" },
+        { key: "brand", label: "Marca" },
+        { key: "model", label: "Modelo" },
+        { key: "year", label: "Año" },
+        { key: "mileage", label: "Kilometraje" },
+        { key: "license_plate", label: "Matrícula" }
+    ];
 
     useEffect(() => {
-        actions.getVehicles();
-        actions.getClients();
-    }, []);
+        Promise.all([actions.getVehicles(), actions.getClients()])
+            .then(() => setLoading(false))
+            .catch(err => {
+                console.error("Error al obtener datos:", err);
+                setLoading(false);
+            });
+    }, [actions]);
 
     useEffect(() => {
         if (selectedClient) {
-            const filtered = store.vehicles.filter(vehicle => vehicle.user_id === selectedClient);
+            const filtered = store.vehicles.filter(vehicle => parseInt(vehicle.user_id) === parseInt(selectedClient));
             setFilteredVehicles(filtered);
         } else {
             setFilteredVehicles(store.vehicles);
@@ -42,8 +57,13 @@ const AdminVehiculos = () => {
             </Modal.Header>
             <Modal.Body className="custom-modal-body">
                 <div className="mb-3">
-                    <label htmlFor="clientSelect" className="form-label">Filtrar por Cliente</label>
-                    <select id="clientSelect" className="form-select" value={selectedClient} onChange={handleClientChange}>
+                    <label htmlFor="clientSelect" className="form-label text-white">Filtrar por Cliente</label>
+                    <select
+                        id="clientSelect"
+                        className="form-select"
+                        value={selectedClient}
+                        onChange={handleClientChange}
+                    >
                         <option value="">Todos los Clientes</option>
                         {store.clients.map(client => (
                             <option key={client.id} value={client.id}>
@@ -52,21 +72,28 @@ const AdminVehiculos = () => {
                         ))}
                     </select>
                 </div>
-                {filteredVehicles && filteredVehicles.length > 0 ? (
+
+                {loading ? (
+                    <div className="custom-content-box text-center">
+                        Cargando...
+                    </div>
+                ) : filteredVehicles && filteredVehicles.length > 0 ? (
                     <div className="table-responsive">
                         <table className="table table-hover table-striped">
                             <thead>
                                 <tr>
-                                    {Object.keys(filteredVehicles[0]).map((key, index) => (
-                                        <th key={index} className="text-nowrap">{key}</th>
+                                    {columnConfig.map((column, index) => (
+                                        <th key={index} className="text-nowrap">{column.label}</th>
                                     ))}
                                 </tr>
                             </thead>
                             <tbody>
                                 {filteredVehicles.map((vehicle, rowIndex) => (
                                     <tr key={rowIndex}>
-                                        {Object.values(vehicle).map((value, colIndex) => (
-                                            <td key={colIndex} className="text-nowrap">{value}</td>
+                                        {columnConfig.map((column, colIndex) => (
+                                            <td key={colIndex} className="text-nowrap">
+                                                {vehicle[column.key]}
+                                            </td>
                                         ))}
                                     </tr>
                                 ))}

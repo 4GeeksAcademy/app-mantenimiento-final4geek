@@ -4,11 +4,25 @@ import { useNavigate } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 import "../../styles/modal.css";
 
-const AdminVehiculos = () => {
+const columnConfig = [
+  { key: "id", label: "ID" },
+  { key: "vehicle_ID", label: "ID Vehículo" },
+  { key: "Service_Type_ID", label: "Tipo de Servicio" },
+  { key: "Start_Date", label: "Fecha de Inicio" },
+  { key: "End_Date", label: "Fecha de Fin" },
+  { key: "status", label: "Status" },
+
+  { key: "Total_Cost", label: "Costo Total" },
+  { key: "Payment_Status", label: "Estado de Pago" },
+  { key: "User_ID", label: "ID Usuario" }
+];
+
+const AdminSeguimientos = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
   const [selectedClient, setSelectedClient] = useState("");
   const [filteredServices, setFilteredServices] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     actions.getServices();
@@ -16,8 +30,14 @@ const AdminVehiculos = () => {
   }, []);
 
   useEffect(() => {
+    if (store.services.length > 0 && store.clients.length > 0) {
+      setLoading(false);
+    }
+  }, [store.services, store.clients]);
+
+  useEffect(() => {
     if (selectedClient) {
-      const filtered = store.services.filter(service => service.user_id === selectedClient);
+      const filtered = store.services.filter(service => service.User_ID === selectedClient);
       setFilteredServices(filtered);
     } else {
       setFilteredServices(store.services);
@@ -41,46 +61,56 @@ const AdminVehiculos = () => {
         <Modal.Title className="custom-modal-title">Seguimiento de Servicios</Modal.Title>
       </Modal.Header>
       <Modal.Body className="custom-modal-body">
-        <div className="mb-3">
-          <label htmlFor="clientSelect" className="form-label">Filtrar por Cliente</label>
-          <select id="clientSelect" className="form-select" value={selectedClient} onChange={handleClientChange}>
-            <option value="">Todos los Clientes</option>
-            {store.clients.map(client => (
-              <option key={client.id} value={client.id}>
-                {client.name} {client.email}
-              </option>
-            ))}
-          </select>
-        </div>
-        {filteredServices && filteredServices.length > 0 ? (
-          <div className="table-responsive">
-            <table className="table table-hover table-striped">
-              <thead>
-                <tr>
-                  {Object.keys(filteredServices[0]).map((key, index) => (
-                    <th key={index} className="text-nowrap">{key}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {filteredServices.map((service, rowIndex) => (
-                  <tr key={rowIndex}>
-                    {Object.values(service).map((value, colIndex) => (
-                      <td key={colIndex} className="text-nowrap">{value}</td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        {loading ? (
+          <div className="text-center">
+            <p className="text-white">Cargando...</p>
           </div>
         ) : (
-          <div className="custom-content-box text-center">
-            No hay datos disponibles.
-          </div>
+          <>
+            <div className="mb-3">
+              <label htmlFor="clientSelect" className="form-label text-white">Filtrar por Cliente</label>
+              <select id="clientSelect" className="form-select" value={selectedClient} onChange={handleClientChange}>
+                <option value="">Todos los Clientes</option>
+                {store.clients.map(client => (
+                  <option key={client.id} value={client.id}>
+                    {client.name} {client.email}
+                  </option>
+                ))}
+              </select>
+            </div>
+            {filteredServices && filteredServices.length > 0 ? (
+              <div className="table-responsive">
+                <table className="table table-hover table-striped">
+                  <thead>
+                    <tr>
+                      {columnConfig.map((column, index) => (
+                        <th key={index} className="text-nowrap">{column.label}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredServices.map((service, rowIndex) => (
+                      <tr key={rowIndex}>
+                        {columnConfig.map((column, colIndex) => (
+                          <td key={colIndex} className="text-nowrap">
+                            {service[column.key]}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div className="custom-content-box text-center">
+                No hay datos disponibles.
+              </div>
+            )}
+          </>
         )}
       </Modal.Body>
     </Modal>
   );
 };
 
-export default AdminVehiculos;
+export default AdminSeguimientos;

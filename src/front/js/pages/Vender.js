@@ -99,7 +99,7 @@ const Vender = () => {
                             value={formData.vehicle_ID}
                             onChange={handleChange}
                             className="form-control"
-                            style={{ backgroundColor: '#FFFFFF', height: '26.94px', width: '609px' }}
+                            style={{ backgroundColor: '#FFFFFF', height: '40px', width: '609px' }}
                         >
                             <option value="">Seleccione un vehículo</option>
                             {store.vehicles && store.vehicles.length > 0 ? (
@@ -131,7 +131,7 @@ const Vender = () => {
                             onChange={handleChange}
                             className="form-control"
                             placeholder="Precio de venta en Dólares"
-                            style={{ backgroundColor: '#FFFFFF', height: '27px', width: '220px', borderRadius: '10px', opacity: '0.7' }}
+                            style={{ backgroundColor: '#FFFFFF', height: '40px', width: '220px', borderRadius: '10px', opacity: '0.7' }}
                         />
                     </div>
 
@@ -144,7 +144,7 @@ const Vender = () => {
                             style={{
                                 backgroundColor: '#7ED957',
                                 width: '206px',
-                                height: '33px',
+                                height: '40px',
                                 color: '#312E2D'
                             }}
                         >

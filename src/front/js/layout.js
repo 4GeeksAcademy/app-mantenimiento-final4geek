@@ -57,7 +57,7 @@ const Layout = () => {
                     <Route element={<ClienteSeguimientos />} path="seguimiento-servicios" />
                    <Route element={<ClienteVehiculos />} path="vehiculos-registrados" />
                     <Route element={<Vender />} path="/vender" />
-                    <Route element={<h1>No encontrado</h1>} path="*" />
+                    <Route element={<h1></h1>} path="*" />
                   </Route> :
                   <Route element={<AdminDashboard />} >
                     <Route element={<RegistrarVehiculoAdmin />} path="/registrar-vehiculo-admin" />
@@ -66,7 +66,7 @@ const Layout = () => {
                     <Route element={<AdminVehiculos />} path="vehiculos-registrados" />
 
                    
-                    <Route element={<h1>No encontrado</h1>} path="*" />
+                    <Route element={<h1></h1>} path="*" />
 
                   </Route>
             }

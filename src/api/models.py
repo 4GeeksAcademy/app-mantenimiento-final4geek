@@ -152,13 +152,14 @@ class Services(db.Model):
 
 
     def __repr__(self):
-        return f'User {self.id}{self.vehicle_ID}{self.Service_Type_ID}{self.Start_Date}{self.End_Date}{self.Total_Cost}{self.Payment_status}'
+        return f'User {self.id}{self.vehicle_ID}{self.Service_Type_ID}{self.status}{self.Start_Date}{self.End_Date}{self.Total_Cost}{self.Payment_status}'
 
     def serialize(self):
         return {
             "id": self.id,
             "vehicle_ID": self.vehicle_ID,
             "Service_Type_ID": self.Service_Type_ID,
+            "status" : self.status,
             "Start_Date": self.Start_Date,
             "End_Date": self.End_Date,
             "Total_Cost": self.Total_Cost,

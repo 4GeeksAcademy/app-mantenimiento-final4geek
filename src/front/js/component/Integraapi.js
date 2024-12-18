@@ -42,11 +42,11 @@ const Integraapi = ({ onImageUpload }) => {
                 className="form-control"
                 style={{
                     backgroundColor: '#FFFFFF',
-                    height: '26.94px',
+                    height: '40px',
                     width: '609px',
                     color: '#495057',
                     border: '1px solid #ced4da',
-                    borderRadius: '0.25rem',
+                    borderRadius: '5px',
                     padding: '5px 10px'
                 }}
             />

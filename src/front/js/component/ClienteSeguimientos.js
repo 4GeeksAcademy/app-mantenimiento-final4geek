@@ -19,6 +19,7 @@ const ClienteSeguimientos = () => {
     { key: "Service_Type_ID", label: "Tipo de Servicio" },
     { key: "Start_Date", label: "Fecha de Inicio" },
     { key: "End_Date", label: "Fecha de Fin" },
+    { key: "status", label: "Status" },
     { key: "Total_Cost", label: "Costo Total" },
     { key: "Payment_Status", label: "Estado de Pago" },
     { key: "User_ID", label: "ID Usuario" }
