@@ -32,44 +32,45 @@ const AgendarServicio = () => {
 
     const handleSchedule = async (data) => {
         try {
-          const result = await actions.createService(data);
-          if (result) {
-            // Handle success
-            console.log(result)
-            navigate('/cliente-dashboard');
-            alert('Servicio agendado correctamente');
-          } else {
-            const errorData = await result.json();
-            alert(`Error al agendar servicio: ${errorData.message}`);
-          }
+            const result = await actions.createService(data);
+            if (result) {
+                // Handle success
+                console.log(result)
+                navigate('/cliente-dashboard');
+                alert('Servicio agendado correctamente');
+            } else {
+                const errorData = await result.json();
+                alert(`Error al agendar servicio: ${errorData.message}`);
+            }
         } catch (error) {
-          console.error('Error scheduling service:', error);
-          alert('Error al agendar servicio. Por favor, inténtalo nuevamente.');
+            console.error('Error scheduling service:', error);
+            alert('Error al agendar servicio. Por favor, inténtalo nuevamente.');
         }
-      };
+    };
 
     const handleClose = () => {
         navigate("/cliente-dashboard");
     };
 
     return (
-        <div className="container py-5 position-relative p-4"   style={{
-            width: '786px',
-            backgroundColor: '#312E2D',
-            borderRadius: '20px',
-            margin: 'auto',
-            padding: '20px'
-        }}>
+        <div className="container py-5 position-relative mx-auto p-4"
+            style={{
+                maxWidth: '800px',
+                backgroundColor: '#312E2D',
+                borderRadius: '20px',
+            }}>
             <div className="row justify-content-center">
                 <div className="col-lg-8 col-md-10 col-sm-12">
-                    <div className="d-flex justify-content-between align-items-center mb-4" >
-                    <h5 className="text-center fw-bold text-light text-shadow" style={{ fontSize: '40px' }}>Agendar Servicio</h5>
+                    <div className="d-flex justify-content-between align-items-center mb-4">
+                        <h5 className="text-center fw-bold text-light text-shadow"
+                            style={{ fontSize: '40px' }}>
+                            Agendar Servicio
+                        </h5>
                         <button
                             className="btn-close btn-close-custom rounded-circle me-1"
                             aria-label="Cerrar"
                             onClick={handleClose}
                         ></button>
-
                     </div>
                     <form>
                         <div className="mb-3 text-start">
@@ -134,6 +135,7 @@ const AgendarServicio = () => {
                 </div>
             </div>
         </div>
+
     );
 };
 

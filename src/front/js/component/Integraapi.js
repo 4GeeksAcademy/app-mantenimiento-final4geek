@@ -31,27 +31,17 @@ const Integraapi = ({ onImageUpload }) => {
     };
 
     return (
-        <div className="mb-3 text-start">
-            <label className="form-label text-white">
-                Seleccionar Archivo
-            </label>
+        <div className="mb-3">
+            <label className="form-label text-white">Seleccionar Archivo</label>
             <input
                 type="file"
                 name="file"
-                onChange={(e) => uploadImage(e)}
+                onChange={uploadImage}
                 className="form-control"
-                style={{
-                    backgroundColor: '#FFFFFF',
-                    height: '26.94px',
-                    width: '609px',
-                    color: '#495057',
-                    border: '1px solid #ced4da',
-                    borderRadius: '0.25rem',
-                    padding: '5px 10px'
-                }}
             />
             {loading && <h3 className="text-white mt-2">Cargando...</h3>}
         </div>
+
     );
 };
 

@@ -16,7 +16,7 @@ const DashboardNavbar = () => {
   };
 
   return (
-    <nav className="d-flex justify-content-center w-100 p-3 fw-medium" style={{ backgroundColor: '#312E2D' }}>
+    <nav className="d-flex justify-content-center w-100 p-3 fw-medium colorFondo">
       <ul className="nav d-flex justify-content-between w-100 m-0 p-0">
         {/* Botón para el menú */}
         <li>

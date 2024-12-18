@@ -22,19 +22,19 @@ const Vender = () => {
 
 
     return (
-        <div className="container py-5 position-relative p-4" style={{
-            width: '786px',
-            backgroundColor: '#312E2D',
-            borderRadius: '20px',
-            margin: 'auto',
-            padding: '20px'
-        }}>
+        <div className="container py-5 position-relative mx-auto p-4"
+            style={{
+                maxWidth: '800px',
+                backgroundColor: '#312E2D',
+                borderRadius: '20px',
+            }}>
             <div className="row justify-content-center">
 
-
-
                 <div className="d-flex justify-content-between align-items-center mb-4">
-                    <h5 className=" text-center fw-bold text-light text-shadow" style={{ fontSize: "40px" }}>Completa tu formulario</h5>
+                    <h5 className="text-center fw-bold text-light text-shadow"
+                        style={{ fontSize: "40px" }}>
+                        Completa tu formulario
+                    </h5>
                     <button
                         className="btn-close btn-close-custom rounded-circle me-1"
                         aria-label="Cerrar"
@@ -42,39 +42,29 @@ const Vender = () => {
                     ></button>
                 </div>
 
-
                 <form>
                     {/* Seleccione Marca */}
-                    <div className="mb-3 text-start">
-                        <label className="form-label text-white">
-                            Seleccione Marca
-                        </label>
+                    <div className="mb-3">
+                        <label className="form-label text-white">Seleccione Marca</label>
                         <input
                             type="text"
                             className="form-control"
                             placeholder="Elija Marca, Modelo y Kilometraje"
-                            style={{ backgroundColor: '#FFFFFF', height: '26.94px', width: '609px' }}
                         />
                     </div>
-
 
                     {/* Componente Cloudinary */}
                     <Integraapi onImageUpload={handleImageUpload} />
 
-
                     {/* Precio de venta */}
-                    <div className="mb-3 text-start">
-                        <label className="form-label text-white">
-                            Precio de venta USD
-                        </label>
+                    <div className="mb-3">
+                        <label className="form-label text-white">Precio de venta USD</label>
                         <input
                             type="number"
                             className="form-control"
                             placeholder="Precio de venta en Dólares"
-                            style={{ backgroundColor: '#FFFFFF', height: '27px', width: '220px', borderRadius: '10px', opacity: '0.7' }}
                         />
                     </div>
-
 
                     {/* Botón Publicar Vehículo */}
                     <div className="d-flex justify-content-center mt-4">
@@ -83,17 +73,13 @@ const Vender = () => {
                             className="btn fw-bold"
                             style={{
                                 backgroundColor: '#7ED957',
-                                width: '206px',
-                                height: '33px',
                                 color: '#312E2D'
-                            }}
-                        >
+                            }}>
                             Publicar Vehículo
                         </button>
                     </div>
                 </form>
             </div>
-
 
             {/* Renderización de la Imagen Subida */}
             {uploadedImage && (
@@ -101,11 +87,10 @@ const Vender = () => {
                     <img
                         src={uploadedImage}
                         alt="Imagen subida"
+                        className="img-fluid rounded"
                         style={{
-                            maxWidth: '100%',
-                            height: '200px',
+                            maxHeight: '200px',
                             objectFit: 'contain',
-                            borderRadius: '10px',
                             boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
                         }}
                     />

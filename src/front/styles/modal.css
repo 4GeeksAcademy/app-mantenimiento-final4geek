@@ -127,3 +127,14 @@ li.enlaceAdmin a:hover {
   color: #6CBF4F !important; /* Color al pasar el cursor */
   transform: scale(1.10); /* Efecto de zoom leve */
 }
+
+nav.colorFondo {
+  background-color: #312E2D !important;
+}
+
+img.imgLogo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* O cualquier altura específica */
+}

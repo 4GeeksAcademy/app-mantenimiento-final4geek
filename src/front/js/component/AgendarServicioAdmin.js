@@ -32,33 +32,27 @@ const AgendarServicioAdmin = () => {
 
     const handleSchedule = async (data) => {
         try {
-          const result = await actions.createService(data);
-          if (result.ok) {
-            // Handle success
-            navigate('/admin-dashboard');
-            alert('Servicio agendado correctamente');
-          } else {
-            const errorData = await result.json();
-            alert(`Error al agendar servicio: ${errorData.message}`);
-          }
+            const result = await actions.createService(data);
+            if (result.ok) {
+                // Handle success
+                navigate('/admin-dashboard');
+                alert('Servicio agendado correctamente');
+            } else {
+                const errorData = await result.json();
+                alert(`Error al agendar servicio: ${errorData.message}`);
+            }
         } catch (error) {
-          console.error('Error scheduling service:', error);
-          alert('Error al agendar servicio. Por favor, inténtalo nuevamente.');
+            console.error('Error scheduling service:', error);
+            alert('Error al agendar servicio. Por favor, inténtalo nuevamente.');
         }
-      };
+    };
 
     const handleClose = () => {
         navigate("/admin-dashboard");
     };
 
     return (
-        <div className="container py-5 position-relative p-4 rounded shadow"  style={{
-            width: '786px',
-            backgroundColor: '#312E2D',
-            borderRadius: '20px',
-            margin: 'auto',
-            padding: '20px'
-        }}>
+        <div className="container py-5 position-relative p-4 rounded shadow" style={{ backgroundColor: '#312E2D' }}>
             <div className="row justify-content-center">
                 <div className="col-lg-8 col-md-10 col-sm-12">
                     <div className="d-flex justify-content-between align-items-center mb-4">
@@ -70,7 +64,7 @@ const AgendarServicioAdmin = () => {
                         ></button>
                     </div>
                     <form>
-                        <div className="mb-3 text-start">
+                        <div className="mb-3">
                             <label htmlFor="selectVehicle" className="form-label text-light">Seleccione un vehículo</label>
                             <select
                                 className="form-control"
@@ -89,7 +83,7 @@ const AgendarServicioAdmin = () => {
                             </select>
                         </div>
 
-                        <div className="mb-3 text-start">
+                        <div className="mb-3">
                             <label htmlFor="selectServiceType" className="form-label text-light">Seleccione un tipo de servicio</label>
                             <select
                                 className="form-control"
@@ -108,7 +102,7 @@ const AgendarServicioAdmin = () => {
                             </select>
                         </div>
 
-                        <div className="mb-3 text-start">
+                        <div className="mb-3">
                             <label htmlFor="serviceCost" className="form-label text-light">Precio estimado</label>
                             <input
                                 type="text"
@@ -122,7 +116,7 @@ const AgendarServicioAdmin = () => {
                         <div className="d-flex justify-content-center mt-4">
                             <button
                                 type="button"
-                                className="btn btn-green fw-bold"
+                                className="btn btn-success fw-bold"
                                 onClick={() => handleSchedule(formData)}
                             >
                                 Ingresar Servicio
@@ -132,6 +126,7 @@ const AgendarServicioAdmin = () => {
                 </div>
             </div>
         </div>
+
     );
 };
 

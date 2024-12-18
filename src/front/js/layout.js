@@ -28,6 +28,8 @@ import ClienteSeguimientos from "./component/ClienteSeguimientos";
 import ClienteVehiculos from "./component/ClienteVehiculos";
 import AdminSeguimientos from "./component/AdminSeguimientos";
 import AdminVehiculos from "./component/AdminVehiculos";
+
+
 //create your first component
 const Layout = () => {
   const { store } = useContext(Context);
@@ -49,6 +51,7 @@ const Layout = () => {
                   <Route element={<Registro />} path="/registro" />
                   <Route element={<LoginPostRegister />} path= "loginpostregister" />
                   <Route element={<Navigate to="/" replace />} path="*" />
+                  
                 </> :
                 store.userType === "client" ?
                   <Route element={<ClientDashboard />} >
@@ -57,7 +60,7 @@ const Layout = () => {
                     <Route element={<ClienteSeguimientos />} path="seguimiento-servicios" />
                    <Route element={<ClienteVehiculos />} path="vehiculos-registrados" />
                     <Route element={<Vender />} path="/vender" />
-                    <Route element={<h1>No encontrado</h1>} path="*" />
+                    <Route element={<h1></h1>} path="*" />
                   </Route> :
                   <Route element={<AdminDashboard />} >
                     <Route element={<RegistrarVehiculoAdmin />} path="/registrar-vehiculo-admin" />
@@ -66,7 +69,7 @@ const Layout = () => {
                     <Route element={<AdminVehiculos />} path="vehiculos-registrados" />
 
                    
-                    <Route element={<h1>No encontrado</h1>} path="*" />
+                    <Route element={<h1></h1>} path="*" />
 
                   </Route>
             }

@@ -5,6 +5,8 @@ import "../../styles/modal.css";
 import LeftPanelAdmin from "../../js/newVisual/LeftPanelAdmin";
 import DashboardNavbar from "../../js/newVisual/DashboardNavBar";
 
+
+
 const AdminDashboard = () => {
   return (
     <div className="container-fluid d-flex p-0 vh-100">
@@ -25,6 +27,7 @@ const AdminDashboard = () => {
         <DashboardNavbar />
 
         <div className="p-3 p-md-4 overflow-y-scroll">
+            
           <Outlet />
         </div>
       </div>
