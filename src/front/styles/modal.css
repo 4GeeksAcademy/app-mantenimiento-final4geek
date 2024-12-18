@@ -100,6 +100,15 @@ nav.d-flex a:hover {
   opacity: 1 !important;                  
 }
 
+.btn-success {
+  background-color: #7ED957 !important; 
+  border-radius: 5% !important;          
+  border: none !important;               
+  opacity: 1 !important;
+  color: #312E2D !important;
+  font-weight: bold !important;                 
+}
+
 .btn-close-green:hover {
   background-color: #6CBF4F !important;  
 }

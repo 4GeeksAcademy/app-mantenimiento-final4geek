@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import Integraapi from '../component/Integraapi';
 
-
 const Vender = () => {
     const { actions, store } = useContext(Context);
     const navigate = useNavigate();
@@ -48,7 +47,6 @@ const Vender = () => {
         const dataToSend = {
             vehicle_ID: formData.vehicle_ID,
             sale_price: formData.sale_price,
-           
         };
 
         // Llamar a la acción del contexto
@@ -69,19 +67,10 @@ const Vender = () => {
     };
 
     return (
-        <div className="container py-5 position-relative mx-auto p-4"
-            style={{
-                maxWidth: '800px',
-                backgroundColor: '#312E2D',
-                borderRadius: '20px',
-            }}>
+        <div className="container py-5 position-relative p-4" style={{ backgroundColor: '#312E2D', borderRadius: '20px' }}>
             <div className="row justify-content-center">
-
                 <div className="d-flex justify-content-between align-items-center mb-4">
-                    <h5 className="text-center fw-bold text-light text-shadow"
-                        style={{ fontSize: "40px" }}>
-                        Completa tu formulario
-                    </h5>
+                    <h5 className="text-center fw-bold text-light text-shadow" style={{ fontSize: "40px" }}>Vende tu vehículo ya!</h5>
                     <button
                         className="btn-close btn-close-custom rounded-circle me-1"
                         aria-label="Cerrar"
@@ -89,15 +78,27 @@ const Vender = () => {
                     ></button>
                 </div>
 
-                <form>
-                    {/* Seleccione Marca */}
+                <form onSubmit={handleSubmit}>
+                    {/* Seleccione Vehículo */}
                     <div className="mb-3">
-                        <label className="form-label text-white">Seleccione Marca</label>
-                        <input
-                            type="text"
+                        <label className="form-label text-white">Seleccione Vehículo</label>
+                        <select
+                            name="vehicle_ID"
+                            value={formData.vehicle_ID}
+                            onChange={handleChange}
                             className="form-control"
-                            placeholder="Elija Marca, Modelo y Kilometraje"
-                        />
+                        >
+                            <option value="">Seleccione un vehículo</option>
+                            {store.vehicles && store.vehicles.length > 0 ? (
+                                store.vehicles.map((vehicle) => (
+                                    <option key={vehicle.id} value={vehicle.id}>
+                                        {`${vehicle.brand} ${vehicle.model} - ${vehicle.year} (${vehicle.mileage} km) ${vehicle.license_plate}`}
+                                    </option>
+                                ))
+                            ) : (
+                                <option value="" disabled>No hay vehículos disponibles</option>
+                            )}
+                        </select>
                     </div>
 
                     {/* Componente Cloudinary */}
@@ -123,8 +124,11 @@ const Vender = () => {
                             className="btn fw-bold"
                             style={{
                                 backgroundColor: '#7ED957',
+                                width: '206px',
+                                height: '33px',
                                 color: '#312E2D'
-                            }}>
+                            }}
+                        >
                             Publicar Vehículo
                         </button>
                     </div>
@@ -137,21 +141,19 @@ const Vender = () => {
                     <img
                         src={uploadedImage}
                         alt="Imagen subida"
-                        className="img-fluid rounded"
+                        className="img-fluid"
                         style={{
-                            maxHeight: '200px',
+                            maxWidth: '100%',
+                            height: '200px',
                             objectFit: 'contain',
+                            borderRadius: '10px',
                             boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
                         }}
                     />
                 </div>
             )}
         </div>
-
-
-
     );
 };
-
 
 export default Vender;
