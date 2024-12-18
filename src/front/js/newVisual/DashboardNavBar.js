@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Context } from '../store/appContext';
+import logoapp from "../../img/logoapp.jpg";
 
 
 const DashboardNavbar = () => {
@@ -20,15 +21,19 @@ const DashboardNavbar = () => {
   };
 
   return (
-    <nav className="d-flex justify-content-center w-100 p-3 fw-medium colorFondo">
-      <ul className="nav d-flex justify-content-between w-100 m-0 p-0">
+    <nav className="d-flex justify-content-center align-items-center w-100 p-3 fw-medium colorFondo">
+      <ul className="nav d-flex justify-content-between  align-items-center w-100 m-0 p-0">
         {/* Botón para el menú */}
         <li>
           <button className="btn btn-green fw-bold" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive" aria-controls="offcanvasResponsive">
             <i className="fa-solid fa-bars"></i>
           </button>
+          <img src={logoapp} alt="logo" className="m-0 p-0 img-fluid" style={{ maxwidth: '80px', height: '80px' }} />
         </li>
-
+          {/* Título centrado */}
+        <li className="flex-grow-1 text-center">
+          <h2 className="title m-0 p-0 text-truncate">¡Bienvenid@!</h2>
+        </li>
         {/* Links del Navbar */}
         <div className="d-flex">
           <li className="nav-item m-0 p-0">
