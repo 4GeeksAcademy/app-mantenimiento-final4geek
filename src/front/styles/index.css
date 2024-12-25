@@ -1,3 +1,27 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+.backgroundHome {
+    background-color: #312D2E;
+}
+
+.navHome {
+    background-color: #619546;
+}
+
+.menuHome  {
+    background-color: #143E79 !important; 
+    padding: 0;
+    margin: 0;
+    width: 100px;
+    
+}
+
+.botonMenu {
+    color: white;  
+}
+
+.botonMenu:hover {
+    background-color: white;
+    color: #143E79;
+}

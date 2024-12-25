@@ -1,0 +1,149 @@
+.custom-modal {
+    max-width: 700px;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  
+  .custom-modal-header {
+    background-color: #332D2D;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    position: relative;
+    border-bottom: none;
+  }
+  
+  .custom-close-button {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 24px;
+    color: white;
+  }
+
+  .custom-modal-title {
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .custom-modal-body {
+    background-color: #332D2D;
+    padding: 10px;
+  }
+  
+  .custom-content-box {
+    background-color: white;
+    padding: 20px;
+    margin: 0;
+    font-size: 18px;
+    font-family: Arial, sans-serif;
+    border: none;
+  }
+  
+
+  .leftPanel {
+    background-color: '#143E79';
+  }
+
+
+  .offcanvas-start {
+    background-color: #143E79 !important; /* bg-dark */
+    color: white; /* Para texto blanco */
+}
+
+.offcanvas-body {
+    background-color: #143E79 !important; /* bg-dark */
+    color: white; /* Para texto blanco */
+}
+
+/* Estilo global para LeftPanelClient */
+nav.d-flex {
+  background-color: #143E79 !important; /* Fondo oscuro (bg-dark) */
+  color: white !important; /* Texto blanco */
+}
+
+nav.d-flex-flex {
+  background-color: #143E79 !important; /* Fondo oscuro (bg-dark) */
+  color: white !important; /* Texto blanco */
+}
+
+/* Ajustar los enlaces dentro del nav */
+nav.d-flex-flex a {
+  color: white !important; /* Color del texto de los enlaces */
+  text-decoration: none; /* Remover subrayado */
+}
+
+nav.d-flex a:hover {
+  color: #143E79 !important; /* Color gris al pasar el mouse */
+}
+
+.btn-close-custom {
+  background-color: white;
+  border: none;
+  opacity: 1; 
+}
+
+.btn-green {
+  background-color: #7ED957 !important; 
+  border-radius: 5% !important;          
+  border: none !important;               
+  opacity: 1 !important;                  
+}
+
+.btn-success {
+  background-color: #7ED957 !important; 
+  border-radius: 5% !important;          
+  border: none !important;               
+  opacity: 1 !important;
+  color: #312E2D !important;
+  font-weight: bold !important;                 
+}
+
+.btn-close-green:hover {
+  background-color: #6CBF4F !important;  
+}
+
+.cerrarSesion{
+  font-size: 20px;
+}
+
+.cerrarSesion:hover{
+  color: #6CBF4F !important;
+  transform: scale(1.05);
+}
+
+li.enlaceAdmin a {
+  color: white !important; /* Color del texto de los enlaces */
+  text-decoration: none; /* Remover subrayado */
+  font-size: 16px; /* Tamaño de la fuente */
+  font-weight: 500; /* Grosor de la fuente */
+  display: inline-block; /* Permite agregar márgenes */
+  margin-bottom: 10px; /* Espacio entre los enlaces */
+  transition: color 0.3s ease-in-out; /* Efecto suave al cambiar el color */
+}
+
+li.enlaceAdmin a:hover {
+  color: #6CBF4F !important; /* Color al pasar el cursor */
+  transform: scale(1.10); /* Efecto de zoom leve */
+}
+
+nav.colorFondo {
+  background-color: #312E2D !important;
+}
+
+img.imgLogo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* O cualquier altura específica */
+}
